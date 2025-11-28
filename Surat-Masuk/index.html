@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Surat - UNJANI</title>
+
+  <style>
+    :root {
+      --primary-color: #006B3F;
+      --primary-light: #e6f5ec;
+      --text-color: #333;
+      --light-gray: #f1f5f2;
+      --white: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--light-gray);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    /* HEADER */
+    header {
+      background-color: var(--primary-color);
+      color: var(--white);
+      padding: 20px 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    button {
+      background-color: var(--white);
+      color: var(--primary-color);
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    button:hover {
+      background-color: #f0f0f0;
+      transform: translateY(-2px);
+    }
+
+    /* SEARCH */
+    .search-container {
+      max-width: 1100px;
+      margin: 20px auto 10px;
+      padding: 0 20px;
+    }
+
+    #search-input {
+      width: 100%;
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    /* TABLE CONTAINER */
+    .container {
+      max-width: 1100px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      background-color: var(--white);
+    }
+
+    /* TABLE */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 900px;
+    }
+
+    thead {
+      background-color: var(--primary-color);
+      color: var(--white);
+    }
+
+    thead tr:hover {
+      background-color: var(--primary-color) !important;
+    }
+
+    th {
+      padding: 14px 12px;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      text-align: left;
+    }
+
+    td {
+      padding: 12px;
+      font-size: 14px;
+      border-bottom: 1px solid #e8e8e8;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9fdfb;
+    }
+
+    tbody tr:hover {
+      background-color: var(--primary-light);
+      transition: 0.2s ease-in-out;
+    }
+
+    /* FOOTER */
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 15px;
+      font-size: 13px;
+      color: #666;
+    }
+
+    /* LOADING INDICATOR */
+    .loading {
+      text-align: center;
+      padding: 20px;
+      font-style: italic;
+      color: #666;
+    }
+
+    /* MODAL STYLES */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+      background-color: var(--white);
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      color: var(--primary-color);
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: #000;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .form-group textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 5px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .btn-primary:hover {
+      background-color: #005a33;
+    }
+
+    .btn-secondary {
+      background-color: #6c757d;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn-secondary:hover {
+      background-color: #545b62;
+    }
+
+    .btn-danger {
+      background-color: #dc3545;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn-danger:hover {
+      background-color: #c82333;
+    }
+
+    /* ACTION BUTTONS IN TABLE */
+    .action-btn {
+      background: #006B3F;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 12px;
+      margin: 2px;
+    }
+    
+    .action-btn:hover {
+      background: #005a33;
+    }
+
+    .edit-btn {
+      background: #ffc107;
+      color: #000;
+    }
+
+    .edit-btn:hover {
+      background: #e0a800;
+    }
+
+    .detail-btn {
+      background: #17a2b8;
+      color: white;
+    }
+
+    .detail-btn:hover {
+      background: #138496;
+    }
+
+    /* DETAIL PAGE STYLES */
+    .detail-container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .detail-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--primary-color);
+    }
+
+    .detail-title {
+      color: var(--primary-color);
+      margin: 0;
+    }
+
+    .detail-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .detail-section {
+      margin-bottom: 25px;
+      padding: 20px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      background: #fafafa;
+    }
+
+    .detail-section h3 {
+      color: var(--primary-color);
+      margin-top: 0;
+      margin-bottom: 15px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .detail-row {
+      display: flex;
+      margin-bottom: 12px;
+      padding: 8px 0;
+      border-bottom: 1px dashed #e0e0e0;
+    }
+
+    .detail-label {
+      font-weight: bold;
+      width: 200px;
+      min-width: 200px;
+      color: #555;
+    }
+
+    .detail-value {
+      flex: 1;
+      color: #333;
+    }
+
+    /* PRINT STYLES - SOLUSI SEDERHANA */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #print-content, #print-content * {
+        visibility: visible;
+      }
+      #print-content {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+      }
+      .no-print {
+        display: none !important;
+      }
+      
+      /* Pastikan logo muncul saat print */
+      .print-logo img {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+      }
+    }
+
+    /* STYLE UNTUK PRINT CONTENT */
+    .print-content {
+      display: none;
+      font-family: 'Arial', sans-serif;
+      width: 100%;
+      max-width: 21cm;
+      margin: 0 auto;
+      padding: 20px;
+      background: white;
+      box-sizing: border-box;
+    }
+
+    .print-kop {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #0066cc;
+    }
+
+    .print-logo {
+      width: 50px;
+      height: 50px;
+      margin-right: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .print-logo img {
+      max-width: 100%;
+      max-height: 100%;
+      display: block;
+    }
+
+    .print-kop-text {
+      flex: 1;
+    }
+
+    .print-kop-text h1 {
+      font-size: 12pt;
+      font-weight: bold;
+      margin: 0 0 1px 0;
+      color: #000;
+    }
+
+    .print-kop-text h2 {
+      font-size: 9pt;
+      font-weight: bold;
+      margin: 0 0 1px 0;
+      color: #0066cc;
+    }
+
+    .print-kop-text p {
+      font-size: 7pt;
+      margin: 0;
+      color: #000;
+    }
+
+    .print-judul {
+      text-align: center;
+      font-weight: bold;
+      font-size: 10pt;
+      margin: 12px 0;
+      color: #0066cc;
+    }
+
+    .print-data-box {
+      border: 1px solid #000;
+      padding: 8px;
+      margin-bottom: 12px;
+    }
+
+    .print-data-row {
+      display: flex;
+      margin-bottom: 4px;
+    }
+
+    .print-data-label {
+      font-weight: bold;
+      width: 140px;
+      min-width: 140px;
+      font-size: 8pt;
+    }
+
+    .print-data-value {
+      flex: 1;
+      border-bottom: 1px dotted #000;
+      margin-left: 8px;
+      padding-bottom: 1px;
+      font-size: 8pt;
+    }
+
+    .print-disposisi-container {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .print-disposisi-box {
+      flex: 1;
+      border: 1px solid #000;
+      padding: 8px;
+    }
+
+    .print-disposisi-box h3 {
+      font-size: 9pt;
+      font-weight: bold;
+      margin: 0 0 6px 0;
+      text-align: center;
+      border-bottom: 1px solid #000;
+      padding-bottom: 2px;
+      color: #0066cc;
+    }
+
+    .print-checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .print-checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 8pt;
+    }
+
+    .print-checkbox-box {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border: 1px solid #000;
+      background: white;
+    }
+
+    .print-checkbox-box.checked {
+      background: #000;
+    }
+
+    .print-disposisi-text-box {
+      border: 1px solid #000;
+      padding: 8px;
+      margin-bottom: 12px;
+      min-height: 60px;
+    }
+
+    .print-disposisi-text-box h3 {
+      font-size: 9pt;
+      font-weight: bold;
+      margin: 0 0 6px 0;
+      text-align: center;
+      border-bottom: 1px solid #000;
+      padding-bottom: 2px;
+      color: #0066cc;
+    }
+
+    .print-ttd {
+      text-align: right;
+      margin-top: 40px;
+    }
+
+    .print-ttd p {
+      margin: 30px 0 3px 0;
+      font-size: 8pt;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .controls {
+        width: 100%;
+        justify-content: space-between;
+      }
+      
+      button {
+        flex: 1;
+        justify-content: center;
+      }
+      
+      h1 {
+        font-size: 20px;
+      }
+      
+      .modal-content {
+        width: 95%;
+        margin: 10% auto;
+      }
+      
+      .detail-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+      }
+      
+      .detail-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+      
+      .detail-row {
+        flex-direction: column;
+        gap: 5px;
+      }
+      
+      .detail-label {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .controls {
+        flex-direction: column;
+      }
+      
+      h1 {
+        font-size: 18px;
+      }
+      
+      th, td {
+        padding: 8px 6px;
+        font-size: 12px;
+      }
+      
+      .form-actions {
+        flex-direction: column;
+      }
+      
+      .detail-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="no-print">
+    <div class="header-content">
+      <h1>📄 Data Surat Masuk — UNJANI</h1>
+      <div class="controls">
+        <button id="tambah-surat-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+          </svg>
+          Tambah Surat
+        </button>
+        <button id="spreadsheet-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm1 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-1z"/>
+          </svg>
+          Buka Spreadsheet
+        </button>
+        <button id="refresh-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+            <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+          </svg>
+          Refresh Data
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="search-container no-print">
+    <input type="text" id="search-input" placeholder="Cari data surat...">
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="container no-print" id="main-content">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nomor Surat</th>
+            <th>Tanggal Surat</th>
+            <th>Tanggal Terima</th>
+            <th>Jumlah Lampiran</th>
+            <th>Sifat Surat</th>
+            <th>Surat Dari</th>
+            <th>Perihal</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        
+        <tbody id="data-table-body">
+          <tr>
+            <td colspan="9" class="loading">Memuat data surat...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- DETAIL CONTENT (HIDDEN BY DEFAULT) -->
+  <div class="detail-container no-print" id="detail-content" style="display: none;">
+    <div class="detail-header">
+      <h2 class="detail-title">Detail Surat Masuk</h2>
+      <div class="detail-actions">
+        <button class="btn-secondary" id="back-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+          </svg>
+          Kembali
+        </button>
+        <button class="btn-primary" id="print-detail-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
+            <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/>
+          </svg>
+          Cetak Surat
+        </button>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <h3>Informasi Surat</h3>
+      <div class="detail-row">
+        <div class="detail-label">Nomor Agenda</div>
+        <div class="detail-value" id="detail-nomor-agenda">-</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Nomor Surat</div>
+        <div class="detail-value" id="detail-nomor-surat">-</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Tanggal Surat</div>
+        <div class="detail-value" id="detail-tanggal-surat">-</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Tanggal Terima</div>
+        <div class="detail-value" id="detail-tanggal-terima">-</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Jumlah Lampiran</div>
+        <div class="detail-value" id="detail-jumlah-lampiran">-</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Sifat Surat</div>
+        <div class="detail-value" id="detail-sifat-surat">-</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Surat Dari</div>
+        <div class="detail-value" id="detail-surat-dari">-</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Perihal</div>
+        <div class="detail-value" id="detail-perihal">-</div>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <h3>Disposisi</h3>
+      <div class="detail-row">
+        <div class="detail-label">Isi Disposisi</div>
+        <div class="detail-value" id="detail-isi-disposisi">-</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Disampaikan Kepada</div>
+        <div class="detail-value" id="detail-disampaikan-kepada">-</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Keterangan Disposisi</div>
+        <div class="detail-value" id="detail-disposisi">-</div>
+      </div>
+    </div>
+
+    <div class="detail-section">
+      <h3>Informasi Tambahan</h3>
+      <div class="detail-row">
+        <div class="detail-label">Tanggal Input</div>
+        <div class="detail-value" id="detail-tanggal-input">-</div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-label">Terakhir Diupdate</div>
+        <div class="detail-value" id="detail-terakhir-update">-</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL FORM EDIT SURAT -->
+  <div id="surat-modal" class="modal no-print">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modal-title">Edit Data Surat</h2>
+        <span class="close">&times;</span>
+      </div>
+      <form id="surat-form">
+        <input type="hidden" id="edit-index">
+        
+        <div class="form-group">
+          <label for="nomor-surat">Nomor Surat</label>
+          <input type="text" id="nomor-surat" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="tanggal-surat">Tanggal Surat</label>
+          <input type="date" id="tanggal-surat" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="tanggal-terima">Tanggal Terima</label>
+          <input type="date" id="tanggal-terima" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="jumlah-lampiran">Jumlah Lampiran</label>
+          <select id="jumlah-lampiran" required>
+            <option value="">Pilih Jumlah Lampiran</option>
+            <option value="1 Surat">1 Surat</option>
+            <option value="1 Berkas">1 Berkas</option>
+            <option value="1 Bundel">1 Bundel</option>
+            <option value="1 Exemplar">1 Exemplar</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="sifat-surat">Sifat Surat</label>
+          <select id="sifat-surat" required>
+            <option value="">Pilih Sifat Surat</option>
+            <option value="Disposisi Rektor">Disposisi Rektor</option>
+            <option value="Dalam Lampiran">Dalam Lampiran</option>
+            <option value="Tembusan">Tembusan</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="surat-dari">Surat Dari</label>
+          <input type="text" id="surat-dari" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="perihal">Perihal</label>
+          <textarea id="perihal" required></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label>Isi Disposisi</label>
+          <div class="checkbox-group" id="isi-disposisi-checkbox">
+            <div class="checkbox-item">
+              <input type="checkbox" id="disposisi-tindak-lanjuti" value="Tindak lanjuti">
+              <label for="disposisi-tindak-lanjuti">Tindak lanjuti</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="disposisi-untuk-dilaksanakan" value="Untuk dilaksanakan">
+              <label for="disposisi-untuk-dilaksanakan">Untuk dilaksanakan</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="disposisi-wakili" value="Wakili">
+              <label for="disposisi-wakili">Wakili</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="disposisi-jadwalkan" value="Jadwalkan">
+              <label for="disposisi-jadwalkan">Jadwalkan</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="disposisi-sisipkan-jawaban" value="Sisipkan jawaban">
+              <label for="disposisi-sisipkan-jawaban">Sisipkan jawaban</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="disposisi-arsipkan" value="Arsipkan">
+              <label for="disposisi-arsipkan">Arsipkan</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="disposisi-untuk-dilaporkan" value="Untuk dilaporkan">
+              <label for="disposisi-untuk-dilaporkan">Untuk dilaporkan</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="disposisi-untuk-diketahui" value="Untuk diketahui">
+              <label for="disposisi-untuk-diketahui">Untuk diketahui</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="disposisi-pelajari-teliti" value="Pelajari/Teliti">
+              <label for="disposisi-pelajari-teliti">Pelajari/Teliti</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="disposisi-lain-lain" value="Lain-lain">
+              <label for="disposisi-lain-lain">Lain-lain</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="disposisi-koordinasikan" value="Koordinasikan">
+              <label for="disposisi-koordinasikan">Koordinasikan</label>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label>Disampaikan Kepada</label>
+          <div class="checkbox-group" id="disampaikan-kepada-checkbox">
+            <div class="checkbox-item">
+              <input type="checkbox" id="kepada-ka-humas" value="Ka Humas">
+              <label for="kepada-ka-humas">Ka Humas</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="kepada-kabag" value="Kabag">
+              <label for="kepada-kabag">Kabag</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="kepada-arsip" value="Arsip">
+              <label for="kepada-arsip">Arsip</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="kepada-ka-bag" value="Ka bag">
+              <label for="kepada-ka-bag">Ka bag</label>
+            </div>
+            <div class="checkbox-item">
+              <input type="checkbox" id="kepada-staff" value="Staff">
+              <label for="kepada-staff">Staff</label>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="disposisi">Keterangan Disposisi</label>
+          <textarea id="disposisi"></textarea>
+        </div>
+        
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" id="cancel-btn">Batal</button>
+          <button type="submit" class="btn-primary">Simpan Perubahan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- PRINT CONTENT -->
+  <div class="print-content" id="print-content">
+    <div class="print-kop">
+      <div class="print-logo">
+        <!-- LOGO UNJANI - Ganti dengan path yang benar ke file logounjani.jpg -->
+        <img src="logounjani.jpg" alt="Logo UNJANI" 
+             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjMDA2QjNGIi8+Cjx0ZXh0IHg9IjMwIiB5PSIzNSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+VVNKPC90ZXh0Pgo8L3N2Zz4K'">
+      </div>
+      <div class="print-kop-text">
+        <h1>UNIVERSITAS JENDERAL ACHMAD YANI</h1>
+        <h2>SISHUMAD (SISFO HUMAS DAN ADMISI)</h2>
+        <p>Jl. Terusan Jenderal Sudirman PO. BOX 148 Cimahi 40533 | email: sishumad@unjani.ac.id</p>
+      </div>
+    </div>
+    
+    <div class="print-judul">AGENDA SURAT MASUK — LEMBAR DISPOSISI</div>
+    
+    <div class="print-data-box">
+      <div class="print-data-row">
+        <div class="print-data-label">Nomor Agenda</div>
+        <div class="print-data-value" id="print-nomor-agenda"></div>
+        <div class="print-data-label" style="width: 110px; margin-left: 15px;">Nomor Surat</div>
+        <div class="print-data-value" id="print-nomor-surat"></div>
+      </div>
+      <div class="print-data-row">
+        <div class="print-data-label">Tanggal Surat</div>
+        <div class="print-data-value" id="print-tanggal-surat"></div>
+        <div class="print-data-label" style="width: 110px; margin-left: 15px;">Tanggal Terima</div>
+        <div class="print-data-value" id="print-tanggal-terima"></div>
+      </div>
+      <div class="print-data-row">
+        <div class="print-data-label">Sifat Surat</div>
+        <div class="print-data-value" id="print-sifat-surat"></div>
+        <div class="print-data-label" style="width: 110px; margin-left: 15px;">Jumlah Lampiran</div>
+        <div class="print-data-value" id="print-jumlah-lampiran"></div>
+      </div>
+      <div class="print-data-row">
+        <div class="print-data-label">Surat Dari</div>
+        <div class="print-data-value" id="print-surat-dari" style="flex: 3;"></div>
+      </div>
+      <div class="print-data-row">
+        <div class="print-data-label">Perihal</div>
+        <div class="print-data-value" id="print-perihal" style="flex: 3;"></div>
+      </div>
+    </div>
+    
+    <div class="print-disposisi-container">
+      <div class="print-disposisi-box">
+        <h3>Isi Disposisi</h3>
+        <div class="print-checkbox-group" id="print-isi-disposisi">
+          <div class="print-checkbox-item">
+            <span class="print-checkbox-box" id="print-disposisi-tindak-lanjuti"></span> Tindak lanjuti
+          </div>
+          <div class="print-checkbox-item">
+            <span class="print-checkbox-box" id="print-disposisi-untuk-dilaksanakan"></span> Untuk dilaksanakan
+          </div>
+          <div class="print-checkbox-item">
+            <span class="print-checkbox-box" id="print-disposisi-wakili"></span> Wakili
+          </div>
+          <div class="print-checkbox-item">
+            <span class="print-checkbox-box" id="print-disposisi-jadwalkan"></span> Jadwalkan
+          </div>
+          <div class="print-checkbox-item">
+            <span class="print-checkbox-box" id="print-disposisi-sisipkan-jawaban"></span> Sisipkan jawaban
+          </div>
+          <div class="print-checkbox-item">
+            <span class="print-checkbox-box" id="print-disposisi-arsipkan"></span> Arsipkan
+          </div>
+          <div class="print-checkbox-item">
+            <span class="print-checkbox-box" id="print-disposisi-untuk-dilaporkan"></span> Untuk dilaporkan
+          </div>
+          <div class="print-checkbox-item">
+            <span class="print-checkbox-box" id="print-disposisi-untuk-diketahui"></span> Untuk diketahui
+          </div>
+          <div class="print-checkbox-item">
+            <span class="print-checkbox-box" id="print-disposisi-pelajari-teliti"></span> Pelajari/Teliti
+          </div>
+          <div class="print-checkbox-item">
+            <span class="print-checkbox-box" id="print-disposisi-lain-lain"></span> Lain-lain
+          </div>
+          <div class="print-checkbox-item">
+            <span class="print-checkbox-box" id="print-disposisi-koordinasikan"></span> Koordinasikan
+          </div>
+        </div>
+      </div>
+      
+      <div class="print-disposisi-box">
+        <h3>Disampaikan kepada:</h3>
+        <div class="print-checkbox-group" id="print-disampaikan-kepada">
+          <div class="print-checkbox-item">
+            <span class="print-checkbox-box" id="print-kepada-ka-humas"></span> Ka Humas
+          </div>
+          <div class="print-checkbox-item">
+            <span class="print-checkbox-box" id="print-kepada-kabag"></span> Kabag
+          </div>
+          <div class="print-checkbox-item">
+            <span class="print-checkbox-box" id="print-kepada-arsip"></span> Arsip
+          </div>
+          <div class="print-checkbox-item">
+            <span class="print-checkbox-box" id="print-kepada-ka-bag"></span> Ka bag
+          </div>
+          <div class="print-checkbox-item">
+            <span class="print-checkbox-box" id="print-kepada-staff"></span> Staff
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="print-disposisi-text-box">
+      <h3>Disposisi</h3>
+      <div id="print-disposisi-text"></div>
+    </div>
+    
+    <div class="print-ttd">
+      <p>Cimahi, ........./........./2025</p>
+      <p>Kapus Sishumad</p>
+    </div>
+  </div>
+
+  <div class="footer no-print">© 2025 Sistem Administrasi Surat — Universitas Jenderal Achmad Yani</div>
+
+  <script>
+    let currentData = [];
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz9WFGK899fkPUGfpODr3g7FGYJWxFJAbhoz6ZYT7_3_hIEq1qCU2pRD-eNk2lVajyx/exec";
+
+    // Fungsi untuk memuat data dari Google Sheets
+    function loadData() {
+      const tableBody = document.getElementById('data-table-body');
+      
+      tableBody.innerHTML = '<tr><td colspan="9" class="loading">Memuat data surat...</td></tr>';
+      
+      fetch(SCRIPT_URL + "?action=read")
+        .then(response => response.json())
+        .then(data => {
+          tableBody.innerHTML = '';
+          currentData = data;
+          
+          if (data.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="9" class="loading">Tidak ada data surat</td></tr>';
+            return;
+          }
+          
+          // Hapus baris pertama jika itu adalah header
+          if (data.length > 0 && data[0][0] === "Timestamp") {
+            data.shift(); // Hapus baris pertama
+          }
+          
+          data.forEach(function(row, index) {
+            const tr = document.createElement('tr');
+            tr.dataset.rowIndex = index;
+            
+            // Nomor urut
+            const noTd = document.createElement('td');
+            noTd.textContent = index + 1;
+            tr.appendChild(noTd);
+            
+            // Data kolom - sesuaikan dengan urutan data dari spreadsheet
+            const nomorSuratTd = document.createElement('td');
+            nomorSuratTd.textContent = row[1] || '';
+            tr.appendChild(nomorSuratTd);
+            
+            const tanggalSuratTd = document.createElement('td');
+            tanggalSuratTd.textContent = formatDateForDisplay(row[2]) || '';
+            tr.appendChild(tanggalSuratTd);
+            
+            const tanggalTerimaTd = document.createElement('td');
+            tanggalTerimaTd.textContent = formatDateForDisplay(row[3]) || '';
+            tr.appendChild(tanggalTerimaTd);
+            
+            const jumlahLampiranTd = document.createElement('td');
+            jumlahLampiranTd.textContent = row[4] || '';
+            tr.appendChild(jumlahLampiranTd);
+            
+            const sifatSuratTd = document.createElement('td');
+            sifatSuratTd.textContent = row[5] || '';
+            tr.appendChild(sifatSuratTd);
+            
+            const suratDariTd = document.createElement('td');
+            suratDariTd.textContent = row[6] || '';
+            tr.appendChild(suratDariTd);
+            
+            const perihalTd = document.createElement('td');
+            perihalTd.textContent = row[7] || '';
+            tr.appendChild(perihalTd);
+            
+            // Kolom aksi - Hanya Edit dan Detail
+            const actionTd = document.createElement('td');
+            actionTd.style.display = 'flex';
+            actionTd.style.gap = '5px';
+            actionTd.style.flexWrap = 'wrap';
+            
+            const detailBtn = document.createElement('button');
+            detailBtn.className = 'action-btn detail-btn';
+            detailBtn.textContent = 'Detail';
+            detailBtn.onclick = () => showDetail(index, row);
+            
+            const editBtn = document.createElement('button');
+            editBtn.className = 'action-btn edit-btn';
+            editBtn.textContent = 'Edit';
+            editBtn.onclick = () => editSurat(index, row);
+            
+            actionTd.appendChild(detailBtn);
+            actionTd.appendChild(editBtn);
+            tr.appendChild(actionTd);
+            
+            tableBody.appendChild(tr);
+          });
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          tableBody.innerHTML = '<tr><td colspan="9" class="loading">Gagal memuat data. Silakan refresh halaman.</td></tr>';
+        });
+    }
+
+    // Fungsi untuk menampilkan halaman detail
+    function showDetail(index, rowData) {
+      document.getElementById('main-content').style.display = 'none';
+      document.getElementById('detail-content').style.display = 'block';
+      
+      // Isi data detail sesuai dengan urutan kolom spreadsheet
+      document.getElementById('detail-nomor-agenda').textContent = (index + 1).toString();
+      document.getElementById('detail-nomor-surat').textContent = rowData[1] || '-';
+      document.getElementById('detail-tanggal-surat').textContent = formatDateForDisplay(rowData[2]) || '-';
+      document.getElementById('detail-tanggal-terima').textContent = formatDateForDisplay(rowData[3]) || '-';
+      document.getElementById('detail-jumlah-lampiran').textContent = rowData[4] || '-';
+      document.getElementById('detail-sifat-surat').textContent = rowData[5] || '-';
+      document.getElementById('detail-surat-dari').textContent = rowData[6] || '-';
+      document.getElementById('detail-perihal').textContent = rowData[7] || '-';
+      document.getElementById('detail-isi-disposisi').textContent = rowData[8] || '-';
+      document.getElementById('detail-disampaikan-kepada').textContent = rowData[9] || '-';
+      document.getElementById('detail-disposisi').textContent = rowData[10] || '-';
+      
+      // Informasi timestamp
+      if (rowData[0]) {
+        const inputDate = new Date(rowData[0]);
+        document.getElementById('detail-tanggal-input').textContent = formatDateTime(inputDate);
+        document.getElementById('detail-terakhir-update').textContent = formatDateTime(inputDate);
+      }
+    }
+
+    // Fungsi untuk kembali ke halaman utama
+    function backToMain() {
+      document.getElementById('main-content').style.display = 'block';
+      document.getElementById('detail-content').style.display = 'none';
+    }
+
+    // Format tanggal untuk display
+    function formatDateForDisplay(dateString) {
+      if (!dateString) return '';
+      const date = new Date(dateString);
+      return date.toLocaleDateString('id-ID', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+    }
+
+    // Format tanggal dan waktu
+    function formatDateTime(date) {
+      return date.toLocaleString('id-ID', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+
+    // Format tanggal untuk input date
+    function formatDateForInput(dateString) {
+      if (!dateString) return '';
+      const date = new Date(dateString);
+      return date.toISOString().split('T')[0];
+    }
+
+    // Fungsi untuk mengedit data
+    function updateSurat(index, suratData) {
+      return new Promise((resolve, reject) => {
+        // Buat URL dengan parameter
+        const params = new URLSearchParams();
+        params.append('action', 'update');
+        params.append('rowIndex', index);
+        
+        // Tambahkan semua data kolom
+        const columns = [
+          currentData[index][0], // Timestamp asli
+          suratData.nomorSurat,
+          suratData.tanggalSurat,
+          suratData.tanggalTerima,
+          suratData.jumlahLampiran,
+          suratData.sifatSurat,
+          suratData.suratDari,
+          suratData.perihal,
+          suratData.isiDisposisi,
+          suratData.disampaikanKepada,
+          suratData.disposisi
+        ];
+        
+        columns.forEach((value, colIndex) => {
+          params.append(`col${colIndex}`, value || '');
+        });
+        
+        // Gunakan GET request untuk menghindari CORS issues
+        fetch(SCRIPT_URL + '?' + params.toString())
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log('Response dari server:', data);
+            if (data.status === 'success') {
+              resolve(true);
+            } else {
+              reject(new Error(data.message || 'Unknown error occurred'));
+            }
+          })
+          .catch(error => {
+            console.error('Error detail:', error);
+            reject(error);
+          });
+      });
+    }
+
+    // Fungsi untuk mencetak detail surat
+    function printDetail() {
+      const nomorAgenda = document.getElementById('detail-nomor-agenda').textContent;
+      const nomorSurat = document.getElementById('detail-nomor-surat').textContent;
+      const tanggalSurat = document.getElementById('detail-tanggal-surat').textContent;
+      const tanggalTerima = document.getElementById('detail-tanggal-terima').textContent;
+      const sifatSurat = document.getElementById('detail-sifat-surat').textContent;
+      const jumlahLampiran = document.getElementById('detail-jumlah-lampiran').textContent;
+      const suratDari = document.getElementById('detail-surat-dari').textContent;
+      const perihal = document.getElementById('detail-perihal').textContent;
+      const disposisi = document.getElementById('detail-disposisi').textContent;
+      const isiDisposisi = document.getElementById('detail-isi-disposisi').textContent;
+      const disampaikanKepada = document.getElementById('detail-disampaikan-kepada').textContent;
+      
+      // Isi data ke template print
+      document.getElementById('print-nomor-agenda').textContent = nomorAgenda;
+      document.getElementById('print-nomor-surat').textContent = nomorSurat;
+      document.getElementById('print-tanggal-surat').textContent = tanggalSurat;
+      document.getElementById('print-tanggal-terima').textContent = tanggalTerima;
+      document.getElementById('print-sifat-surat').textContent = sifatSurat;
+      document.getElementById('print-jumlah-lampiran').textContent = jumlahLampiran;
+      document.getElementById('print-surat-dari').textContent = suratDari;
+      document.getElementById('print-perihal').textContent = perihal;
+      document.getElementById('print-disposisi-text').textContent = disposisi;
+      
+      // Reset semua checkbox di template print
+      const printDisposisiCheckboxes = document.querySelectorAll('#print-isi-disposisi .print-checkbox-box');
+      const printKepadaCheckboxes = document.querySelectorAll('#print-disampaikan-kepada .print-checkbox-box');
+      
+      printDisposisiCheckboxes.forEach(box => {
+        box.classList.remove('checked');
+      });
+      
+      printKepadaCheckboxes.forEach(box => {
+        box.classList.remove('checked');
+      });
+      
+      // Centang checkbox isi disposisi yang sesuai
+      if (isiDisposisi && isiDisposisi !== '-') {
+        const disposisiValues = isiDisposisi.split(', ');
+        disposisiValues.forEach(value => {
+          const checkboxId = 'print-disposisi-' + value.toLowerCase().replace(/\s+\/+/g, '-').replace(/\s+/g, '-');
+          const checkbox = document.getElementById(checkboxId);
+          if (checkbox) {
+            checkbox.classList.add('checked');
+          }
+        });
+      }
+      
+      // Centang checkbox disampaikan kepada yang sesuai
+      if (disampaikanKepada && disampaikanKepada !== '-') {
+        const kepadaValues = disampaikanKepada.split(', ');
+        kepadaValues.forEach(value => {
+          const checkboxId = 'print-kepada-' + value.toLowerCase().replace(/\s+/g, '-');
+          const checkbox = document.getElementById(checkboxId);
+          if (checkbox) {
+            checkbox.classList.add('checked');
+          }
+        });
+      }
+      
+      // Tampilkan print content
+      document.getElementById('print-content').style.display = 'block';
+      
+      // Tunggu sebentar agar DOM diperbarui, lalu cetak
+      setTimeout(() => {
+        window.print();
+        // Setelah cetak, sembunyikan print content
+        setTimeout(() => {
+          document.getElementById('print-content').style.display = 'none';
+        }, 100);
+      }, 500);
+    }
+
+    // Modal functions
+    const modal = document.getElementById('surat-modal');
+    const closeBtn = document.querySelector('.close');
+    const cancelBtn = document.getElementById('cancel-btn');
+    const suratForm = document.getElementById('surat-form');
+    const modalTitle = document.getElementById('modal-title');
+
+    function openModal() {
+      modal.style.display = 'block';
+      suratForm.reset();
+      document.getElementById('edit-index').value = '';
+      modalTitle.textContent = 'Tambah Surat Baru';
+    }
+
+    function closeModal() {
+      modal.style.display = 'none';
+    }
+
+    function editSurat(index, rowData) {
+      modal.style.display = 'block';
+      modalTitle.textContent = 'Edit Data Surat';
+      document.getElementById('edit-index').value = index;
+      
+      // Isi form dengan data yang ada sesuai urutan spreadsheet
+      document.getElementById('nomor-surat').value = rowData[1] || '';
+      document.getElementById('tanggal-surat').value = formatDateForInput(rowData[2]) || '';
+      document.getElementById('tanggal-terima').value = formatDateForInput(rowData[3]) || '';
+      document.getElementById('jumlah-lampiran').value = rowData[4] || '';
+      document.getElementById('sifat-surat').value = rowData[5] || '';
+      document.getElementById('surat-dari').value = rowData[6] || '';
+      document.getElementById('perihal').value = rowData[7] || '';
+      document.getElementById('disposisi').value = rowData[10] || '';
+      
+      // Reset checkbox
+      const disposisiCheckboxes = document.querySelectorAll('#isi-disposisi-checkbox input[type="checkbox"]');
+      const kepadaCheckboxes = document.querySelectorAll('#disampaikan-kepada-checkbox input[type="checkbox"]');
+      
+      disposisiCheckboxes.forEach(checkbox => {
+        checkbox.checked = false;
+      });
+      
+      kepadaCheckboxes.forEach(checkbox => {
+        checkbox.checked = false;
+      });
+      
+      // Isi checkbox isi disposisi jika ada data
+      if (rowData[8]) {
+        const disposisiValues = rowData[8].split(', ');
+        disposisiCheckboxes.forEach(checkbox => {
+          if (disposisiValues.includes(checkbox.value)) {
+            checkbox.checked = true;
+          }
+        });
+      }
+      
+      // Isi checkbox disampaikan kepada jika ada data
+      if (rowData[9]) {
+        const kepadaValues = rowData[9].split(', ');
+        kepadaCheckboxes.forEach(checkbox => {
+          if (kepadaValues.includes(checkbox.value)) {
+            checkbox.checked = true;
+          }
+        });
+      }
+    }
+
+    // Event listeners untuk modal
+    closeBtn.onclick = closeModal;
+    cancelBtn.onclick = closeModal;
+
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        closeModal();
+      }
+    }
+
+    // Handle form submission
+    suratForm.onsubmit = function(e) {
+      e.preventDefault();
+      
+      // Ambil nilai checkbox isi disposisi
+      const disposisiCheckboxes = document.querySelectorAll('#isi-disposisi-checkbox input[type="checkbox"]:checked');
+      const isiDisposisi = Array.from(disposisiCheckboxes).map(cb => cb.value).join(', ');
+      
+      // Ambil nilai checkbox disampaikan kepada
+      const kepadaCheckboxes = document.querySelectorAll('#disampaikan-kepada-checkbox input[type="checkbox"]:checked');
+      const disampaikanKepada = Array.from(kepadaCheckboxes).map(cb => cb.value).join(', ');
+      
+      const suratData = {
+        nomorSurat: document.getElementById('nomor-surat').value,
+        tanggalSurat: document.getElementById('tanggal-surat').value,
+        tanggalTerima: document.getElementById('tanggal-terima').value,
+        jumlahLampiran: document.getElementById('jumlah-lampiran').value,
+        sifatSurat: document.getElementById('sifat-surat').value,
+        suratDari: document.getElementById('surat-dari').value,
+        perihal: document.getElementById('perihal').value,
+        isiDisposisi: isiDisposisi,
+        disampaikanKepada: disampaikanKepada,
+        disposisi: document.getElementById('disposisi').value
+      };
+      
+      const editIndex = document.getElementById('edit-index').value;
+      
+      console.log('Mengupdate data dengan index:', editIndex);
+      console.log('Data surat:', suratData);
+      
+      // Update data existing
+      updateSurat(editIndex, suratData)
+        .then(() => {
+          closeModal();
+          alert('Data surat berhasil diperbarui');
+          loadData(); // Reload data untuk memperbarui tampilan
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Gagal memperbarui data: ' + error.message);
+        });
+    };
+
+    // Setup fungsi lainnya
+    function setupSearch() {
+      const searchInput = document.getElementById('search-input');
+      const tableBody = document.getElementById('data-table-body');
+      
+      searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        const rows = tableBody.querySelectorAll('tr');
+        let hasResults = false;
+        
+        rows.forEach(row => {
+          if (row.cells.length === 1) {
+            row.style.display = 'none';
+            return;
+          }
+          
+          const text = row.textContent.toLowerCase();
+          const isVisible = text.includes(searchTerm);
+          row.style.display = isVisible ? '' : 'none';
+          
+          if (isVisible) hasResults = true;
+        });
+        
+        if (!hasResults && searchTerm) {
+          const noResultsRow = document.createElement('tr');
+          noResultsRow.innerHTML = `<td colspan="9" class="loading">Tidak ditemukan data dengan kata kunci "${searchTerm}"</td>`;
+          tableBody.appendChild(noResultsRow);
+        }
+      });
+    }
+
+    function setupTambahSurat() {
+      document.getElementById('tambah-surat-btn').addEventListener('click', function() {
+        window.open('https://docs.google.com/forms/d/e/1FAIpQLSdji8_K3Crg8x-7G65B7522AcRuVePPTN11QLHGdg8YpIxcOg/viewform?usp=dialog', '_blank');
+      });
+    }
+
+    function setupSpreadsheet() {
+      document.getElementById('spreadsheet-btn').addEventListener('click', function() {
+        window.open('https://docs.google.com/spreadsheets/d/1lMexA72hPdfsxc356LZKaVWrqTHz1Kox2lYiDPaSLxY/edit?usp=sharing', '_blank');
+      });
+    }
+
+    function setupRefresh() {
+      document.getElementById('refresh-btn').addEventListener('click', function() {
+        loadData();
+      });
+    }
+
+    function setupDetailPage() {
+      document.getElementById('back-btn').addEventListener('click', backToMain);
+      document.getElementById('print-detail-btn').addEventListener('click', printDetail);
+    }
+
+    // Inisialisasi saat halaman dimuat
+    window.onload = function() {
+      loadData();
+      setupSearch();
+      setupTambahSurat();
+      setupSpreadsheet();
+      setupRefresh();
+      setupDetailPage();
+    };
+  </script>
+
+</body>
+</html>
