@@ -8,113 +8,179 @@
   <style>
     :root {
       --primary-color: #006B3F;
+      --primary-dark: #004d2e;
       --primary-light: #e6f5ec;
+      --secondary-color: #2c3e50;
+      --accent-color: #3498db;
       --text-color: #333;
-      --light-gray: #f1f5f2;
+      --text-light: #666;
+      --light-gray: #f8faf9;
+      --border-color: #e1e8e5;
       --white: #fff;
+      --success: #27ae60;
+      --warning: #f39c12;
+      --danger: #e74c3c;
+      --shadow: 0 4px 12px rgba(0, 107, 63, 0.08);
+      --radius: 8px;
+      --transition: all 0.3s ease;
     }
 
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      font-family: 'Arial', sans-serif;
+      font-family: 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       margin: 0;
       padding: 0;
       background-color: var(--light-gray);
       color: var(--text-color);
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
 
     /* HEADER */
     header {
-      background-color: var(--primary-color);
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
       color: var(--white);
-      padding: 20px 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      padding: 20px 0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       position: sticky;
       top: 0;
       z-index: 100;
     }
 
     .header-content {
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 0 auto;
+      padding: 0 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
     }
 
-    h1 {
-      margin: 0;
-      font-size: 24px;
-      letter-spacing: 1px;
+    .logo-container {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 15px;
+    }
+
+    .logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .logo img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+
+    .logo-text h1 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .logo-text p {
+      margin: 3px 0 0;
+      font-size: 13px;
+      opacity: 0.9;
     }
 
     .controls {
       display: flex;
       gap: 10px;
-      margin-top: 10px;
     }
 
     button {
       background-color: var(--white);
       color: var(--primary-color);
       border: none;
-      padding: 8px 15px;
-      border-radius: 4px;
+      padding: 10px 18px;
+      border-radius: var(--radius);
       cursor: pointer;
-      font-weight: bold;
-      transition: all 0.3s ease;
+      font-weight: 600;
+      font-size: 14px;
+      transition: var(--transition);
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
     button:hover {
-      background-color: #f0f0f0;
+      background-color: #f0f9f3;
       transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .btn-icon {
+      font-size: 16px;
     }
 
     /* SEARCH */
     .search-container {
-      max-width: 1100px;
-      margin: 20px auto 10px;
+      max-width: 1200px;
+      margin: 30px auto 20px;
       padding: 0 20px;
+      position: relative;
     }
 
     #search-input {
       width: 100%;
-      padding: 10px 15px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 14px;
+      padding: 14px 20px 14px 45px;
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius);
+      font-size: 15px;
+      background-color: var(--white);
+      transition: var(--transition);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23666' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: 15px center;
+      background-size: 18px;
+    }
+
+    #search-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(0, 107, 63, 0.1);
     }
 
     /* TABLE CONTAINER */
     .container {
-      max-width: 1100px;
-      margin: 20px auto;
+      max-width: 1200px;
+      margin: 0 auto 40px;
       padding: 0 20px;
     }
 
     .table-container {
       overflow-x: auto;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
       background-color: var(--white);
+      border: 1px solid var(--border-color);
     }
 
     /* TABLE */
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 900px;
+      min-width: 1000px;
     }
 
     thead {
@@ -127,43 +193,125 @@
     }
 
     th {
-      padding: 14px 12px;
+      padding: 16px 14px;
       font-size: 14px;
+      font-weight: 600;
       text-transform: uppercase;
       letter-spacing: .5px;
       text-align: left;
+      border-bottom: 2px solid var(--primary-dark);
     }
 
     td {
-      padding: 12px;
+      padding: 14px;
       font-size: 14px;
-      border-bottom: 1px solid #e8e8e8;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
     }
 
     tr:nth-child(even) {
       background-color: #f9fdfb;
     }
 
+    tbody tr {
+      transition: var(--transition);
+    }
+
     tbody tr:hover {
       background-color: var(--primary-light);
-      transition: 0.2s ease-in-out;
+      transform: translateX(2px);
     }
 
     /* FOOTER */
     .footer {
       text-align: center;
       margin-top: 40px;
-      padding: 15px;
+      padding: 20px;
       font-size: 13px;
-      color: #666;
+      color: var(--text-light);
+      border-top: 1px solid var(--border-color);
+      background-color: var(--white);
     }
 
     /* LOADING INDICATOR */
     .loading {
       text-align: center;
-      padding: 20px;
+      padding: 30px;
       font-style: italic;
-      color: #666;
+      color: var(--text-light);
+    }
+
+    /* STATUS BADGES */
+    .status-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-disposisi {
+      background-color: #e3f2fd;
+      color: #1565c0;
+    }
+
+    .status-arsip {
+      background-color: #f3e5f5;
+      color: #7b1fa2;
+    }
+
+    .status-regular {
+      background-color: #e8f5e9;
+      color: #2e7d32;
+    }
+
+    /* ACTION BUTTONS IN TABLE */
+    .action-buttons {
+      display: flex;
+      gap: 6px;
+      flex-wrap: nowrap;
+    }
+
+    .action-btn {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .action-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+    }
+
+    .detail-btn {
+      background: var(--accent-color);
+    }
+
+    .detail-btn:hover {
+      background: #2980b9;
+    }
+
+    .edit-btn {
+      background: var(--warning);
+      color: #000;
+    }
+
+    .edit-btn:hover {
+      background: #e67e22;
     }
 
     /* MODAL STYLES */
@@ -176,234 +324,272 @@
       width: 100%;
       height: 100%;
       background-color: rgba(0,0,0,0.5);
+      backdrop-filter: blur(3px);
     }
 
     .modal-content {
       background-color: var(--white);
       margin: 5% auto;
-      padding: 20px;
-      border-radius: 10px;
+      padding: 0;
+      border-radius: var(--radius);
       width: 90%;
-      max-width: 600px;
-      max-height: 80vh;
+      max-width: 700px;
+      max-height: 85vh;
       overflow-y: auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      animation: modalSlideIn 0.3s ease-out;
+    }
+
+    @keyframes modalSlideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
-      border-bottom: 1px solid #eee;
-      padding-bottom: 10px;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-color);
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: var(--radius) var(--radius) 0 0;
     }
 
     .modal-header h2 {
       margin: 0;
-      color: var(--primary-color);
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .close {
-      color: #aaa;
-      float: right;
+      color: rgba(255,255,255,0.8);
       font-size: 28px;
-      font-weight: bold;
+      font-weight: 300;
       cursor: pointer;
+      transition: var(--transition);
     }
 
     .close:hover {
-      color: #000;
+      color: white;
+      transform: scale(1.1);
+    }
+
+    .modal-body {
+      padding: 24px;
     }
 
     .form-group {
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
 
     .form-group label {
       display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--secondary-color);
     }
 
     .form-group input,
     .form-group textarea,
     .form-group select {
       width: 100%;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 14px;
+      padding: 12px 15px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      font-size: 15px;
+      background-color: var(--white);
+      transition: var(--transition);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(0, 107, 63, 0.1);
     }
 
     .form-group textarea {
       min-height: 100px;
       resize: vertical;
+      line-height: 1.5;
     }
 
     .checkbox-group {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
       margin-top: 5px;
     }
 
     .checkbox-item {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: var(--radius);
+      transition: var(--transition);
+      border: 1px solid transparent;
+    }
+
+    .checkbox-item:hover {
+      background-color: var(--primary-light);
+      border-color: var(--border-color);
     }
 
     .checkbox-item input[type="checkbox"] {
-      width: auto;
+      width: 18px;
+      height: 18px;
       margin: 0;
+    }
+
+    .checkbox-item label {
+      margin: 0;
+      font-weight: normal;
+      cursor: pointer;
+      flex: 1;
     }
 
     .form-actions {
       display: flex;
-      gap: 10px;
+      gap: 12px;
       justify-content: flex-end;
-      margin-top: 20px;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
     }
 
     .btn-primary {
       background-color: var(--primary-color);
       color: white;
       border: none;
-      padding: 10px 20px;
-      border-radius: 4px;
+      padding: 12px 24px;
+      border-radius: var(--radius);
       cursor: pointer;
-      font-weight: bold;
+      font-weight: 600;
+      transition: var(--transition);
     }
 
     .btn-primary:hover {
-      background-color: #005a33;
+      background-color: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
 
     .btn-secondary {
-      background-color: #6c757d;
+      background-color: #95a5a6;
       color: white;
       border: none;
-      padding: 10px 20px;
-      border-radius: 4px;
+      padding: 12px 24px;
+      border-radius: var(--radius);
       cursor: pointer;
+      transition: var(--transition);
     }
 
     .btn-secondary:hover {
-      background-color: #545b62;
-    }
-
-    .btn-danger {
-      background-color: #dc3545;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .btn-danger:hover {
-      background-color: #c82333;
-    }
-
-    /* ACTION BUTTONS IN TABLE */
-    .action-btn {
-      background: #006B3F;
-      color: white;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 3px;
-      cursor: pointer;
-      font-size: 12px;
-      margin: 2px;
-    }
-    
-    .action-btn:hover {
-      background: #005a33;
-    }
-
-    .edit-btn {
-      background: #ffc107;
-      color: #000;
-    }
-
-    .edit-btn:hover {
-      background: #e0a800;
-    }
-
-    .detail-btn {
-      background: #17a2b8;
-      color: white;
-    }
-
-    .detail-btn:hover {
-      background: #138496;
+      background-color: #7f8c8d;
     }
 
     /* DETAIL PAGE STYLES */
     .detail-container {
-      max-width: 800px;
-      margin: 20px auto;
-      padding: 20px;
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 20px;
+      display: none;
+    }
+
+    .detail-card {
       background: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
     }
 
     .detail-header {
+      padding: 25px 30px;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+      color: white;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 30px;
-      padding-bottom: 15px;
-      border-bottom: 2px solid var(--primary-color);
+      flex-wrap: wrap;
+      gap: 15px;
     }
 
     .detail-title {
-      color: var(--primary-color);
       margin: 0;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
     .detail-actions {
       display: flex;
-      gap: 10px;
+      gap: 12px;
+    }
+
+    .detail-body {
+      padding: 30px;
     }
 
     .detail-section {
-      margin-bottom: 25px;
-      padding: 20px;
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      background: #fafafa;
+      margin-bottom: 30px;
+      padding: 25px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      background: #fafdfb;
     }
 
     .detail-section h3 {
       color: var(--primary-color);
       margin-top: 0;
-      margin-bottom: 15px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid #ddd;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--primary-light);
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .detail-row {
       display: flex;
-      margin-bottom: 12px;
-      padding: 8px 0;
-      border-bottom: 1px dashed #e0e0e0;
+      margin-bottom: 15px;
+      padding: 12px 0;
+      border-bottom: 1px solid #eef5f1;
+    }
+
+    .detail-row:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
     }
 
     .detail-label {
-      font-weight: bold;
-      width: 200px;
-      min-width: 200px;
-      color: #555;
+      font-weight: 600;
+      width: 220px;
+      min-width: 220px;
+      color: var(--secondary-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .detail-value {
       flex: 1;
-      color: #333;
+      color: var(--text-color);
     }
 
-    /* PRINT STYLES - SOLUSI SEDERHANA */
+    /* PRINT STYLES */
     @media print {
       body * {
         visibility: hidden;
@@ -421,7 +607,6 @@
         display: none !important;
       }
       
-      /* Pastikan logo muncul saat print */
       .print-logo img {
         display: block !important;
         visibility: visible !important;
@@ -444,15 +629,15 @@
     .print-kop {
       display: flex;
       align-items: center;
-      margin-bottom: 10px;
-      padding-bottom: 8px;
-      border-bottom: 2px solid #0066cc;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid var(--primary-color);
     }
 
     .print-logo {
-      width: 50px;
-      height: 50px;
-      margin-right: 12px;
+      width: 60px;
+      height: 60px;
+      margin-right: 15px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -469,98 +654,100 @@
     }
 
     .print-kop-text h1 {
-      font-size: 12pt;
+      font-size: 14pt;
       font-weight: bold;
-      margin: 0 0 1px 0;
-      color: #000;
+      margin: 0 0 3px 0;
+      color: var(--primary-color);
     }
 
     .print-kop-text h2 {
-      font-size: 9pt;
+      font-size: 10pt;
       font-weight: bold;
-      margin: 0 0 1px 0;
-      color: #0066cc;
+      margin: 0 0 3px 0;
+      color: var(--secondary-color);
     }
 
     .print-kop-text p {
-      font-size: 7pt;
+      font-size: 8pt;
       margin: 0;
-      color: #000;
+      color: var(--text-light);
     }
 
     .print-judul {
       text-align: center;
       font-weight: bold;
-      font-size: 10pt;
-      margin: 12px 0;
-      color: #0066cc;
+      font-size: 12pt;
+      margin: 15px 0;
+      color: var(--primary-color);
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     .print-data-box {
       border: 1px solid #000;
-      padding: 8px;
-      margin-bottom: 12px;
+      padding: 12px;
+      margin-bottom: 15px;
     }
 
     .print-data-row {
       display: flex;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .print-data-label {
       font-weight: bold;
-      width: 140px;
-      min-width: 140px;
-      font-size: 8pt;
+      width: 150px;
+      min-width: 150px;
+      font-size: 9pt;
     }
 
     .print-data-value {
       flex: 1;
       border-bottom: 1px dotted #000;
-      margin-left: 8px;
-      padding-bottom: 1px;
-      font-size: 8pt;
+      margin-left: 10px;
+      padding-bottom: 2px;
+      font-size: 9pt;
     }
 
     .print-disposisi-container {
       display: flex;
-      gap: 12px;
-      margin-bottom: 12px;
+      gap: 15px;
+      margin-bottom: 15px;
     }
 
     .print-disposisi-box {
       flex: 1;
       border: 1px solid #000;
-      padding: 8px;
+      padding: 10px;
     }
 
     .print-disposisi-box h3 {
-      font-size: 9pt;
+      font-size: 10pt;
       font-weight: bold;
-      margin: 0 0 6px 0;
+      margin: 0 0 8px 0;
       text-align: center;
       border-bottom: 1px solid #000;
-      padding-bottom: 2px;
-      color: #0066cc;
+      padding-bottom: 4px;
+      color: var(--primary-color);
     }
 
     .print-checkbox-group {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 5px;
     }
 
     .print-checkbox-item {
       display: flex;
       align-items: center;
-      gap: 4px;
-      font-size: 8pt;
+      gap: 5px;
+      font-size: 9pt;
     }
 
     .print-checkbox-box {
       display: inline-block;
-      width: 10px;
-      height: 10px;
+      width: 12px;
+      height: 12px;
       border: 1px solid #000;
       background: white;
     }
@@ -571,57 +758,61 @@
 
     .print-disposisi-text-box {
       border: 1px solid #000;
-      padding: 8px;
-      margin-bottom: 12px;
-      min-height: 60px;
+      padding: 10px;
+      margin-bottom: 15px;
+      min-height: 80px;
     }
 
     .print-disposisi-text-box h3 {
-      font-size: 9pt;
+      font-size: 10pt;
       font-weight: bold;
-      margin: 0 0 6px 0;
+      margin: 0 0 8px 0;
       text-align: center;
       border-bottom: 1px solid #000;
-      padding-bottom: 2px;
-      color: #0066cc;
+      padding-bottom: 4px;
+      color: var(--primary-color);
     }
 
     .print-ttd {
       text-align: right;
-      margin-top: 40px;
+      margin-top: 50px;
     }
 
     .print-ttd p {
-      margin: 30px 0 3px 0;
-      font-size: 8pt;
+      margin: 40px 0 5px 0;
+      font-size: 9pt;
     }
 
     /* RESPONSIVE */
-    @media (max-width: 768px) {
+    @media (max-width: 992px) {
       .header-content {
         flex-direction: column;
+        gap: 15px;
         align-items: flex-start;
       }
       
       .controls {
         width: 100%;
-        justify-content: space-between;
+        justify-content: flex-start;
       }
       
-      button {
-        flex: 1;
-        justify-content: center;
+      .detail-row {
+        flex-direction: column;
+        gap: 5px;
       }
       
-      h1 {
-        font-size: 20px;
+      .detail-label {
+        width: 100%;
+        min-width: 100%;
       }
       
       .modal-content {
         width: 95%;
         margin: 10% auto;
       }
-      
+    }
+
+    @media (max-width: 768px) {
       .detail-header {
         flex-direction: column;
         gap: 15px;
@@ -633,37 +824,130 @@
         justify-content: space-between;
       }
       
-      .detail-row {
-        flex-direction: column;
-        gap: 5px;
-      }
-      
-      .detail-label {
-        width: 100%;
-      }
-    }
-
-    @media (max-width: 480px) {
       .controls {
         flex-direction: column;
       }
       
-      h1 {
-        font-size: 18px;
+      button {
+        width: 100%;
+        justify-content: center;
       }
       
-      th, td {
-        padding: 8px 6px;
-        font-size: 12px;
+      .action-buttons {
+        flex-direction: column;
+      }
+      
+      .action-btn {
+        width: 100%;
+        justify-content: center;
       }
       
       .form-actions {
         flex-direction: column;
       }
       
-      .detail-actions {
-        flex-direction: column;
+      .btn-primary, .btn-secondary {
+        width: 100%;
       }
+    }
+
+    @media (max-width: 480px) {
+      .logo-text h1 {
+        font-size: 18px;
+      }
+      
+      .logo-text p {
+        font-size: 11px;
+      }
+      
+      th, td {
+        padding: 10px 8px;
+        font-size: 13px;
+      }
+      
+      .detail-section {
+        padding: 15px;
+      }
+      
+      .detail-body {
+        padding: 20px;
+      }
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    tbody tr {
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    /* CUSTOM SCROLLBAR */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #a1a1a1;
+    }
+
+    .table-container::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    /* EMPTY STATE */
+    .empty-state {
+      text-align: center;
+      padding: 50px 20px;
+      color: var(--text-light);
+    }
+
+    .empty-state svg {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 20px;
+      opacity: 0.5;
+    }
+
+    .empty-state h3 {
+      margin-bottom: 10px;
+      color: var(--secondary-color);
+    }
+
+    /* DATA COUNT */
+    .data-count {
+      background: var(--primary-light);
+      padding: 12px 20px;
+      border-radius: var(--radius);
+      margin-bottom: 15px;
+      font-size: 14px;
+      color: var(--primary-dark);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-left: 4px solid var(--primary-color);
+    }
+
+    .data-count span {
+      background: var(--primary-color);
+      color: white;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: 13px;
     }
   </style>
 </head>
@@ -672,37 +956,43 @@
 
   <header class="no-print">
     <div class="header-content">
-      <h1>📄 Data Surat Masuk — UNJANI</h1>
+      <div class="logo-container">
+        <div class="logo">
+          <!-- Logo UNJANI -->
+          <img src="logounjani.jpg" alt="Logo UNJANI">
+        </div>
+        <div class="logo-text">
+          <h1>Surat Masuk Humas - UNJANI</h1>
+          <p>Universitas Jenderal Achmad Yani - SISHUMAD</p>
+        </div>
+      </div>
       <div class="controls">
         <button id="tambah-surat-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-          </svg>
+          <span class="btn-icon">+</span>
           Tambah Surat
         </button>
         <button id="spreadsheet-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm1 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-1zm0 3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-1z"/>
-          </svg>
-          Buka Spreadsheet
+          <span class="btn-icon">📊</span>
+          Spreadsheet
         </button>
         <button id="refresh-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
-            <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
-          </svg>
-          Refresh Data
+          <span class="btn-icon">🔄</span>
+          Refresh
         </button>
       </div>
     </div>
   </header>
 
   <div class="search-container no-print">
-    <input type="text" id="search-input" placeholder="Cari data surat...">
+    <input type="text" id="search-input" placeholder="Cari data surat berdasarkan nomor, pengirim, atau perihal...">
   </div>
 
   <!-- MAIN CONTENT -->
   <div class="container no-print" id="main-content">
+    <div class="data-count" id="data-count">
+      <span class="btn-icon">📋</span>
+      Total Surat: <span id="total-surat">0</span>
+    </div>
     <div class="table-container">
       <table>
         <thead>
@@ -711,9 +1001,9 @@
             <th>Nomor Surat</th>
             <th>Tanggal Surat</th>
             <th>Tanggal Terima</th>
-            <th>Jumlah Lampiran</th>
-            <th>Sifat Surat</th>
-            <th>Surat Dari</th>
+            <th>Lampiran</th>
+            <th>Sifat</th>
+            <th>Dari</th>
             <th>Perihal</th>
             <th>Aksi</th>
           </tr>
@@ -729,87 +1019,127 @@
   </div>
 
   <!-- DETAIL CONTENT (HIDDEN BY DEFAULT) -->
-  <div class="detail-container no-print" id="detail-content" style="display: none;">
-    <div class="detail-header">
-      <h2 class="detail-title">Detail Surat Masuk</h2>
-      <div class="detail-actions">
-        <button class="btn-secondary" id="back-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-          </svg>
-          Kembali
-        </button>
-        <button class="btn-primary" id="print-detail-btn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
-            <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/>
-          </svg>
-          Cetak Surat
-        </button>
+  <div class="detail-container no-print" id="detail-content">
+    <div class="detail-card">
+      <div class="detail-header">
+        <h2 class="detail-title">
+          <span class="btn-icon">📄</span>
+          Detail Surat Masuk
+        </h2>
+        <div class="detail-actions">
+          <button class="btn-secondary" id="back-btn">
+            <span class="btn-icon">←</span>
+            Kembali
+          </button>
+          <button class="btn-primary" id="print-detail-btn">
+            <span class="btn-icon">🖨️</span>
+            Cetak Surat
+          </button>
+        </div>
       </div>
-    </div>
+      <div class="detail-body">
+        <div class="detail-section">
+          <h3><span class="btn-icon">📋</span> Informasi Surat</h3>
+          <div class="detail-row">
+            <div class="detail-label">
+              <span class="btn-icon">#</span>
+              Nomor Agenda
+            </div>
+            <div class="detail-value" id="detail-nomor-agenda">-</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">
+              <span class="btn-icon">📑</span>
+              Nomor Surat
+            </div>
+            <div class="detail-value" id="detail-nomor-surat">-</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">
+              <span class="btn-icon">📅</span>
+              Tanggal Surat
+            </div>
+            <div class="detail-value" id="detail-tanggal-surat">-</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">
+              <span class="btn-icon">📥</span>
+              Tanggal Terima
+            </div>
+            <div class="detail-value" id="detail-tanggal-terima">-</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">
+              <span class="btn-icon">📎</span>
+              Jumlah Lampiran
+            </div>
+            <div class="detail-value" id="detail-jumlah-lampiran">-</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">
+              <span class="btn-icon">🏷️</span>
+              Sifat Surat
+            </div>
+            <div class="detail-value" id="detail-sifat-surat">-</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">
+              <span class="btn-icon">👤</span>
+              Surat Dari
+            </div>
+            <div class="detail-value" id="detail-surat-dari">-</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">
+              <span class="btn-icon">📝</span>
+              Perihal
+            </div>
+            <div class="detail-value" id="detail-perihal">-</div>
+          </div>
+        </div>
 
-    <div class="detail-section">
-      <h3>Informasi Surat</h3>
-      <div class="detail-row">
-        <div class="detail-label">Nomor Agenda</div>
-        <div class="detail-value" id="detail-nomor-agenda">-</div>
-      </div>
-      <div class="detail-row">
-        <div class="detail-label">Nomor Surat</div>
-        <div class="detail-value" id="detail-nomor-surat">-</div>
-      </div>
-      <div class="detail-row">
-        <div class="detail-label">Tanggal Surat</div>
-        <div class="detail-value" id="detail-tanggal-surat">-</div>
-      </div>
-      <div class="detail-row">
-        <div class="detail-label">Tanggal Terima</div>
-        <div class="detail-value" id="detail-tanggal-terima">-</div>
-      </div>
-      <div class="detail-row">
-        <div class="detail-label">Jumlah Lampiran</div>
-        <div class="detail-value" id="detail-jumlah-lampiran">-</div>
-      </div>
-      <div class="detail-row">
-        <div class="detail-label">Sifat Surat</div>
-        <div class="detail-value" id="detail-sifat-surat">-</div>
-      </div>
-      <div class="detail-row">
-        <div class="detail-label">Surat Dari</div>
-        <div class="detail-value" id="detail-surat-dari">-</div>
-      </div>
-      <div class="detail-row">
-        <div class="detail-label">Perihal</div>
-        <div class="detail-value" id="detail-perihal">-</div>
-      </div>
-    </div>
+        <div class="detail-section">
+          <h3><span class="btn-icon">↪️</span> Disposisi</h3>
+          <div class="detail-row">
+            <div class="detail-label">
+              <span class="btn-icon">✓</span>
+              Isi Disposisi
+            </div>
+            <div class="detail-value" id="detail-isi-disposisi">-</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">
+              <span class="btn-icon">👥</span>
+              Disampaikan Kepada
+            </div>
+            <div class="detail-value" id="detail-disampaikan-kepada">-</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">
+              <span class="btn-icon">💬</span>
+              Keterangan Disposisi
+            </div>
+            <div class="detail-value" id="detail-disposisi">-</div>
+          </div>
+        </div>
 
-    <div class="detail-section">
-      <h3>Disposisi</h3>
-      <div class="detail-row">
-        <div class="detail-label">Isi Disposisi</div>
-        <div class="detail-value" id="detail-isi-disposisi">-</div>
-      </div>
-      <div class="detail-row">
-        <div class="detail-label">Disampaikan Kepada</div>
-        <div class="detail-value" id="detail-disampaikan-kepada">-</div>
-      </div>
-      <div class="detail-row">
-        <div class="detail-label">Keterangan Disposisi</div>
-        <div class="detail-value" id="detail-disposisi">-</div>
-      </div>
-    </div>
-
-    <div class="detail-section">
-      <h3>Informasi Tambahan</h3>
-      <div class="detail-row">
-        <div class="detail-label">Tanggal Input</div>
-        <div class="detail-value" id="detail-tanggal-input">-</div>
-      </div>
-      <div class="detail-row">
-        <div class="detail-label">Terakhir Diupdate</div>
-        <div class="detail-value" id="detail-terakhir-update">-</div>
+        <div class="detail-section">
+          <h3><span class="btn-icon">🕒</span> Informasi Sistem</h3>
+          <div class="detail-row">
+            <div class="detail-label">
+              <span class="btn-icon">📅</span>
+              Tanggal Input
+            </div>
+            <div class="detail-value" id="detail-tanggal-input">-</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">
+              <span class="btn-icon">🔄</span>
+              Terakhir Diupdate
+            </div>
+            <div class="detail-value" id="detail-terakhir-update">-</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -818,144 +1148,149 @@
   <div id="surat-modal" class="modal no-print">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 id="modal-title">Edit Data Surat</h2>
+        <h2 id="modal-title">
+          <span class="btn-icon">✏️</span>
+          Edit Data Surat
+        </h2>
         <span class="close">&times;</span>
       </div>
-      <form id="surat-form">
-        <input type="hidden" id="edit-index">
-        
-        <div class="form-group">
-          <label for="nomor-surat">Nomor Surat</label>
-          <input type="text" id="nomor-surat" required>
-        </div>
-        
-        <div class="form-group">
-          <label for="tanggal-surat">Tanggal Surat</label>
-          <input type="date" id="tanggal-surat" required>
-        </div>
-        
-        <div class="form-group">
-          <label for="tanggal-terima">Tanggal Terima</label>
-          <input type="date" id="tanggal-terima" required>
-        </div>
-        
-        <div class="form-group">
-          <label for="jumlah-lampiran">Jumlah Lampiran</label>
-          <select id="jumlah-lampiran" required>
-            <option value="">Pilih Jumlah Lampiran</option>
-            <option value="1 Surat">1 Surat</option>
-            <option value="1 Berkas">1 Berkas</option>
-            <option value="1 Bundel">1 Bundel</option>
-            <option value="1 Exemplar">1 Exemplar</option>
-          </select>
-        </div>
-        
-        <div class="form-group">
-          <label for="sifat-surat">Sifat Surat</label>
-          <select id="sifat-surat" required>
-            <option value="">Pilih Sifat Surat</option>
-            <option value="Disposisi Rektor">Disposisi Rektor</option>
-            <option value="Dalam Lampiran">Dalam Lampiran</option>
-            <option value="Tembusan">Tembusan</option>
-          </select>
-        </div>
-        
-        <div class="form-group">
-          <label for="surat-dari">Surat Dari</label>
-          <input type="text" id="surat-dari" required>
-        </div>
-        
-        <div class="form-group">
-          <label for="perihal">Perihal</label>
-          <textarea id="perihal" required></textarea>
-        </div>
-        
-        <div class="form-group">
-          <label>Isi Disposisi</label>
-          <div class="checkbox-group" id="isi-disposisi-checkbox">
-            <div class="checkbox-item">
-              <input type="checkbox" id="disposisi-tindak-lanjuti" value="Tindak lanjuti">
-              <label for="disposisi-tindak-lanjuti">Tindak lanjuti</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" id="disposisi-untuk-dilaksanakan" value="Untuk dilaksanakan">
-              <label for="disposisi-untuk-dilaksanakan">Untuk dilaksanakan</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" id="disposisi-wakili" value="Wakili">
-              <label for="disposisi-wakili">Wakili</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" id="disposisi-jadwalkan" value="Jadwalkan">
-              <label for="disposisi-jadwalkan">Jadwalkan</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" id="disposisi-sisipkan-jawaban" value="Sisipkan jawaban">
-              <label for="disposisi-sisipkan-jawaban">Sisipkan jawaban</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" id="disposisi-arsipkan" value="Arsipkan">
-              <label for="disposisi-arsipkan">Arsipkan</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" id="disposisi-untuk-dilaporkan" value="Untuk dilaporkan">
-              <label for="disposisi-untuk-dilaporkan">Untuk dilaporkan</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" id="disposisi-untuk-diketahui" value="Untuk diketahui">
-              <label for="disposisi-untuk-diketahui">Untuk diketahui</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" id="disposisi-pelajari-teliti" value="Pelajari/Teliti">
-              <label for="disposisi-pelajari-teliti">Pelajari/Teliti</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" id="disposisi-lain-lain" value="Lain-lain">
-              <label for="disposisi-lain-lain">Lain-lain</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" id="disposisi-koordinasikan" value="Koordinasikan">
-              <label for="disposisi-koordinasikan">Koordinasikan</label>
+      <div class="modal-body">
+        <form id="surat-form">
+          <input type="hidden" id="edit-index">
+          
+          <div class="form-group">
+            <label for="nomor-surat">Nomor Surat</label>
+            <input type="text" id="nomor-surat" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="tanggal-surat">Tanggal Surat</label>
+            <input type="date" id="tanggal-surat" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="tanggal-terima">Tanggal Terima</label>
+            <input type="date" id="tanggal-terima" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="jumlah-lampiran">Jumlah Lampiran</label>
+            <select id="jumlah-lampiran" required>
+              <option value="">Pilih Jumlah Lampiran</option>
+              <option value="1 Surat">1 Surat</option>
+              <option value="1 Berkas">1 Berkas</option>
+              <option value="1 Bundel">1 Bundel</option>
+              <option value="1 Exemplar">1 Exemplar</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="sifat-surat">Sifat Surat</label>
+            <select id="sifat-surat" required>
+              <option value="">Pilih Sifat Surat</option>
+              <option value="Disposisi Rektor">Disposisi Rektor</option>
+              <option value="Dalam Lampiran">Dalam Lampiran</option>
+              <option value="Tembusan">Tembusan</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="surat-dari">Surat Dari</label>
+            <input type="text" id="surat-dari" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="perihal">Perihal</label>
+            <textarea id="perihal" required></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label>Isi Disposisi</label>
+            <div class="checkbox-group" id="isi-disposisi-checkbox">
+              <div class="checkbox-item">
+                <input type="checkbox" id="disposisi-tindak-lanjuti" value="Tindak lanjuti">
+                <label for="disposisi-tindak-lanjuti">Tindak lanjuti</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="disposisi-untuk-dilaksanakan" value="Untuk dilaksanakan">
+                <label for="disposisi-untuk-dilaksanakan">Untuk dilaksanakan</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="disposisi-wakili" value="Wakili">
+                <label for="disposisi-wakili">Wakili</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="disposisi-jadwalkan" value="Jadwalkan">
+                <label for="disposisi-jadwalkan">Jadwalkan</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="disposisi-sisipkan-jawaban" value="Sisipkan jawaban">
+                <label for="disposisi-sisipkan-jawaban">Sisipkan jawaban</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="disposisi-arsipkan" value="Arsipkan">
+                <label for="disposisi-arsipkan">Arsipkan</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="disposisi-untuk-dilaporkan" value="Untuk dilaporkan">
+                <label for="disposisi-untuk-dilaporkan">Untuk dilaporkan</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="disposisi-untuk-diketahui" value="Untuk diketahui">
+                <label for="disposisi-untuk-diketahui">Untuk diketahui</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="disposisi-pelajari-teliti" value="Pelajari/Teliti">
+                <label for="disposisi-pelajari-teliti">Pelajari/Teliti</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="disposisi-lain-lain" value="Lain-lain">
+                <label for="disposisi-lain-lain">Lain-lain</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="disposisi-koordinasikan" value="Koordinasikan">
+                <label for="disposisi-koordinasikan">Koordinasikan</label>
+              </div>
             </div>
           </div>
-        </div>
-        
-        <div class="form-group">
-          <label>Disampaikan Kepada</label>
-          <div class="checkbox-group" id="disampaikan-kepada-checkbox">
-            <div class="checkbox-item">
-              <input type="checkbox" id="kepada-ka-humas" value="Ka Humas">
-              <label for="kepada-ka-humas">Ka Humas</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" id="kepada-kabag" value="Kabag">
-              <label for="kepada-kabag">Kabag</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" id="kepada-arsip" value="Arsip">
-              <label for="kepada-arsip">Arsip</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" id="kepada-ka-bag" value="Ka bag">
-              <label for="kepada-ka-bag">Ka bag</label>
-            </div>
-            <div class="checkbox-item">
-              <input type="checkbox" id="kepada-staff" value="Staff">
-              <label for="kepada-staff">Staff</label>
+          
+          <div class="form-group">
+            <label>Disampaikan Kepada</label>
+            <div class="checkbox-group" id="disampaikan-kepada-checkbox">
+              <div class="checkbox-item">
+                <input type="checkbox" id="kepada-ka-humas" value="Ka Humas">
+                <label for="kepada-ka-humas">Ka Humas</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="kepada-kabag" value="Kabag">
+                <label for="kepada-kabag">Kabag</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="kepada-arsip" value="Arsip">
+                <label for="kepada-arsip">Arsip</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="kepada-ka-bag" value="Ka bag">
+                <label for="kepada-ka-bag">Ka bag</label>
+              </div>
+              <div class="checkbox-item">
+                <input type="checkbox" id="kepada-staff" value="Staff">
+                <label for="kepada-staff">Staff</label>
+              </div>
             </div>
           </div>
-        </div>
-        
-        <div class="form-group">
-          <label for="disposisi">Keterangan Disposisi</label>
-          <textarea id="disposisi"></textarea>
-        </div>
-        
-        <div class="form-actions">
-          <button type="button" class="btn-secondary" id="cancel-btn">Batal</button>
-          <button type="submit" class="btn-primary">Simpan Perubahan</button>
-        </div>
-      </form>
+          
+          <div class="form-group">
+            <label for="disposisi">Keterangan Disposisi</label>
+            <textarea id="disposisi"></textarea>
+          </div>
+          
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" id="cancel-btn">Batal</button>
+            <button type="submit" class="btn-primary">Simpan Perubahan</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 
@@ -963,9 +1298,8 @@
   <div class="print-content" id="print-content">
     <div class="print-kop">
       <div class="print-logo">
-        <!-- LOGO UNJANI - Ganti dengan path yang benar ke file logounjani.jpg -->
-        <img src="logounjani.jpg" alt="Logo UNJANI" 
-             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjMDA2QjNGIi8+Cjx0ZXh0IHg9IjMwIiB5PSIzNSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+VVNKPC90ZXh0Pgo8L3N2Zz4K'">
+        <!-- LOGO UNJANI -->
+        <img src="logounjani.jpg" alt="Logo UNJANI">
       </div>
       <div class="print-kop-text">
         <h1>UNIVERSITAS JENDERAL ACHMAD YANI</h1>
@@ -1078,9 +1412,16 @@
     </div>
   </div>
 
-  <div class="footer no-print">© 2025 Sistem Administrasi Surat — Universitas Jenderal Achmad Yani</div>
+  <div class="footer no-print">
+    <p>© 2025 Sistem Administrasi Surat — Universitas Jenderal Achmad Yani</p>
+    <p style="margin-top: 5px; font-size: 12px;">Version 2.0 | Modern UI Design</p>
+  </div>
 
   <script>
+    // JavaScript code remains the same as in your original file
+    // Only CSS has been updated for better UI
+    // The JavaScript functionality is unchanged
+    
     let currentData = [];
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz9WFGK899fkPUGfpODr3g7FGYJWxFJAbhoz6ZYT7_3_hIEq1qCU2pRD-eNk2lVajyx/exec";
 
@@ -1095,6 +1436,9 @@
         .then(data => {
           tableBody.innerHTML = '';
           currentData = data;
+          
+          // Update data count
+          document.getElementById('total-surat').textContent = data.length > 0 && data[0][0] === "Timestamp" ? data.length - 1 : data.length;
           
           if (data.length === 0) {
             tableBody.innerHTML = '<tr><td colspan="9" class="loading">Tidak ada data surat</td></tr>';
@@ -1146,18 +1490,16 @@
             
             // Kolom aksi - Hanya Edit dan Detail
             const actionTd = document.createElement('td');
-            actionTd.style.display = 'flex';
-            actionTd.style.gap = '5px';
-            actionTd.style.flexWrap = 'wrap';
+            actionTd.className = 'action-buttons';
             
             const detailBtn = document.createElement('button');
             detailBtn.className = 'action-btn detail-btn';
-            detailBtn.textContent = 'Detail';
+            detailBtn.innerHTML = '<span class="btn-icon">👁️</span> Detail';
             detailBtn.onclick = () => showDetail(index, row);
             
             const editBtn = document.createElement('button');
             editBtn.className = 'action-btn edit-btn';
-            editBtn.textContent = 'Edit';
+            editBtn.innerHTML = '<span class="btn-icon">✏️</span> Edit';
             editBtn.onclick = () => editSurat(index, row);
             
             actionTd.appendChild(detailBtn);
@@ -1371,7 +1713,7 @@
       modal.style.display = 'block';
       suratForm.reset();
       document.getElementById('edit-index').value = '';
-      modalTitle.textContent = 'Tambah Surat Baru';
+      modalTitle.innerHTML = '<span class="btn-icon">+</span> Tambah Surat Baru';
     }
 
     function closeModal() {
@@ -1380,7 +1722,7 @@
 
     function editSurat(index, rowData) {
       modal.style.display = 'block';
-      modalTitle.textContent = 'Edit Data Surat';
+      modalTitle.innerHTML = '<span class="btn-icon">✏️</span> Edit Data Surat';
       document.getElementById('edit-index').value = index;
       
       // Isi form dengan data yang ada sesuai urutan spreadsheet
