@@ -1543,10 +1543,7 @@
           <div class="form-group">
             <label>Disampaikan Kepada</label>
             <div class="checkbox-group" id="disampaikan-kepada-checkbox">
-              <div class="checkbox-item">
-                <input type="checkbox" id="kepada-ka-humas" value="Ka Humas">
-                <label for="kepada-ka-humas">Ka Humas</label>
-              </div>
+              <!-- TELAH DIHAPUS: Ka Humas -->
               <div class="checkbox-item">
                 <input type="checkbox" id="kepada-ka-bag-pers-multimedia" value="Ka Bag Pers & Multimedia">
                 <label for="kepada-ka-bag-pers-multimedia">Ka Bag Pers & Multimedia</label>
@@ -1714,9 +1711,7 @@
       <div class="print-disposisi-box">
         <h3>Disampaikan kepada:</h3>
         <div class="print-checkbox-group" id="print-disampaikan-kepada">
-          <div class="print-checkbox-item">
-            <span class="print-checkbox-box" id="print-kepada-ka-humas"></span> Ka Humas
-          </div>
+          <!-- TELAH DIHAPUS: Ka Humas -->
           <div class="print-checkbox-item">
             <span class="print-checkbox-box" id="print-kepada-ka-bag-pers-multimedia"></span> Ka Bag Pers & Multimedia
           </div>
@@ -1749,7 +1744,7 @@
   <script>
     let currentData = [];
     let currentDetailIndex = null;
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz9WFGK899fkPUGfpODr3g7FGYJWxFJAbhoz6ZYT7_3_hIEq1qCU2pRD-eNk2lVajyx/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby8BnmhdcrqVd4XU7Ih2KweeYxOt1Rwwxrt7DOLimm9WtrawYhRKSIr409YmyfQ_DWiTw/exec";
 
     // Fungsi untuk memuat data dari Google Sheets
     function loadData() {
@@ -2219,7 +2214,7 @@
             <div style="flex: 1; border: 1px solid #000; padding: 8px; font-size: 8pt;">
               <h3 style="font-size: 9pt; font-weight: bold; margin: 0 0 6px 0; text-align: center; border-bottom: 1px solid #000; padding-bottom: 3px; color: #006B3F;">Disampaikan kepada:</h3>
               ${generateCheckboxHTML(disampaikanKepada, [
-                'Ka Humas',
+                // TELAH DIHAPUS: 'Ka Humas',
                 'Ka Bag Pers & Multimedia',
                 'Arsip',
                 'Staff'
@@ -2290,7 +2285,7 @@
       return html;
     }
 
-    // Fungsi untuk share ke WhatsApp
+    // Fungsi untuk share ke WhatsApp - DIUBAH FORMAT
     function shareToWhatsApp() {
       const nomorAgenda = document.getElementById('detail-nomor-agenda').textContent;
       const nomorSurat = document.getElementById('detail-nomor-surat').textContent;
@@ -2300,26 +2295,18 @@
       const jumlahLampiran = document.getElementById('detail-jumlah-lampiran').textContent;
       const suratDari = document.getElementById('detail-surat-dari').textContent;
       const perihal = document.getElementById('detail-perihal').textContent;
-      const isiDisposisi = document.getElementById('detail-isi-disposisi').textContent;
-      const disampaikanKepada = document.getElementById('detail-disampaikan-kepada').textContent;
-      const disposisi = document.getElementById('detail-disposisi').textContent;
       
-      // Buat pesan untuk WhatsApp dengan format yang diminta
-      const message = `*DETAIL SURAT MASUK - HUMAS UNJANI*
+      // Buat pesan untuk WhatsApp dengan format yang baru
+      const message = `SURAT MASUK - HUMAS UNJANI
 
-*Nomor Agenda:* ${nomorAgenda}
-*Nomor Surat:* ${nomorSurat}
-*Tanggal Surat:* ${tanggalSurat}
-*Tanggal Terima:* ${tanggalTerima}
-*Sifat Surat:* ${sifatSurat}
-*Jumlah Lampiran:* ${jumlahLampiran}
-*Surat Dari:* ${suratDari}
-*Perihal:* ${perihal}
-*Isi Disposisi:* ${isiDisposisi}
-*Disampaikan Kepada:* ${disampaikanKepada}
-*Keterangan Disposisi:* ${disposisi}
-
-_Dikirim dari Sistem Administrasi Surat Humas UNJANI_`;
+Nomor Agenda: ${nomorAgenda}
+Nomor Surat: ${nomorSurat}
+Tanggal Surat: ${tanggalSurat}
+Tanggal Terima: ${tanggalTerima}
+Sifat Surat: ${sifatSurat}
+Jumlah Lampiran: ${jumlahLampiran}
+Surat Dari: ${suratDari}
+Perihal: ${perihal}`;
       
       // Encode message untuk URL
       const encodedMessage = encodeURIComponent(message);
@@ -2579,13 +2566,13 @@ _Dikirim dari Sistem Administrasi Surat Humas UNJANI_`;
 
     function setupTambahSurat() {
       document.getElementById('tambah-surat-btn').addEventListener('click', function() {
-        window.open('https://docs.google.com/forms/d/e/1FAIpQLSdji8_K3Crg8x-7G65B7522AcRuVePPTN11QLHGdg8YpIxcOg/viewform?usp=dialog', '_blank');
+        window.open('https://docs.google.com/forms/d/e/1FAIpQLSdSCx2Egbmt4Mk7nnu0x02VdKUfa59-QFvLu_ZxBxyz3tkjJQ/viewform?usp=header', '_blank');
       });
     }
 
     function setupSpreadsheet() {
       document.getElementById('spreadsheet-btn').addEventListener('click', function() {
-        window.open('https://docs.google.com/spreadsheets/d/1lMexA72hPdfsxc356LZKaVWrqTHz1Kox2lYiDPaSLxY/edit?usp=sharing', '_blank');
+        window.open('https://docs.google.com/spreadsheets/d/1wNNP6V6nR54ZodcVfQGsiyMLB0ummn6paqFIJZigyZk/edit?usp=sharing', '_blank');
       });
     }
 
@@ -2614,9 +2601,4 @@ _Dikirim dari Sistem Administrasi Surat Humas UNJANI_`;
   </script>
 
 </body>
-
-
 </html>
-
-
-
