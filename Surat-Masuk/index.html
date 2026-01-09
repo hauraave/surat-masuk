@@ -1276,6 +1276,7 @@
         <thead>
           <tr>
             <th>No</th>
+            <th>Timestamp</th>
             <th>Nomor Surat</th>
             <th>Tanggal Surat</th>
             <th>Tanggal Terima</th>
@@ -1283,13 +1284,16 @@
             <th>Sifat</th>
             <th>Dari</th>
             <th>Perihal</th>
+            <th>Isi Disposisi</th>
+            <th>Disampaikan Kepada</th>
+            <th>Keterangan Disposisi</th>
             <th>Aksi</th>
           </tr>
         </thead>
         
         <tbody id="data-table-body">
           <tr>
-            <td colspan="9" class="loading">Memuat data surat...</td>
+            <td colspan="13" class="loading">Memuat data surat...</td>
           </tr>
         </tbody>
       </table>
@@ -1332,6 +1336,13 @@
               Nomor Agenda
             </div>
             <div class="detail-value" id="detail-nomor-agenda">-</div>
+          </div>
+          <div class="detail-row">
+            <div class="detail-label">
+              <span class="btn-icon">📅</span>
+              Timestamp
+            </div>
+            <div class="detail-value" id="detail-timestamp">-</div>
           </div>
           <div class="detail-row">
             <div class="detail-label">
@@ -1543,7 +1554,6 @@
           <div class="form-group">
             <label>Disampaikan Kepada</label>
             <div class="checkbox-group" id="disampaikan-kepada-checkbox">
-              <!-- TELAH DIHAPUS: Ka Humas -->
               <div class="checkbox-item">
                 <input type="checkbox" id="kepada-ka-bag-pers-multimedia" value="Ka Bag Pers & Multimedia">
                 <label for="kepada-ka-bag-pers-multimedia">Ka Bag Pers & Multimedia</label>
@@ -1711,7 +1721,6 @@
       <div class="print-disposisi-box">
         <h3>Disampaikan kepada:</h3>
         <div class="print-checkbox-group" id="print-disampaikan-kepada">
-          <!-- TELAH DIHAPUS: Ka Humas -->
           <div class="print-checkbox-item">
             <span class="print-checkbox-box" id="print-kepada-ka-bag-pers-multimedia"></span> Ka Bag Pers & Multimedia
           </div>
@@ -1750,66 +1759,113 @@
     function loadData() {
       const tableBody = document.getElementById('data-table-body');
       
-      tableBody.innerHTML = '<tr><td colspan="9" class="loading">Memuat data surat...</td></tr>';
+      tableBody.innerHTML = '<tr><td colspan="13" class="loading">Memuat data surat...</td></tr>';
       
       fetch(SCRIPT_URL + "?action=read")
         .then(response => response.json())
         .then(data => {
+          console.log('Data received:', data);
+          
+          if (data.status === 'error') {
+            throw new Error(data.message);
+          }
+          
           tableBody.innerHTML = '';
-          currentData = data;
+          currentData = data.data || [];
           
           // Update data count
-          const dataCount = data.length > 0 && data[0][0] === "Timestamp" ? data.length - 1 : data.length;
+          const dataCount = currentData.length;
           document.getElementById('total-surat').textContent = dataCount;
           
           if (dataCount === 0) {
-            tableBody.innerHTML = '<tr><td colspan="9" class="loading">Tidak ada data surat</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="13" class="loading">Tidak ada data surat</td></tr>';
             return;
           }
           
-          // Hapus baris pertama jika itu adalah header
-          if (data.length > 0 && data[0][0] === "Timestamp") {
-            data.shift(); // Hapus baris pertama
-          }
+          // Urutkan data berdasarkan timestamp terbaru
+          currentData.sort((a, b) => {
+            const dateA = new Date(a.Timestamp || a.timestamp || a[0]);
+            const dateB = new Date(b.Timestamp || b.timestamp || b[0]);
+            return dateB - dateA;
+          });
           
-          data.forEach(function(row, index) {
+          currentData.forEach(function(row, index) {
             const tr = document.createElement('tr');
             tr.dataset.rowIndex = index;
             tr.dataset.nomorAgenda = index + 1;
+            
+            // Convert row data to array based on available format
+            let rowArray;
+            if (Array.isArray(row)) {
+              rowArray = row;
+            } else if (typeof row === 'object') {
+              // Convert object to array based on headers
+              rowArray = [
+                row.Timestamp || row.timestamp || '',
+                row['Nomor Surat'] || row.nomorSurat || row[1] || '',
+                row['Tanggal Surat'] || row.tanggalSurat || row[2] || '',
+                row['Tanggal Terima'] || row.tanggalTerima || row[3] || '',
+                row['Lampiran'] || row.jumlahLampiran || row[4] || '',
+                row['Sifat'] || row.sifatSurat || row[5] || '',
+                row['Dari'] || row.suratDari || row[6] || '',
+                row['Perihal'] || row.perihal || row[7] || '',
+                row['Isi Disposisi'] || row.isiDisposisi || row[8] || '',
+                row['Disampaikan Kepada'] || row.disampaikanKepada || row[9] || '',
+                row['Keterangan Disposisi'] || row.disposisi || row[10] || ''
+              ];
+            } else {
+              rowArray = [];
+            }
             
             // Nomor urut
             const noTd = document.createElement('td');
             noTd.textContent = index + 1;
             tr.appendChild(noTd);
             
-            // Data kolom - sesuaikan dengan urutan data dari spreadsheet
+            // Data kolom
+            const timestampTd = document.createElement('td');
+            timestampTd.textContent = formatDateForDisplay(rowArray[0]) || '';
+            tr.appendChild(timestampTd);
+            
             const nomorSuratTd = document.createElement('td');
-            nomorSuratTd.textContent = row[1] || '';
+            nomorSuratTd.textContent = rowArray[1] || '';
             tr.appendChild(nomorSuratTd);
             
             const tanggalSuratTd = document.createElement('td');
-            tanggalSuratTd.textContent = formatDateForDisplay(row[2]) || '';
+            tanggalSuratTd.textContent = formatDateForDisplay(rowArray[2]) || '';
             tr.appendChild(tanggalSuratTd);
             
             const tanggalTerimaTd = document.createElement('td');
-            tanggalTerimaTd.textContent = formatDateForDisplay(row[3]) || '';
+            tanggalTerimaTd.textContent = formatDateForDisplay(rowArray[3]) || '';
             tr.appendChild(tanggalTerimaTd);
             
             const jumlahLampiranTd = document.createElement('td');
-            jumlahLampiranTd.textContent = row[4] || '';
+            jumlahLampiranTd.textContent = rowArray[4] || '';
             tr.appendChild(jumlahLampiranTd);
             
             const sifatSuratTd = document.createElement('td');
-            sifatSuratTd.textContent = row[5] || '';
+            sifatSuratTd.textContent = rowArray[5] || '';
             tr.appendChild(sifatSuratTd);
             
             const suratDariTd = document.createElement('td');
-            suratDariTd.textContent = row[6] || '';
+            suratDariTd.textContent = rowArray[6] || '';
             tr.appendChild(suratDariTd);
             
             const perihalTd = document.createElement('td');
-            perihalTd.textContent = row[7] || '';
+            perihalTd.textContent = rowArray[7] || '';
             tr.appendChild(perihalTd);
+            
+            const isiDisposisiTd = document.createElement('td');
+            isiDisposisiTd.textContent = rowArray[8] || '';
+            tr.appendChild(isiDisposisiTd);
+            
+            const disampaikanKepadaTd = document.createElement('td');
+            disampaikanKepadaTd.textContent = rowArray[9] || '';
+            tr.appendChild(disampaikanKepadaTd);
+            
+            const disposisiTd = document.createElement('td');
+            disposisiTd.textContent = rowArray[10] || '';
+            tr.appendChild(disposisiTd);
             
             // Kolom aksi
             const actionTd = document.createElement('td');
@@ -1820,7 +1876,7 @@
             detailBtn.className = 'detail-btn';
             detailBtn.innerHTML = '<span class="btn-icon">👁️</span>';
             detailBtn.title = 'Detail';
-            detailBtn.onclick = () => showDetail(index, row);
+            detailBtn.onclick = () => showDetail(index, rowArray);
             
             // Action dropdown untuk Edit dan Delete
             const actionDropdown = document.createElement('div');
@@ -1846,7 +1902,7 @@
             editItem.onclick = (e) => {
               e.preventDefault();
               e.stopPropagation();
-              editSurat(index, row);
+              editSurat(index, rowArray);
               closeAllDropdowns();
             };
             
@@ -1858,7 +1914,7 @@
             deleteItem.onclick = (e) => {
               e.preventDefault();
               e.stopPropagation();
-              showDeleteModal(index, row);
+              showDeleteModal(index, rowArray);
               closeAllDropdowns();
             };
             
@@ -1880,7 +1936,7 @@
         })
         .catch(error => {
           console.error('Error:', error);
-          tableBody.innerHTML = '<tr><td colspan="9" class="loading">Gagal memuat data. Silakan refresh halaman.</td></tr>';
+          tableBody.innerHTML = '<tr><td colspan="13" class="loading">Gagal memuat data. Silakan refresh halaman.</td></tr>';
         });
     }
 
@@ -1903,8 +1959,9 @@
       document.getElementById('main-content').style.display = 'none';
       document.getElementById('detail-content').style.display = 'block';
       
-      // Isi data detail sesuai dengan urutan kolom spreadsheet
+      // Isi data detail
       document.getElementById('detail-nomor-agenda').textContent = (index + 1).toString();
+      document.getElementById('detail-timestamp').textContent = formatDateForDisplay(rowData[0]) || '-';
       document.getElementById('detail-nomor-surat').textContent = rowData[1] || '-';
       document.getElementById('detail-tanggal-surat').textContent = formatDateForDisplay(rowData[2]) || '-';
       document.getElementById('detail-tanggal-terima').textContent = formatDateForDisplay(rowData[3]) || '-';
@@ -1934,43 +1991,59 @@
     // Format tanggal untuk display
     function formatDateForDisplay(dateString) {
       if (!dateString) return '';
-      const date = new Date(dateString);
-      return date.toLocaleDateString('id-ID', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      });
+      try {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('id-ID', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+      } catch (e) {
+        return dateString;
+      }
     }
 
     // Format tanggal untuk display singkat (untuk print)
     function formatDateShort(dateString) {
       if (!dateString) return '';
-      const date = new Date(dateString);
-      return date.toLocaleDateString('id-ID', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-      });
+      try {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('id-ID', {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric'
+        });
+      } catch (e) {
+        return dateString;
+      }
     }
 
     // Format tanggal dan waktu
     function formatDateTime(date) {
-      return date.toLocaleString('id-ID', {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
+      try {
+        return date.toLocaleString('id-ID', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+      } catch (e) {
+        return date.toString();
+      }
     }
 
     // Format tanggal untuk input date
     function formatDateForInput(dateString) {
       if (!dateString) return '';
-      const date = new Date(dateString);
-      return date.toISOString().split('T')[0];
+      try {
+        const date = new Date(dateString);
+        return date.toISOString().split('T')[0];
+      } catch (e) {
+        return dateString;
+      }
     }
 
     // Fungsi untuk mengedit data
@@ -1983,7 +2056,7 @@
         
         // Tambahkan semua data kolom
         const columns = [
-          currentData[index][0], // Timestamp asli
+          new Date().toISOString(), // Update timestamp
           suratData.nomorSurat,
           suratData.tanggalSurat,
           suratData.tanggalTerima,
@@ -1997,11 +2070,19 @@
         ];
         
         columns.forEach((value, colIndex) => {
-          params.append(`col${colIndex}`, value || '');
+          params.append(`col${colIndex + 1}`, value || '');
         });
         
-        // Gunakan GET request untuk menghindari CORS issues
-        fetch(SCRIPT_URL + '?' + params.toString())
+        console.log('Update params:', params.toString());
+        
+        // Gunakan fetch dengan method POST untuk update
+        fetch(SCRIPT_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: params
+        })
           .then(response => {
             if (!response.ok) {
               throw new Error('Network response was not ok');
@@ -2030,7 +2111,13 @@
         params.append('action', 'delete');
         params.append('rowIndex', index);
         
-        fetch(SCRIPT_URL + '?' + params.toString())
+        fetch(SCRIPT_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: params
+        })
           .then(response => {
             if (!response.ok) {
               throw new Error('Network response was not ok');
@@ -2054,28 +2141,40 @@
 
     // Fungsi untuk mencetak detail surat
     function printDetail() {
-      const nomorAgenda = document.getElementById('detail-nomor-agenda').textContent;
-      const nomorSurat = document.getElementById('detail-nomor-surat').textContent;
-      const tanggalSurat = document.getElementById('detail-tanggal-surat').textContent;
-      const tanggalTerima = document.getElementById('detail-tanggal-terima').textContent;
-      const sifatSurat = document.getElementById('detail-sifat-surat').textContent;
-      const jumlahLampiran = document.getElementById('detail-jumlah-lampiran').textContent;
-      const suratDari = document.getElementById('detail-surat-dari').textContent;
-      const perihal = document.getElementById('detail-perihal').textContent;
-      const disposisi = document.getElementById('detail-disposisi').textContent;
-      const isiDisposisi = document.getElementById('detail-isi-disposisi').textContent;
-      const disampaikanKepada = document.getElementById('detail-disampaikan-kepada').textContent;
+      if (currentDetailIndex === null) return;
+      
+      const rowData = currentData[currentDetailIndex];
+      let rowArray;
+      if (Array.isArray(rowData)) {
+        rowArray = rowData;
+      } else if (typeof rowData === 'object') {
+        rowArray = [
+          rowData.Timestamp || rowData.timestamp || '',
+          rowData['Nomor Surat'] || rowData.nomorSurat || '',
+          rowData['Tanggal Surat'] || rowData.tanggalSurat || '',
+          rowData['Tanggal Terima'] || rowData.tanggalTerima || '',
+          rowData['Lampiran'] || rowData.jumlahLampiran || '',
+          rowData['Sifat'] || rowData.sifatSurat || '',
+          rowData['Dari'] || rowData.suratDari || '',
+          rowData['Perihal'] || rowData.perihal || '',
+          rowData['Isi Disposisi'] || rowData.isiDisposisi || '',
+          rowData['Disampaikan Kepada'] || rowData.disampaikanKepada || '',
+          rowData['Keterangan Disposisi'] || rowData.disposisi || ''
+        ];
+      } else {
+        rowArray = [];
+      }
       
       // Isi data ke template print
-      document.getElementById('print-nomor-agenda').textContent = nomorAgenda;
-      document.getElementById('print-nomor-surat').textContent = nomorSurat;
-      document.getElementById('print-tanggal-surat').textContent = formatDateShort(currentDetailIndex !== null ? currentData[currentDetailIndex][2] : '');
-      document.getElementById('print-tanggal-terima').textContent = formatDateShort(currentDetailIndex !== null ? currentData[currentDetailIndex][3] : '');
-      document.getElementById('print-sifat-surat').textContent = sifatSurat;
-      document.getElementById('print-jumlah-lampiran').textContent = jumlahLampiran;
-      document.getElementById('print-surat-dari').textContent = suratDari;
-      document.getElementById('print-perihal').textContent = perihal;
-      document.getElementById('print-disposisi-text').textContent = disposisi;
+      document.getElementById('print-nomor-agenda').textContent = (currentDetailIndex + 1).toString();
+      document.getElementById('print-nomor-surat').textContent = rowArray[1] || '';
+      document.getElementById('print-tanggal-surat').textContent = formatDateShort(rowArray[2]) || '';
+      document.getElementById('print-tanggal-terima').textContent = formatDateShort(rowArray[3]) || '';
+      document.getElementById('print-sifat-surat').textContent = rowArray[5] || '';
+      document.getElementById('print-jumlah-lampiran').textContent = rowArray[4] || '';
+      document.getElementById('print-surat-dari').textContent = rowArray[6] || '';
+      document.getElementById('print-perihal').textContent = rowArray[7] || '';
+      document.getElementById('print-disposisi-text').textContent = rowArray[10] || '';
       
       // Reset semua checkbox di template print
       const printDisposisiCheckboxes = document.querySelectorAll('#print-isi-disposisi .print-checkbox-box');
@@ -2090,10 +2189,11 @@
       });
       
       // Centang checkbox isi disposisi yang sesuai
-      if (isiDisposisi && isiDisposisi !== '-') {
-        const disposisiValues = isiDisposisi.split(', ');
+      if (rowArray[8]) {
+        const disposisiValues = rowArray[8].split(', ');
         disposisiValues.forEach(value => {
-          const checkboxId = 'print-disposisi-' + value.toLowerCase().replace(/\s+\/+/g, '-').replace(/\s+/g, '-');
+          const cleanValue = value.trim().toLowerCase().replace(/\s+\/+/g, '-').replace(/\s+/g, '-');
+          const checkboxId = 'print-disposisi-' + cleanValue;
           const checkbox = document.getElementById(checkboxId);
           if (checkbox) {
             checkbox.classList.add('checked');
@@ -2102,10 +2202,11 @@
       }
       
       // Centang checkbox disampaikan kepada yang sesuai
-      if (disampaikanKepada && disampaikanKepada !== '-') {
-        const kepadaValues = disampaikanKepada.split(', ');
+      if (rowArray[9]) {
+        const kepadaValues = rowArray[9].split(', ');
         kepadaValues.forEach(value => {
-          const checkboxId = 'print-kepada-' + value.toLowerCase().replace(/\s+/g, '-');
+          const cleanValue = value.trim().toLowerCase().replace(/\s+/g, '-');
+          const checkboxId = 'print-kepada-' + cleanValue;
           const checkbox = document.getElementById(checkboxId);
           if (checkbox) {
             checkbox.classList.add('checked');
@@ -2128,18 +2229,41 @@
 
     // Fungsi untuk download PDF
     function downloadPDF() {
-      // Ambil data dari detail view
-      const nomorAgenda = document.getElementById('detail-nomor-agenda').textContent;
-      const nomorSurat = document.getElementById('detail-nomor-surat').textContent;
-      const tanggalSurat = document.getElementById('detail-tanggal-surat').textContent;
-      const tanggalTerima = document.getElementById('detail-tanggal-terima').textContent;
-      const sifatSurat = document.getElementById('detail-sifat-surat').textContent;
-      const jumlahLampiran = document.getElementById('detail-jumlah-lampiran').textContent;
-      const suratDari = document.getElementById('detail-surat-dari').textContent;
-      const perihal = document.getElementById('detail-perihal').textContent;
-      const disposisi = document.getElementById('detail-disposisi').textContent;
-      const isiDisposisi = document.getElementById('detail-isi-disposisi').textContent;
-      const disampaikanKepada = document.getElementById('detail-disampaikan-kepada').textContent;
+      if (currentDetailIndex === null) return;
+      
+      const rowData = currentData[currentDetailIndex];
+      let rowArray;
+      if (Array.isArray(rowData)) {
+        rowArray = rowData;
+      } else if (typeof rowData === 'object') {
+        rowArray = [
+          rowData.Timestamp || rowData.timestamp || '',
+          rowData['Nomor Surat'] || rowData.nomorSurat || '',
+          rowData['Tanggal Surat'] || rowData.tanggalSurat || '',
+          rowData['Tanggal Terima'] || rowData.tanggalTerima || '',
+          rowData['Lampiran'] || rowData.jumlahLampiran || '',
+          rowData['Sifat'] || rowData.sifatSurat || '',
+          rowData['Dari'] || rowData.suratDari || '',
+          rowData['Perihal'] || rowData.perihal || '',
+          rowData['Isi Disposisi'] || rowData.isiDisposisi || '',
+          rowData['Disampaikan Kepada'] || rowData.disampaikanKepada || '',
+          rowData['Keterangan Disposisi'] || rowData.disposisi || ''
+        ];
+      } else {
+        rowArray = [];
+      }
+      
+      const nomorAgenda = (currentDetailIndex + 1).toString();
+      const nomorSurat = rowArray[1] || '';
+      const tanggalSurat = formatDateShort(rowArray[2]);
+      const tanggalTerima = formatDateShort(rowArray[3]);
+      const sifatSurat = rowArray[5] || '';
+      const jumlahLampiran = rowArray[4] || '';
+      const suratDari = rowArray[6] || '';
+      const perihal = rowArray[7] || '';
+      const disposisi = rowArray[10] || '';
+      const isiDisposisi = rowArray[8] || '';
+      const disampaikanKepada = rowArray[9] || '';
       
       // Buat elemen HTML untuk PDF
       const pdfContent = document.createElement('div');
@@ -2148,7 +2272,7 @@
           <!-- Kop Surat -->
           <div style="display: flex; align-items: center; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 2px solid #006B3F;">
             <div style="width: 50px; height: 50px; margin-right: 12px;">
-              <img src="logounjani.png" alt="Logo UNJANI" style="max-width: 100%; max-height: 100%; display: block;">
+              <div style="width: 100%; height: 100%; background: #006B3F; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 10px; text-align: center;">LOGO<br>UNJANI</div>
             </div>
             <div style="flex: 1;">
               <h1 style="font-size: 12pt; font-weight: bold; margin: 0 0 3px 0; color: #006B3F;">UNIVERSITAS JENDERAL ACHMAD YANI</h1>
@@ -2172,9 +2296,9 @@
             </div>
             <div style="display: flex; margin-bottom: 5px;">
               <div style="font-weight: bold; width: 130px; min-width: 130px; font-size: 8pt;">Tanggal Surat</div>
-              <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 8px; padding-bottom: 2px; font-size: 8pt;">${formatDateShort(currentDetailIndex !== null ? currentData[currentDetailIndex][2] : '')}</div>
+              <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 8px; padding-bottom: 2px; font-size: 8pt;">${tanggalSurat}</div>
               <div style="font-weight: bold; width: 110px; margin-left: 15px; font-size: 8pt;">Tanggal Terima</div>
-              <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 8px; padding-bottom: 2px; font-size: 8pt;">${formatDateShort(currentDetailIndex !== null ? currentData[currentDetailIndex][3] : '')}</div>
+              <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 8px; padding-bottom: 2px; font-size: 8pt;">${tanggalTerima}</div>
             </div>
             <div style="display: flex; margin-bottom: 5px;">
               <div style="font-weight: bold; width: 130px; min-width: 130px; font-size: 8pt;">Sifat Surat</div>
@@ -2214,7 +2338,6 @@
             <div style="flex: 1; border: 1px solid #000; padding: 8px; font-size: 8pt;">
               <h3 style="font-size: 9pt; font-weight: bold; margin: 0 0 6px 0; text-align: center; border-bottom: 1px solid #000; padding-bottom: 3px; color: #006B3F;">Disampaikan kepada:</h3>
               ${generateCheckboxHTML(disampaikanKepada, [
-                // TELAH DIHAPUS: 'Ka Humas',
                 'Ka Bag Pers & Multimedia',
                 'Arsip',
                 'Staff'
@@ -2261,7 +2384,8 @@
 
     // Fungsi untuk generate HTML checkbox untuk PDF
     function generateCheckboxHTML(selectedValues, options) {
-      const values = selectedValues ? selectedValues.split(', ') : [];
+      if (!selectedValues) selectedValues = '';
+      const values = selectedValues.split(', ').filter(v => v.trim() !== '');
       let html = '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px;">';
       
       options.forEach(option => {
@@ -2285,18 +2409,42 @@
       return html;
     }
 
-    // Fungsi untuk share ke WhatsApp - DIUBAH FORMAT
+    // Fungsi untuk share ke WhatsApp
     function shareToWhatsApp() {
-      const nomorAgenda = document.getElementById('detail-nomor-agenda').textContent;
-      const nomorSurat = document.getElementById('detail-nomor-surat').textContent;
-      const tanggalSurat = document.getElementById('detail-tanggal-surat').textContent;
-      const tanggalTerima = document.getElementById('detail-tanggal-terima').textContent;
-      const sifatSurat = document.getElementById('detail-sifat-surat').textContent;
-      const jumlahLampiran = document.getElementById('detail-jumlah-lampiran').textContent;
-      const suratDari = document.getElementById('detail-surat-dari').textContent;
-      const perihal = document.getElementById('detail-perihal').textContent;
+      if (currentDetailIndex === null) return;
       
-      // Buat pesan untuk WhatsApp dengan format yang baru
+      const rowData = currentData[currentDetailIndex];
+      let rowArray;
+      if (Array.isArray(rowData)) {
+        rowArray = rowData;
+      } else if (typeof rowData === 'object') {
+        rowArray = [
+          rowData.Timestamp || rowData.timestamp || '',
+          rowData['Nomor Surat'] || rowData.nomorSurat || '',
+          rowData['Tanggal Surat'] || rowData.tanggalSurat || '',
+          rowData['Tanggal Terima'] || rowData.tanggalTerima || '',
+          rowData['Lampiran'] || rowData.jumlahLampiran || '',
+          rowData['Sifat'] || rowData.sifatSurat || '',
+          rowData['Dari'] || rowData.suratDari || '',
+          rowData['Perihal'] || rowData.perihal || '',
+          rowData['Isi Disposisi'] || rowData.isiDisposisi || '',
+          rowData['Disampaikan Kepada'] || rowData.disampaikanKepada || '',
+          rowData['Keterangan Disposisi'] || rowData.disposisi || ''
+        ];
+      } else {
+        rowArray = [];
+      }
+      
+      const nomorAgenda = (currentDetailIndex + 1).toString();
+      const nomorSurat = rowArray[1] || '';
+      const tanggalSurat = formatDateForDisplay(rowArray[2]) || '';
+      const tanggalTerima = formatDateForDisplay(rowArray[3]) || '';
+      const sifatSurat = rowArray[5] || '';
+      const jumlahLampiran = rowArray[4] || '';
+      const suratDari = rowArray[6] || '';
+      const perihal = rowArray[7] || '';
+      
+      // Buat pesan untuk WhatsApp
       const message = `SURAT MASUK - HUMAS UNJANI
 
 Nomor Agenda: ${nomorAgenda}
@@ -2376,7 +2524,7 @@ Perihal: ${perihal}`;
       modalTitle.innerHTML = '<span class="btn-icon">✏️</span> Edit Data Surat';
       document.getElementById('edit-index').value = index;
       
-      // Isi form dengan data yang ada sesuai urutan spreadsheet
+      // Isi form dengan data yang ada
       document.getElementById('nomor-surat').value = rowData[1] || '';
       document.getElementById('tanggal-surat').value = formatDateForInput(rowData[2]) || '';
       document.getElementById('tanggal-terima').value = formatDateForInput(rowData[3]) || '';
@@ -2552,7 +2700,7 @@ Perihal: ${perihal}`;
           
           const noResultsRow = document.createElement('tr');
           noResultsRow.className = 'no-results';
-          noResultsRow.innerHTML = `<td colspan="9" class="loading">Tidak ditemukan surat dengan nomor agenda "${searchTerm}"</td>`;
+          noResultsRow.innerHTML = `<td colspan="13" class="loading">Tidak ditemukan surat dengan nomor agenda "${searchTerm}"</td>`;
           tableBody.appendChild(noResultsRow);
         } else {
           // Hapus pesan no results jika ada
