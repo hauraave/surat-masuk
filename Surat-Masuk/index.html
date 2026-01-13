@@ -190,7 +190,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 1000px;
+      min-width: 900px; /* Diperkecil karena kolom timestamp dihapus */
     }
 
     thead {
@@ -1276,7 +1276,7 @@
         <thead>
           <tr>
             <th>No</th>
-            <th>Timestamp</th>
+            <!-- Kolom Timestamp dihapus dari tampilan tabel -->
             <th>Nomor Surat</th>
             <th>Tanggal Surat</th>
             <th>Tanggal Terima</th>
@@ -1293,7 +1293,7 @@
         
         <tbody id="data-table-body">
           <tr>
-            <td colspan="13" class="loading">Memuat data surat...</td>
+            <td colspan="12" class="loading">Memuat data surat...</td>
           </tr>
         </tbody>
       </table>
@@ -1337,10 +1337,11 @@
             </div>
             <div class="detail-value" id="detail-nomor-agenda">-</div>
           </div>
+          <!-- Timestamp tetap ditampilkan di halaman detail tapi tidak di tabel utama -->
           <div class="detail-row">
             <div class="detail-label">
               <span class="btn-icon">📅</span>
-              Timestamp
+              Tanggal Input
             </div>
             <div class="detail-value" id="detail-timestamp">-</div>
           </div>
@@ -1776,7 +1777,7 @@
     function loadData() {
       const tableBody = document.getElementById('data-table-body');
       
-      tableBody.innerHTML = '<tr><td colspan="13" class="loading">Memuat data surat...</td></tr>';
+      tableBody.innerHTML = '<tr><td colspan="12" class="loading">Memuat data surat...</td></tr>';
       
       fetch(SCRIPT_URL + "?action=read")
         .then(response => {
@@ -1800,7 +1801,7 @@
           document.getElementById('total-surat').textContent = dataCount;
           
           if (dataCount === 0) {
-            tableBody.innerHTML = '<tr><td colspan="13" class="loading">Tidak ada data surat</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="12" class="loading">Tidak ada data surat</td></tr>';
             return;
           }
           
@@ -1824,11 +1825,7 @@
             noTd.textContent = index + 1;
             tr.appendChild(noTd);
             
-            // Data kolom
-            const timestampTd = document.createElement('td');
-            timestampTd.textContent = formatDateForDisplay(rowData.timestamp) || '';
-            tr.appendChild(timestampTd);
-            
+            // Data kolom (tanpa timestamp)
             const nomorSuratTd = document.createElement('td');
             nomorSuratTd.textContent = rowData.nomorSurat || '';
             tr.appendChild(nomorSuratTd);
@@ -1938,7 +1935,7 @@
         })
         .catch(error => {
           console.error('Error:', error);
-          tableBody.innerHTML = '<tr><td colspan="13" class="loading">Gagal memuat data. Silakan refresh halaman. Error: ' + error.message + '</td></tr>';
+          tableBody.innerHTML = '<tr><td colspan="12" class="loading">Gagal memuat data. Silakan refresh halaman. Error: ' + error.message + '</td></tr>';
         });
     }
 
@@ -2761,7 +2758,7 @@ Perihal: ${perihal}`;
           
           const noResultsRow = document.createElement('tr');
           noResultsRow.className = 'no-results';
-          noResultsRow.innerHTML = `<td colspan="13" class="loading">Tidak ditemukan surat dengan nomor agenda "${searchTerm}"</td>`;
+          noResultsRow.innerHTML = `<td colspan="12" class="loading">Tidak ditemukan surat dengan nomor agenda "${searchTerm}"</td>`;
           tableBody.appendChild(noResultsRow);
         } else {
           // Hapus pesan no results jika ada
@@ -2813,4 +2810,3 @@ Perihal: ${perihal}`;
 
 </body>
 </html>
-
