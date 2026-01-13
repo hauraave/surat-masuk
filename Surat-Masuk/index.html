@@ -1754,6 +1754,7 @@
 <script>
     let currentData = [];
     let currentDetailIndex = null;
+    let sortedData = []; // Menyimpan data yang sudah diurutkan
     
     // PERBAIKAN: Menggunakan link App Script yang baru
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx12U5i3_07MmmNcvvblNzj1VQbOclKRSS-3z4e75Vs5NEyL8E3VcJ3C9OL4HmrLwthNg/exec";
@@ -1805,22 +1806,23 @@
             return;
           }
           
-          // Urutkan data berdasarkan timestamp terbaru
-          currentData.sort((a, b) => {
+          // Urutkan data berdasarkan timestamp terbaru (DESCENDING - terbaru di atas)
+          sortedData = [...currentData].sort((a, b) => {
             const dateA = parseDate(a.Timestamp || a.timestamp || a[0] || 0);
             const dateB = parseDate(b.Timestamp || b.timestamp || b[0] || 0);
-            return dateB - dateA;
+            return dateB - dateA; // Terbaru ke terlama
           });
           
-          currentData.forEach(function(row, index) {
+          // Render tabel dengan nomor agenda yang benar (1 untuk data terbaru)
+          sortedData.forEach(function(row, index) {
             const tr = document.createElement('tr');
-            tr.dataset.rowIndex = index;
-            tr.dataset.nomorAgenda = index + 1;
+            tr.dataset.rowIndex = getOriginalIndex(row); // Simpan index asli untuk edit/hapus
+            tr.dataset.nomorAgenda = (index + 1).toString(); // Nomor agenda berdasarkan urutan tampilan
             
             // Konversi data berdasarkan format yang diterima
             const rowData = extractRowData(row);
             
-            // Nomor urut
+            // Nomor urut (1 untuk data terbaru)
             const noTd = document.createElement('td');
             noTd.textContent = index + 1;
             tr.appendChild(noTd);
@@ -1875,7 +1877,7 @@
             detailBtn.className = 'detail-btn';
             detailBtn.innerHTML = '<span class="btn-icon">👁️</span>';
             detailBtn.title = 'Detail';
-            detailBtn.onclick = () => showDetail(index, rowData);
+            detailBtn.onclick = () => showDetail(getOriginalIndex(row), rowData);
             
             // Action dropdown untuk Edit dan Delete
             const actionDropdown = document.createElement('div');
@@ -1901,7 +1903,7 @@
             editItem.onclick = (e) => {
               e.preventDefault();
               e.stopPropagation();
-              editSurat(index, rowData);
+              editSurat(getOriginalIndex(row), rowData);
               closeAllDropdowns();
             };
             
@@ -1913,7 +1915,7 @@
             deleteItem.onclick = (e) => {
               e.preventDefault();
               e.stopPropagation();
-              showDeleteModal(index, rowData);
+              showDeleteModal(getOriginalIndex(row), rowData);
               closeAllDropdowns();
             };
             
@@ -1937,6 +1939,16 @@
           console.error('Error:', error);
           tableBody.innerHTML = '<tr><td colspan="12" class="loading">Gagal memuat data. Silakan refresh halaman. Error: ' + error.message + '</td></tr>';
         });
+    }
+
+    // Fungsi untuk mendapatkan index asli dari data yang sudah diurutkan
+    function getOriginalIndex(sortedRow) {
+      // Mencari index asli di currentData berdasarkan timestamp (unik)
+      const timestamp = sortedRow.Timestamp || sortedRow.timestamp || sortedRow[0];
+      return currentData.findIndex(row => {
+        const rowTimestamp = row.Timestamp || row.timestamp || row[0];
+        return rowTimestamp === timestamp;
+      });
     }
 
     // Fungsi untuk ekstrak data dari berbagai format
@@ -2115,8 +2127,18 @@
       document.getElementById('main-content').style.display = 'none';
       document.getElementById('detail-content').style.display = 'block';
       
+      // Cari nomor agenda berdasarkan posisi di sortedData
+      let nomorAgenda = 1;
+      for (let i = 0; i < sortedData.length; i++) {
+        const originalIndex = getOriginalIndex(sortedData[i]);
+        if (originalIndex === index) {
+          nomorAgenda = i + 1;
+          break;
+        }
+      }
+      
       // Isi data detail dengan format yang benar
-      document.getElementById('detail-nomor-agenda').textContent = (index + 1).toString();
+      document.getElementById('detail-nomor-agenda').textContent = nomorAgenda.toString();
       document.getElementById('detail-timestamp').textContent = formatDateTime(parseDate(rowData.timestamp)) || '-';
       document.getElementById('detail-nomor-surat').textContent = rowData.nomorSurat || '-';
       document.getElementById('detail-tanggal-surat').textContent = formatDateForDisplay(rowData.tanggalSurat) || '-';
@@ -2263,8 +2285,18 @@
       
       const rowData = extractRowData(currentData[currentDetailIndex]);
       
+      // Cari nomor agenda berdasarkan posisi di sortedData
+      let nomorAgenda = 1;
+      for (let i = 0; i < sortedData.length; i++) {
+        const originalIndex = getOriginalIndex(sortedData[i]);
+        if (originalIndex === currentDetailIndex) {
+          nomorAgenda = i + 1;
+          break;
+        }
+      }
+      
       // Isi data ke template print
-      document.getElementById('print-nomor-agenda').textContent = (currentDetailIndex + 1).toString();
+      document.getElementById('print-nomor-agenda').textContent = nomorAgenda.toString();
       document.getElementById('print-nomor-surat').textContent = rowData.nomorSurat || '';
       document.getElementById('print-tanggal-surat').textContent = formatDateShort(rowData.tanggalSurat) || '';
       document.getElementById('print-tanggal-terima').textContent = formatDateShort(rowData.tanggalTerima) || '';
@@ -2331,7 +2363,16 @@
       
       const rowData = extractRowData(currentData[currentDetailIndex]);
       
-      const nomorAgenda = (currentDetailIndex + 1).toString();
+      // Cari nomor agenda berdasarkan posisi di sortedData
+      let nomorAgenda = 1;
+      for (let i = 0; i < sortedData.length; i++) {
+        const originalIndex = getOriginalIndex(sortedData[i]);
+        if (originalIndex === currentDetailIndex) {
+          nomorAgenda = i + 1;
+          break;
+        }
+      }
+      
       const nomorSurat = rowData.nomorSurat || '';
       const tanggalSurat = formatDateShort(rowData.tanggalSurat);
       const tanggalTerima = formatDateShort(rowData.tanggalTerima);
@@ -2493,7 +2534,16 @@
       
       const rowData = extractRowData(currentData[currentDetailIndex]);
       
-      const nomorAgenda = (currentDetailIndex + 1).toString();
+      // Cari nomor agenda berdasarkan posisi di sortedData
+      let nomorAgenda = 1;
+      for (let i = 0; i < sortedData.length; i++) {
+        const originalIndex = getOriginalIndex(sortedData[i]);
+        if (originalIndex === currentDetailIndex) {
+          nomorAgenda = i + 1;
+          break;
+        }
+      }
+      
       const nomorSurat = rowData.nomorSurat || '';
       const tanggalSurat = formatDateForDisplay(rowData.tanggalSurat) || '';
       const tanggalTerima = formatDateForDisplay(rowData.tanggalTerima) || '';
