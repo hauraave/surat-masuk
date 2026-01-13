@@ -190,7 +190,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 900px; /* Diperkecil karena kolom timestamp dihapus */
+      min-width: 1100px; /* Diperbesar karena ada kolom tambahan */
     }
 
     thead {
@@ -1227,6 +1227,24 @@
       gap: 5px;
       align-items: center;
     }
+    
+    /* STYLE UNTUK KOLOM NOMOR AGENDA */
+    th:nth-child(1), td:nth-child(1) {
+      width: 50px;
+      text-align: center;
+    }
+    
+    th:nth-child(2), td:nth-child(2) {
+      width: 80px;
+      text-align: center;
+      font-weight: bold;
+      background-color: rgba(0, 107, 63, 0.05);
+    }
+    
+    td:nth-child(2) {
+      font-weight: bold;
+      color: var(--primary-dark);
+    }
   </style>
 </head>
 
@@ -1276,7 +1294,7 @@
         <thead>
           <tr>
             <th>No</th>
-            <!-- Kolom Timestamp dihapus dari tampilan tabel -->
+            <th>No. Agenda</th> <!-- Kolom baru untuk Nomor Agenda -->
             <th>Nomor Surat</th>
             <th>Tanggal Surat</th>
             <th>Tanggal Terima</th>
@@ -1293,7 +1311,7 @@
         
         <tbody id="data-table-body">
           <tr>
-            <td colspan="12" class="loading">Memuat data surat...</td>
+            <td colspan="13" class="loading">Memuat data surat...</td>
           </tr>
         </tbody>
       </table>
@@ -1774,184 +1792,31 @@
       'Keterangan Disposisi': 'Disposisi'
     };
 
-    // Fungsi untuk memuat data dari Google Sheets
-    function loadData() {
-      const tableBody = document.getElementById('data-table-body');
+    // ======================== FUNGSI UTAMA ========================
+    
+    // FUNGSI 1: Mendapatkan nomor agenda yang konsisten
+    function getConsistentAgendaNumber(originalIndex) {
+      if (originalIndex === null || originalIndex === undefined || originalIndex < 0) return 1;
       
-      tableBody.innerHTML = '<tr><td colspan="12" class="loading">Memuat data surat...</td></tr>';
-      
-      fetch(SCRIPT_URL + "?action=read")
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Network response was not ok: ' + response.statusText);
-          }
-          return response.json();
-        })
-        .then(data => {
-          console.log('Data received:', data);
-          
-          if (data.status === 'error') {
-            throw new Error(data.message);
-          }
-          
-          tableBody.innerHTML = '';
-          currentData = data.data || [];
-          
-          // Update data count
-          const dataCount = currentData.length;
-          document.getElementById('total-surat').textContent = dataCount;
-          
-          if (dataCount === 0) {
-            tableBody.innerHTML = '<tr><td colspan="12" class="loading">Tidak ada data surat</td></tr>';
-            return;
-          }
-          
-          // Urutkan data berdasarkan timestamp terbaru (DESCENDING - terbaru di atas)
-          sortedData = [...currentData].sort((a, b) => {
-            const dateA = parseDate(a.Timestamp || a.timestamp || a[0] || 0);
-            const dateB = parseDate(b.Timestamp || b.timestamp || b[0] || 0);
-            return dateB - dateA; // Terbaru ke terlama
-          });
-          
-          // Render tabel dengan nomor agenda yang benar (1 untuk data terbaru)
-          sortedData.forEach(function(row, index) {
-            const tr = document.createElement('tr');
-            tr.dataset.rowIndex = getOriginalIndex(row); // Simpan index asli untuk edit/hapus
-            tr.dataset.nomorAgenda = (index + 1).toString(); // Nomor agenda berdasarkan urutan tampilan
-            
-            // Konversi data berdasarkan format yang diterima
-            const rowData = extractRowData(row);
-            
-            // Nomor urut (1 untuk data terbaru)
-            const noTd = document.createElement('td');
-            noTd.textContent = index + 1;
-            tr.appendChild(noTd);
-            
-            // Data kolom (tanpa timestamp)
-            const nomorSuratTd = document.createElement('td');
-            nomorSuratTd.textContent = rowData.nomorSurat || '';
-            tr.appendChild(nomorSuratTd);
-            
-            const tanggalSuratTd = document.createElement('td');
-            tanggalSuratTd.textContent = formatDateForDisplay(rowData.tanggalSurat) || '';
-            tr.appendChild(tanggalSuratTd);
-            
-            const tanggalTerimaTd = document.createElement('td');
-            tanggalTerimaTd.textContent = formatDateForDisplay(rowData.tanggalTerima) || '';
-            tr.appendChild(tanggalTerimaTd);
-            
-            const jumlahLampiranTd = document.createElement('td');
-            jumlahLampiranTd.textContent = rowData.jumlahLampiran || '';
-            tr.appendChild(jumlahLampiranTd);
-            
-            const sifatSuratTd = document.createElement('td');
-            sifatSuratTd.textContent = rowData.sifatSurat || '';
-            tr.appendChild(sifatSuratTd);
-            
-            const suratDariTd = document.createElement('td');
-            suratDariTd.textContent = rowData.suratDari || '';
-            tr.appendChild(suratDariTd);
-            
-            const perihalTd = document.createElement('td');
-            perihalTd.textContent = rowData.perihal || '';
-            tr.appendChild(perihalTd);
-            
-            const isiDisposisiTd = document.createElement('td');
-            isiDisposisiTd.textContent = rowData.isiDisposisi || '';
-            tr.appendChild(isiDisposisiTd);
-            
-            const disampaikanKepadaTd = document.createElement('td');
-            disampaikanKepadaTd.textContent = rowData.disampaikanKepada || '';
-            tr.appendChild(disampaikanKepadaTd);
-            
-            const disposisiTd = document.createElement('td');
-            disposisiTd.textContent = rowData.disposisi || '';
-            tr.appendChild(disposisiTd);
-            
-            // Kolom aksi
-            const actionTd = document.createElement('td');
-            actionTd.className = 'action-buttons';
-            
-            // Detail button
-            const detailBtn = document.createElement('button');
-            detailBtn.className = 'detail-btn';
-            detailBtn.innerHTML = '<span class="btn-icon">👁️</span>';
-            detailBtn.title = 'Detail';
-            detailBtn.onclick = () => showDetail(getOriginalIndex(row), rowData);
-            
-            // Action dropdown untuk Edit dan Delete
-            const actionDropdown = document.createElement('div');
-            actionDropdown.className = 'action-dropdown';
-            
-            const actionToggle = document.createElement('button');
-            actionToggle.className = 'action-toggle';
-            actionToggle.innerHTML = '<span class="btn-icon">⚙️</span>';
-            actionToggle.title = 'Aksi';
-            actionToggle.onclick = (e) => {
-              e.stopPropagation();
-              toggleDropdown(actionDropdown);
-            };
-            
-            const dropdownMenu = document.createElement('div');
-            dropdownMenu.className = 'dropdown-menu';
-            
-            // Edit item
-            const editItem = document.createElement('a');
-            editItem.className = 'dropdown-item';
-            editItem.href = '#';
-            editItem.innerHTML = '<span class="btn-icon">✏️</span> Edit';
-            editItem.onclick = (e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              editSurat(getOriginalIndex(row), rowData);
-              closeAllDropdowns();
-            };
-            
-            // Delete item
-            const deleteItem = document.createElement('a');
-            deleteItem.className = 'dropdown-item delete';
-            deleteItem.href = '#';
-            deleteItem.innerHTML = '<span class="btn-icon">🗑️</span> Hapus';
-            deleteItem.onclick = (e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              showDeleteModal(getOriginalIndex(row), rowData);
-              closeAllDropdowns();
-            };
-            
-            dropdownMenu.appendChild(editItem);
-            dropdownMenu.appendChild(deleteItem);
-            
-            actionDropdown.appendChild(actionToggle);
-            actionDropdown.appendChild(dropdownMenu);
-            
-            actionTd.appendChild(detailBtn);
-            actionTd.appendChild(actionDropdown);
-            tr.appendChild(actionTd);
-            
-            tableBody.appendChild(tr);
-          });
-          
-          // Tambahkan event listener untuk menutup dropdown saat klik di luar
-          document.addEventListener('click', closeAllDropdowns);
-        })
-        .catch(error => {
-          console.error('Error:', error);
-          tableBody.innerHTML = '<tr><td colspan="12" class="loading">Gagal memuat data. Silakan refresh halaman. Error: ' + error.message + '</td></tr>';
-        });
+      for (let i = 0; i < sortedData.length; i++) {
+        const idx = getOriginalIndex(sortedData[i]);
+        if (idx === originalIndex) {
+          return i + 1; // Nomor agenda dari sortedData (1-based)
+        }
+      }
+      return 1; // Default jika tidak ditemukan
     }
-
-    // Fungsi untuk mendapatkan index asli dari data yang sudah diurutkan
+    
+    // FUNGSI 2: Mendapatkan index asli dari sortedData
     function getOriginalIndex(sortedRow) {
-      // Mencari index asli di currentData berdasarkan timestamp (unik)
       const timestamp = sortedRow.Timestamp || sortedRow.timestamp || sortedRow[0];
       return currentData.findIndex(row => {
         const rowTimestamp = row.Timestamp || row.timestamp || row[0];
         return rowTimestamp === timestamp;
       });
     }
-
-    // Fungsi untuk ekstrak data dari berbagai format
+    
+    // FUNGSI 3: Ekstrak data dari berbagai format
     function extractRowData(row) {
       let data = {
         timestamp: '',
@@ -2001,8 +1866,8 @@
       
       return data;
     }
-
-    // Fungsi untuk parse tanggal dari berbagai format
+    
+    // FUNGSI 4: Parse tanggal dari berbagai format
     function parseDate(dateString) {
       if (!dateString) return new Date(0);
       
@@ -2033,13 +1898,13 @@
       // Default ke tanggal 0 jika tidak bisa parse
       return new Date(0);
     }
-
-    // Format tanggal untuk display dengan parsing yang benar
+    
+    // FUNGSI 5: Format tanggal untuk display
     function formatDateForDisplay(dateString) {
       if (!dateString || dateString.trim() === '' || dateString === '-') return '-';
       
       const date = parseDate(dateString);
-      if (date.getTime() === 0) return dateString; // Return as-is jika tanggal tidak valid
+      if (date.getTime() === 0) return dateString;
       
       try {
         return date.toLocaleDateString('id-ID', {
@@ -2052,8 +1917,8 @@
         return dateString;
       }
     }
-
-    // Format tanggal untuk display singkat (untuk print)
+    
+    // FUNGSI 6: Format tanggal singkat (untuk print)
     function formatDateShort(dateString) {
       if (!dateString || dateString.trim() === '' || dateString === '-') return '';
       
@@ -2070,8 +1935,8 @@
         return dateString;
       }
     }
-
-    // Format tanggal dan waktu
+    
+    // FUNGSI 7: Format tanggal dan waktu
     function formatDateTime(date) {
       try {
         if (!date || isNaN(date.getTime())) {
@@ -2089,8 +1954,8 @@
         return 'Tanggal tidak valid';
       }
     }
-
-    // Format tanggal untuk input date field
+    
+    // FUNGSI 8: Format tanggal untuk input date field
     function formatDateForInput(dateString) {
       if (!dateString || dateString.trim() === '' || dateString === '-') return '';
       
@@ -2107,35 +1972,218 @@
         return '';
       }
     }
-
-    // Fungsi untuk toggle dropdown
+    
+    // FUNGSI 9: Toggle dropdown
     function toggleDropdown(dropdown) {
       const menu = dropdown.querySelector('.dropdown-menu');
       menu.classList.toggle('show');
     }
-
-    // Fungsi untuk menutup semua dropdown
+    
+    // FUNGSI 10: Menutup semua dropdown
     function closeAllDropdowns() {
       document.querySelectorAll('.dropdown-menu').forEach(menu => {
         menu.classList.remove('show');
       });
     }
 
+    // ======================== FUNGSI DATA ========================
+    
+    // Fungsi untuk memuat data dari Google Sheets
+    function loadData() {
+      const tableBody = document.getElementById('data-table-body');
+      
+      tableBody.innerHTML = '<tr><td colspan="13" class="loading">Memuat data surat...</td></tr>';
+      
+      fetch(SCRIPT_URL + "?action=read")
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok: ' + response.statusText);
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('Data received:', data);
+          
+          if (data.status === 'error') {
+            throw new Error(data.message);
+          }
+          
+          tableBody.innerHTML = '';
+          currentData = data.data || [];
+          
+          // Update data count
+          const dataCount = currentData.length;
+          document.getElementById('total-surat').textContent = dataCount;
+          
+          if (dataCount === 0) {
+            tableBody.innerHTML = '<tr><td colspan="13" class="loading">Tidak ada data surat</td></tr>';
+            return;
+          }
+          
+          // Urutkan data berdasarkan timestamp terbaru (DESCENDING - terbaru di atas)
+          sortedData = [...currentData].sort((a, b) => {
+            const dateA = parseDate(a.Timestamp || a.timestamp || a[0] || 0);
+            const dateB = parseDate(b.Timestamp || b.timestamp || b[0] || 0);
+            return dateB - dateA; // Terbaru ke terlama
+          });
+          
+          // Render tabel dengan nomor agenda yang benar
+          sortedData.forEach(function(row, index) {
+            const originalIndex = getOriginalIndex(row);
+            const tr = document.createElement('tr');
+            tr.dataset.rowIndex = originalIndex;
+            tr.dataset.nomorAgenda = (index + 1).toString(); // Simpan nomor agenda yang benar
+            
+            // Konversi data
+            const rowData = extractRowData(row);
+            
+            // 1. Kolom No (urutan)
+            const noTd = document.createElement('td');
+            noTd.textContent = index + 1;
+            noTd.style.textAlign = 'center';
+            tr.appendChild(noTd);
+            
+            // 2. Kolom Nomor Agenda (sama dengan No karena sudah terurut)
+            const nomorAgendaTd = document.createElement('td');
+            nomorAgendaTd.textContent = index + 1;
+            nomorAgendaTd.style.textAlign = 'center';
+            nomorAgendaTd.style.fontWeight = 'bold';
+            nomorAgendaTd.style.color = 'var(--primary-dark)';
+            tr.appendChild(nomorAgendaTd);
+            
+            // 3. Kolom Nomor Surat
+            const nomorSuratTd = document.createElement('td');
+            nomorSuratTd.textContent = rowData.nomorSurat || '';
+            tr.appendChild(nomorSuratTd);
+            
+            // 4. Kolom Tanggal Surat
+            const tanggalSuratTd = document.createElement('td');
+            tanggalSuratTd.textContent = formatDateForDisplay(rowData.tanggalSurat) || '';
+            tr.appendChild(tanggalSuratTd);
+            
+            // 5. Kolom Tanggal Terima
+            const tanggalTerimaTd = document.createElement('td');
+            tanggalTerimaTd.textContent = formatDateForDisplay(rowData.tanggalTerima) || '';
+            tr.appendChild(tanggalTerimaTd);
+            
+            // 6. Kolom Jumlah Lampiran
+            const jumlahLampiranTd = document.createElement('td');
+            jumlahLampiranTd.textContent = rowData.jumlahLampiran || '';
+            tr.appendChild(jumlahLampiranTd);
+            
+            // 7. Kolom Sifat Surat
+            const sifatSuratTd = document.createElement('td');
+            sifatSuratTd.textContent = rowData.sifatSurat || '';
+            tr.appendChild(sifatSuratTd);
+            
+            // 8. Kolom Surat Dari
+            const suratDariTd = document.createElement('td');
+            suratDariTd.textContent = rowData.suratDari || '';
+            tr.appendChild(suratDariTd);
+            
+            // 9. Kolom Perihal
+            const perihalTd = document.createElement('td');
+            perihalTd.textContent = rowData.perihal || '';
+            tr.appendChild(perihalTd);
+            
+            // 10. Kolom Isi Disposisi
+            const isiDisposisiTd = document.createElement('td');
+            isiDisposisiTd.textContent = rowData.isiDisposisi || '';
+            tr.appendChild(isiDisposisiTd);
+            
+            // 11. Kolom Disampaikan Kepada
+            const disampaikanKepadaTd = document.createElement('td');
+            disampaikanKepadaTd.textContent = rowData.disampaikanKepada || '';
+            tr.appendChild(disampaikanKepadaTd);
+            
+            // 12. Kolom Keterangan Disposisi
+            const disposisiTd = document.createElement('td');
+            disposisiTd.textContent = rowData.disposisi || '';
+            tr.appendChild(disposisiTd);
+            
+            // 13. Kolom Aksi
+            const actionTd = document.createElement('td');
+            actionTd.className = 'action-buttons';
+            
+            // Detail button
+            const detailBtn = document.createElement('button');
+            detailBtn.className = 'detail-btn';
+            detailBtn.innerHTML = '<span class="btn-icon">👁️</span>';
+            detailBtn.title = 'Detail';
+            detailBtn.onclick = () => showDetail(originalIndex, rowData);
+            
+            // Action dropdown untuk Edit dan Delete
+            const actionDropdown = document.createElement('div');
+            actionDropdown.className = 'action-dropdown';
+            
+            const actionToggle = document.createElement('button');
+            actionToggle.className = 'action-toggle';
+            actionToggle.innerHTML = '<span class="btn-icon">⚙️</span>';
+            actionToggle.title = 'Aksi';
+            actionToggle.onclick = (e) => {
+              e.stopPropagation();
+              toggleDropdown(actionDropdown);
+            };
+            
+            const dropdownMenu = document.createElement('div');
+            dropdownMenu.className = 'dropdown-menu';
+            
+            // Edit item
+            const editItem = document.createElement('a');
+            editItem.className = 'dropdown-item';
+            editItem.href = '#';
+            editItem.innerHTML = '<span class="btn-icon">✏️</span> Edit';
+            editItem.onclick = (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              editSurat(originalIndex, rowData);
+              closeAllDropdowns();
+            };
+            
+            // Delete item
+            const deleteItem = document.createElement('a');
+            deleteItem.className = 'dropdown-item delete';
+            deleteItem.href = '#';
+            deleteItem.innerHTML = '<span class="btn-icon">🗑️</span> Hapus';
+            deleteItem.onclick = (e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              showDeleteModal(originalIndex, rowData);
+              closeAllDropdowns();
+            };
+            
+            dropdownMenu.appendChild(editItem);
+            dropdownMenu.appendChild(deleteItem);
+            
+            actionDropdown.appendChild(actionToggle);
+            actionDropdown.appendChild(dropdownMenu);
+            
+            actionTd.appendChild(detailBtn);
+            actionTd.appendChild(actionDropdown);
+            tr.appendChild(actionTd);
+            
+            tableBody.appendChild(tr);
+          });
+          
+          // Tambahkan event listener untuk menutup dropdown saat klik di luar
+          document.addEventListener('click', closeAllDropdowns);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          tableBody.innerHTML = '<tr><td colspan="13" class="loading">Gagal memuat data. Silakan refresh halaman. Error: ' + error.message + '</td></tr>';
+        });
+    }
+
+    // ======================== FUNGSI TAMPILAN ========================
+    
     // Fungsi untuk menampilkan halaman detail
     function showDetail(index, rowData) {
       currentDetailIndex = index;
       document.getElementById('main-content').style.display = 'none';
       document.getElementById('detail-content').style.display = 'block';
       
-      // Cari nomor agenda berdasarkan posisi di sortedData
-      let nomorAgenda = 1;
-      for (let i = 0; i < sortedData.length; i++) {
-        const originalIndex = getOriginalIndex(sortedData[i]);
-        if (originalIndex === index) {
-          nomorAgenda = i + 1;
-          break;
-        }
-      }
+      // NOMOR AGENDA YANG SAMA DENGAN TABEL UTAMA
+      const nomorAgenda = getConsistentAgendaNumber(index);
       
       // Isi data detail dengan format yang benar
       document.getElementById('detail-nomor-agenda').textContent = nomorAgenda.toString();
@@ -2161,15 +2209,90 @@
         document.getElementById('detail-terakhir-update').textContent = '-';
       }
     }
-
+    
     // Fungsi untuk kembali ke halaman utama
     function backToMain() {
       document.getElementById('main-content').style.display = 'block';
       document.getElementById('detail-content').style.display = 'none';
       currentDetailIndex = null;
     }
-
+    
     // Fungsi untuk mengedit data
+    function editSurat(index, rowData) {
+      modal.style.display = 'block';
+      
+      // TAMPILKAN NOMOR AGENDA DI MODAL TITLE
+      const nomorAgenda = getConsistentAgendaNumber(index);
+      modalTitle.innerHTML = `<span class="btn-icon">✏️</span> Edit Data Surat - Nomor Agenda: ${nomorAgenda}`;
+      
+      document.getElementById('edit-index').value = index;
+      
+      // Isi form dengan data yang ada dengan format yang benar
+      document.getElementById('nomor-surat').value = rowData.nomorSurat || '';
+      document.getElementById('tanggal-surat').value = formatDateForInput(rowData.tanggalSurat) || '';
+      document.getElementById('tanggal-terima').value = formatDateForInput(rowData.tanggalTerima) || '';
+      document.getElementById('jumlah-lampiran').value = rowData.jumlahLampiran || '';
+      document.getElementById('sifat-surat').value = rowData.sifatSurat || '';
+      document.getElementById('surat-dari').value = rowData.suratDari || '';
+      document.getElementById('perihal').value = rowData.perihal || '';
+      document.getElementById('disposisi').value = rowData.disposisi || '';
+      
+      // Reset checkbox
+      const disposisiCheckboxes = document.querySelectorAll('#isi-disposisi-checkbox input[type="checkbox"]');
+      const kepadaCheckboxes = document.querySelectorAll('#disampaikan-kepada-checkbox input[type="checkbox"]');
+      
+      disposisiCheckboxes.forEach(checkbox => {
+        checkbox.checked = false;
+      });
+      
+      kepadaCheckboxes.forEach(checkbox => {
+        checkbox.checked = false;
+      });
+      
+      // Isi checkbox isi disposisi jika ada data
+      if (rowData.isiDisposisi && rowData.isiDisposisi !== '-') {
+        const disposisiValues = rowData.isiDisposisi.split(', ');
+        disposisiCheckboxes.forEach(checkbox => {
+          if (disposisiValues.includes(checkbox.value)) {
+            checkbox.checked = true;
+          }
+        });
+      }
+      
+      // Isi checkbox disampaikan kepada jika ada data
+      if (rowData.disampaikanKepada && rowData.disampaikanKepada !== '-') {
+        const kepadaValues = rowData.disampaikanKepada.split(', ');
+        kepadaCheckboxes.forEach(checkbox => {
+          if (kepadaValues.includes(checkbox.value)) {
+            checkbox.checked = true;
+          }
+        });
+      }
+    }
+    
+    // Fungsi untuk menampilkan modal delete
+    function showDeleteModal(index, rowData) {
+      deleteIndex = index;
+      
+      // TAMPILKAN NOMOR AGENDA YANG SESUAI
+      const nomorAgenda = getConsistentAgendaNumber(index);
+      
+      // Isi informasi surat yang akan dihapus
+      document.getElementById('delete-nomor-surat').textContent = rowData.nomorSurat || '';
+      document.getElementById('delete-surat-dari').textContent = rowData.suratDari || '';
+      document.getElementById('delete-perihal').textContent = rowData.perihal || '';
+      
+      // Update judul modal dengan nomor agenda
+      document.querySelector('.delete-modal-header h2').innerHTML = 
+        `<span class="btn-icon">🗑️</span> Hapus Data Surat - Nomor Agenda: ${nomorAgenda}`;
+      
+      // Tampilkan modal
+      deleteModal.style.display = 'block';
+    }
+
+    // ======================== FUNGSI OPERASI DATA ========================
+    
+    // Fungsi untuk mengupdate data
     function updateSurat(index, suratData) {
       return new Promise((resolve, reject) => {
         // Buat URL dengan parameter
@@ -2243,7 +2366,7 @@
           });
       });
     }
-
+    
     // Fungsi untuk menghapus data
     function deleteSurat(index) {
       return new Promise((resolve, reject) => {
@@ -2279,21 +2402,16 @@
       });
     }
 
+    // ======================== FUNGSI PRINT & SHARE ========================
+    
     // Fungsi untuk mencetak detail surat
     function printDetail() {
       if (currentDetailIndex === null) return;
       
       const rowData = extractRowData(currentData[currentDetailIndex]);
       
-      // Cari nomor agenda berdasarkan posisi di sortedData
-      let nomorAgenda = 1;
-      for (let i = 0; i < sortedData.length; i++) {
-        const originalIndex = getOriginalIndex(sortedData[i]);
-        if (originalIndex === currentDetailIndex) {
-          nomorAgenda = i + 1;
-          break;
-        }
-      }
+      // NOMOR AGENDA YANG SAMA DENGAN TABEL
+      const nomorAgenda = getConsistentAgendaNumber(currentDetailIndex);
       
       // Isi data ke template print
       document.getElementById('print-nomor-agenda').textContent = nomorAgenda.toString();
@@ -2356,22 +2474,15 @@
         }, 100);
       }, 500);
     }
-
+    
     // Fungsi untuk download PDF
     function downloadPDF() {
       if (currentDetailIndex === null) return;
       
       const rowData = extractRowData(currentData[currentDetailIndex]);
       
-      // Cari nomor agenda berdasarkan posisi di sortedData
-      let nomorAgenda = 1;
-      for (let i = 0; i < sortedData.length; i++) {
-        const originalIndex = getOriginalIndex(sortedData[i]);
-        if (originalIndex === currentDetailIndex) {
-          nomorAgenda = i + 1;
-          break;
-        }
-      }
+      // NOMOR AGENDA YANG SAMA DENGAN TABEL
+      const nomorAgenda = getConsistentAgendaNumber(currentDetailIndex);
       
       const nomorSurat = rowData.nomorSurat || '';
       const tanggalSurat = formatDateShort(rowData.tanggalSurat);
@@ -2500,7 +2611,7 @@
       // Generate PDF
       html2pdf().set(opt).from(pdfContent).save();
     }
-
+    
     // Fungsi untuk generate HTML checkbox untuk PDF
     function generateCheckboxHTML(selectedValues, options) {
       if (!selectedValues) selectedValues = '';
@@ -2527,22 +2638,15 @@
       html += '</div>';
       return html;
     }
-
+    
     // Fungsi untuk share ke WhatsApp
     function shareToWhatsApp() {
       if (currentDetailIndex === null) return;
       
       const rowData = extractRowData(currentData[currentDetailIndex]);
       
-      // Cari nomor agenda berdasarkan posisi di sortedData
-      let nomorAgenda = 1;
-      for (let i = 0; i < sortedData.length; i++) {
-        const originalIndex = getOriginalIndex(sortedData[i]);
-        if (originalIndex === currentDetailIndex) {
-          nomorAgenda = i + 1;
-          break;
-        }
-      }
+      // NOMOR AGENDA YANG SAMA DENGAN TABEL
+      const nomorAgenda = getConsistentAgendaNumber(currentDetailIndex);
       
       const nomorSurat = rowData.nomorSurat || '';
       const tanggalSurat = formatDateForDisplay(rowData.tanggalSurat) || '';
@@ -2587,6 +2691,8 @@ Perihal: ${perihal}`;
       };
     }
 
+    // ======================== SETUP MODAL ========================
+    
     // Modal functions
     const modal = document.getElementById('surat-modal');
     const closeBtn = document.querySelector('.close');
@@ -2626,76 +2732,6 @@ Perihal: ${perihal}`;
     function closeWhatsappModal() {
       whatsappModal.style.display = 'none';
     }
-
-    function editSurat(index, rowData) {
-      modal.style.display = 'block';
-      modalTitle.innerHTML = '<span class="btn-icon">✏️</span> Edit Data Surat';
-      document.getElementById('edit-index').value = index;
-      
-      // Isi form dengan data yang ada dengan format yang benar
-      document.getElementById('nomor-surat').value = rowData.nomorSurat || '';
-      document.getElementById('tanggal-surat').value = formatDateForInput(rowData.tanggalSurat) || '';
-      document.getElementById('tanggal-terima').value = formatDateForInput(rowData.tanggalTerima) || '';
-      document.getElementById('jumlah-lampiran').value = rowData.jumlahLampiran || '';
-      document.getElementById('sifat-surat').value = rowData.sifatSurat || '';
-      document.getElementById('surat-dari').value = rowData.suratDari || '';
-      document.getElementById('perihal').value = rowData.perihal || '';
-      document.getElementById('disposisi').value = rowData.disposisi || '';
-      
-      // Reset checkbox
-      const disposisiCheckboxes = document.querySelectorAll('#isi-disposisi-checkbox input[type="checkbox"]');
-      const kepadaCheckboxes = document.querySelectorAll('#disampaikan-kepada-checkbox input[type="checkbox"]');
-      
-      disposisiCheckboxes.forEach(checkbox => {
-        checkbox.checked = false;
-      });
-      
-      kepadaCheckboxes.forEach(checkbox => {
-        checkbox.checked = false;
-      });
-      
-      // Isi checkbox isi disposisi jika ada data
-      if (rowData.isiDisposisi && rowData.isiDisposisi !== '-') {
-        const disposisiValues = rowData.isiDisposisi.split(', ');
-        disposisiCheckboxes.forEach(checkbox => {
-          if (disposisiValues.includes(checkbox.value)) {
-            checkbox.checked = true;
-          }
-        });
-      }
-      
-      // Isi checkbox disampaikan kepada jika ada data
-      if (rowData.disampaikanKepada && rowData.disampaikanKepada !== '-') {
-        const kepadaValues = rowData.disampaikanKepada.split(', ');
-        kepadaCheckboxes.forEach(checkbox => {
-          if (kepadaValues.includes(checkbox.value)) {
-            checkbox.checked = true;
-          }
-        });
-      }
-    }
-
-    function showDeleteModal(index, rowData) {
-      deleteIndex = index;
-      
-      // Isi informasi surat yang akan dihapus
-      document.getElementById('delete-nomor-surat').textContent = rowData.nomorSurat || '';
-      document.getElementById('delete-surat-dari').textContent = rowData.suratDari || '';
-      document.getElementById('delete-perihal').textContent = rowData.perihal || '';
-      
-      // Tampilkan modal
-      deleteModal.style.display = 'block';
-    }
-
-    // Event listeners untuk modal
-    closeBtn.onclick = closeModal;
-    cancelBtn.onclick = closeModal;
-
-    deleteCloseBtn.onclick = closeDeleteModal;
-    deleteCancelBtn.onclick = closeDeleteModal;
-
-    whatsappCloseBtn.onclick = closeWhatsappModal;
-    whatsappCancelBtn.onclick = closeWhatsappModal;
 
     window.onclick = function(event) {
       if (event.target == modal) {
@@ -2773,26 +2809,26 @@ Perihal: ${perihal}`;
         });
     };
 
-    // Setup fungsi lainnya
+    // ======================== SETUP FUNGSI LAINNYA ========================
+    
+    // Setup search
     function setupSearch() {
       const searchInput = document.getElementById('search-input');
-      const tableBody = document.getElementById('data-table-body');
       
       searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.trim().toLowerCase();
-        const rows = tableBody.querySelectorAll('tr');
+        const searchTerm = this.value.trim();
+        const rows = document.querySelectorAll('#data-table-body tr');
         let hasResults = false;
         
-        // Reset semua baris
         rows.forEach(row => {
           if (row.cells.length === 1) {
             row.style.display = 'none';
             return;
           }
           
-          // Cari berdasarkan nomor agenda saja
-          const nomorAgenda = row.dataset.nomorAgenda;
-          const isVisible = nomorAgenda && nomorAgenda.includes(searchTerm);
+          // Cari berdasarkan nomor agenda (kolom ke-2)
+          const nomorAgenda = row.cells[1].textContent;
+          const isVisible = nomorAgenda.includes(searchTerm);
           row.style.display = isVisible ? '' : 'none';
           
           if (isVisible) hasResults = true;
@@ -2801,51 +2837,65 @@ Perihal: ${perihal}`;
         // Jika tidak ada hasil dan search term tidak kosong
         if (!hasResults && searchTerm !== '') {
           // Hapus pesan sebelumnya jika ada
-          const existingMessage = tableBody.querySelector('.no-results');
+          const existingMessage = document.querySelector('.no-results');
           if (existingMessage) {
             existingMessage.remove();
           }
           
           const noResultsRow = document.createElement('tr');
           noResultsRow.className = 'no-results';
-          noResultsRow.innerHTML = `<td colspan="12" class="loading">Tidak ditemukan surat dengan nomor agenda "${searchTerm}"</td>`;
-          tableBody.appendChild(noResultsRow);
+          noResultsRow.innerHTML = `<td colspan="13" class="loading">Tidak ditemukan surat dengan nomor agenda "${searchTerm}"</td>`;
+          document.getElementById('data-table-body').appendChild(noResultsRow);
         } else {
           // Hapus pesan no results jika ada
-          const existingMessage = tableBody.querySelector('.no-results');
+          const existingMessage = document.querySelector('.no-results');
           if (existingMessage) {
             existingMessage.remove();
           }
         }
       });
     }
-
-    // PERBAIKAN: Link Google Forms yang baru
+    
+    // Setup tambah surat
     function setupTambahSurat() {
       document.getElementById('tambah-surat-btn').addEventListener('click', function() {
         window.open('https://docs.google.com/forms/d/e/1FAIpQLSdSCx2Egbmt4Mk7nnu0x02VdKUfa59-QFvLu_ZxBxyz3tkjJQ/viewform?usp=header', '_blank');
       });
     }
-
-    // PERBAIKAN: Link Spreadsheet yang baru
+    
+    // Setup spreadsheet
     function setupSpreadsheet() {
       document.getElementById('spreadsheet-btn').addEventListener('click', function() {
         window.open('https://docs.google.com/spreadsheets/d/1wNNP6V6nR54ZodcVfQGsiyMLB0ummn6paqFIJZigyZk/edit?usp=sharing', '_blank');
       });
     }
-
+    
+    // Setup refresh
     function setupRefresh() {
       document.getElementById('refresh-btn').addEventListener('click', function() {
         loadData();
       });
     }
-
+    
+    // Setup detail page
     function setupDetailPage() {
       document.getElementById('back-btn').addEventListener('click', backToMain);
       document.getElementById('print-detail-btn').addEventListener('click', printDetail);
       document.getElementById('pdf-detail-btn').addEventListener('click', downloadPDF);
       document.getElementById('whatsapp-share-btn').addEventListener('click', shareToWhatsApp);
     }
+
+    // ======================== INISIALISASI ========================
+    
+    // Event listeners untuk modal
+    closeBtn.onclick = closeModal;
+    cancelBtn.onclick = closeModal;
+
+    deleteCloseBtn.onclick = closeDeleteModal;
+    deleteCancelBtn.onclick = closeDeleteModal;
+
+    whatsappCloseBtn.onclick = closeWhatsappModal;
+    whatsappCancelBtn.onclick = closeWhatsappModal;
 
     // Inisialisasi saat halaman dimuat
     window.onload = function() {
