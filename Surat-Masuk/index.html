@@ -190,7 +190,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 1100px; /* Diperbesar karena ada kolom tambahan */
+      min-width: 1000px; /* Diperkecil karena kolom berkurang */
     }
 
     thead {
@@ -1228,22 +1228,17 @@
       align-items: center;
     }
     
-    /* STYLE UNTUK KOLOM NOMOR AGENDA */
+    /* STYLE UNTUK KOLOM NOMOR AGENDA - KOLOM PERTAMA */
     th:nth-child(1), td:nth-child(1) {
-      width: 50px;
-      text-align: center;
-    }
-    
-    th:nth-child(2), td:nth-child(2) {
       width: 80px;
       text-align: center;
       font-weight: bold;
-      background-color: rgba(0, 107, 63, 0.05);
     }
     
-    td:nth-child(2) {
+    td:nth-child(1) {
       font-weight: bold;
       color: var(--primary-dark);
+      background-color: rgba(0, 107, 63, 0.05);
     }
   </style>
 </head>
@@ -1293,8 +1288,8 @@
       <table>
         <thead>
           <tr>
-            <th>No</th>
-            <th>No. Agenda</th> <!-- Kolom baru untuk Nomor Agenda -->
+            <!-- HANYA SATU KOLOM ANGKA: NO. AGENDA -->
+            <th>No. Agenda</th>
             <th>Nomor Surat</th>
             <th>Tanggal Surat</th>
             <th>Tanggal Terima</th>
@@ -1311,7 +1306,7 @@
         
         <tbody id="data-table-body">
           <tr>
-            <td colspan="13" class="loading">Memuat data surat...</td>
+            <td colspan="12" class="loading">Memuat data surat...</td>
           </tr>
         </tbody>
       </table>
@@ -1794,29 +1789,7 @@
 
     // ======================== FUNGSI UTAMA ========================
     
-    // FUNGSI 1: Mendapatkan nomor agenda yang konsisten
-    function getConsistentAgendaNumber(originalIndex) {
-      if (originalIndex === null || originalIndex === undefined || originalIndex < 0) return 1;
-      
-      for (let i = 0; i < sortedData.length; i++) {
-        const idx = getOriginalIndex(sortedData[i]);
-        if (idx === originalIndex) {
-          return i + 1; // Nomor agenda dari sortedData (1-based)
-        }
-      }
-      return 1; // Default jika tidak ditemukan
-    }
-    
-    // FUNGSI 2: Mendapatkan index asli dari sortedData
-    function getOriginalIndex(sortedRow) {
-      const timestamp = sortedRow.Timestamp || sortedRow.timestamp || sortedRow[0];
-      return currentData.findIndex(row => {
-        const rowTimestamp = row.Timestamp || row.timestamp || row[0];
-        return rowTimestamp === timestamp;
-      });
-    }
-    
-    // FUNGSI 3: Ekstrak data dari berbagai format
+    // FUNGSI 1: Ekstrak data dari berbagai format
     function extractRowData(row) {
       let data = {
         timestamp: '',
@@ -1867,7 +1840,7 @@
       return data;
     }
     
-    // FUNGSI 4: Parse tanggal dari berbagai format
+    // FUNGSI 2: Parse tanggal dari berbagai format
     function parseDate(dateString) {
       if (!dateString) return new Date(0);
       
@@ -1899,7 +1872,7 @@
       return new Date(0);
     }
     
-    // FUNGSI 5: Format tanggal untuk display
+    // FUNGSI 3: Format tanggal untuk display
     function formatDateForDisplay(dateString) {
       if (!dateString || dateString.trim() === '' || dateString === '-') return '-';
       
@@ -1918,7 +1891,7 @@
       }
     }
     
-    // FUNGSI 6: Format tanggal singkat (untuk print)
+    // FUNGSI 4: Format tanggal singkat (untuk print)
     function formatDateShort(dateString) {
       if (!dateString || dateString.trim() === '' || dateString === '-') return '';
       
@@ -1936,7 +1909,7 @@
       }
     }
     
-    // FUNGSI 7: Format tanggal dan waktu
+    // FUNGSI 5: Format tanggal dan waktu
     function formatDateTime(date) {
       try {
         if (!date || isNaN(date.getTime())) {
@@ -1955,7 +1928,7 @@
       }
     }
     
-    // FUNGSI 8: Format tanggal untuk input date field
+    // FUNGSI 6: Format tanggal untuk input date field
     function formatDateForInput(dateString) {
       if (!dateString || dateString.trim() === '' || dateString === '-') return '';
       
@@ -1973,13 +1946,13 @@
       }
     }
     
-    // FUNGSI 9: Toggle dropdown
+    // FUNGSI 7: Toggle dropdown
     function toggleDropdown(dropdown) {
       const menu = dropdown.querySelector('.dropdown-menu');
       menu.classList.toggle('show');
     }
     
-    // FUNGSI 10: Menutup semua dropdown
+    // FUNGSI 8: Menutup semua dropdown
     function closeAllDropdowns() {
       document.querySelectorAll('.dropdown-menu').forEach(menu => {
         menu.classList.remove('show');
@@ -1992,7 +1965,7 @@
     function loadData() {
       const tableBody = document.getElementById('data-table-body');
       
-      tableBody.innerHTML = '<tr><td colspan="13" class="loading">Memuat data surat...</td></tr>';
+      tableBody.innerHTML = '<tr><td colspan="12" class="loading">Memuat data surat...</td></tr>';
       
       fetch(SCRIPT_URL + "?action=read")
         .then(response => {
@@ -2016,92 +1989,89 @@
           document.getElementById('total-surat').textContent = dataCount;
           
           if (dataCount === 0) {
-            tableBody.innerHTML = '<tr><td colspan="13" class="loading">Tidak ada data surat</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="12" class="loading">Tidak ada data surat</td></tr>';
             return;
           }
           
-          // Urutkan data berdasarkan timestamp terbaru (DESCENDING - terbaru di atas)
-          sortedData = [...currentData].sort((a, b) => {
-            const dateA = parseDate(a.Timestamp || a.timestamp || a[0] || 0);
-            const dateB = parseDate(b.Timestamp || b.timestamp || b[0] || 0);
-            return dateB - dateA; // Terbaru ke terlama
-          });
+          // BALIK URUTAN ARRAY: data terbaru (indeks terakhir) jadi di atas
+          sortedData = [...currentData].reverse();
           
-          // Render tabel dengan nomor agenda yang benar
-          sortedData.forEach(function(row, index) {
-            const originalIndex = getOriginalIndex(row);
+          // Render tabel
+          sortedData.forEach(function(row, displayIndex) {
+            // Hitung originalIndex dari data yang sudah di-reverse
+            const originalIndex = currentData.length - 1 - displayIndex;
             const tr = document.createElement('tr');
             tr.dataset.rowIndex = originalIndex;
-            tr.dataset.nomorAgenda = (index + 1).toString(); // Simpan nomor agenda yang benar
+            
+            // NOMOR AGENDA SESUAI URUTAN INPUT (originalIndex + 1)
+            const agendaNumber = originalIndex + 1;
+            tr.dataset.nomorAgenda = agendaNumber.toString();
             
             // Konversi data
             const rowData = extractRowData(row);
             
-            // 1. Kolom No (urutan)
-            const noTd = document.createElement('td');
-            noTd.textContent = index + 1;
-            noTd.style.textAlign = 'center';
-            tr.appendChild(noTd);
-            
-            // 2. Kolom Nomor Agenda (sama dengan No karena sudah terurut)
+            // ========== HANYA SATU KOLOM ANGKA: NO. AGENDA ==========
+            // Kolom Nomor Agenda (satu-satunya kolom angka)
             const nomorAgendaTd = document.createElement('td');
-            nomorAgendaTd.textContent = index + 1;
+            nomorAgendaTd.textContent = agendaNumber;
             nomorAgendaTd.style.textAlign = 'center';
             nomorAgendaTd.style.fontWeight = 'bold';
             nomorAgendaTd.style.color = 'var(--primary-dark)';
+            nomorAgendaTd.style.backgroundColor = 'rgba(0, 107, 63, 0.05)';
             tr.appendChild(nomorAgendaTd);
+            // ========================================================
             
-            // 3. Kolom Nomor Surat
+            // Kolom Nomor Surat
             const nomorSuratTd = document.createElement('td');
             nomorSuratTd.textContent = rowData.nomorSurat || '';
             tr.appendChild(nomorSuratTd);
             
-            // 4. Kolom Tanggal Surat
+            // Kolom Tanggal Surat
             const tanggalSuratTd = document.createElement('td');
             tanggalSuratTd.textContent = formatDateForDisplay(rowData.tanggalSurat) || '';
             tr.appendChild(tanggalSuratTd);
             
-            // 5. Kolom Tanggal Terima
+            // Kolom Tanggal Terima
             const tanggalTerimaTd = document.createElement('td');
             tanggalTerimaTd.textContent = formatDateForDisplay(rowData.tanggalTerima) || '';
             tr.appendChild(tanggalTerimaTd);
             
-            // 6. Kolom Jumlah Lampiran
+            // Kolom Jumlah Lampiran
             const jumlahLampiranTd = document.createElement('td');
             jumlahLampiranTd.textContent = rowData.jumlahLampiran || '';
             tr.appendChild(jumlahLampiranTd);
             
-            // 7. Kolom Sifat Surat
+            // Kolom Sifat Surat
             const sifatSuratTd = document.createElement('td');
             sifatSuratTd.textContent = rowData.sifatSurat || '';
             tr.appendChild(sifatSuratTd);
             
-            // 8. Kolom Surat Dari
+            // Kolom Surat Dari
             const suratDariTd = document.createElement('td');
             suratDariTd.textContent = rowData.suratDari || '';
             tr.appendChild(suratDariTd);
             
-            // 9. Kolom Perihal
+            // Kolom Perihal
             const perihalTd = document.createElement('td');
             perihalTd.textContent = rowData.perihal || '';
             tr.appendChild(perihalTd);
             
-            // 10. Kolom Isi Disposisi
+            // Kolom Isi Disposisi
             const isiDisposisiTd = document.createElement('td');
             isiDisposisiTd.textContent = rowData.isiDisposisi || '';
             tr.appendChild(isiDisposisiTd);
             
-            // 11. Kolom Disampaikan Kepada
+            // Kolom Disampaikan Kepada
             const disampaikanKepadaTd = document.createElement('td');
             disampaikanKepadaTd.textContent = rowData.disampaikanKepada || '';
             tr.appendChild(disampaikanKepadaTd);
             
-            // 12. Kolom Keterangan Disposisi
+            // Kolom Keterangan Disposisi
             const disposisiTd = document.createElement('td');
             disposisiTd.textContent = rowData.disposisi || '';
             tr.appendChild(disposisiTd);
             
-            // 13. Kolom Aksi
+            // Kolom Aksi
             const actionTd = document.createElement('td');
             actionTd.className = 'action-buttons';
             
@@ -2170,7 +2140,7 @@
         })
         .catch(error => {
           console.error('Error:', error);
-          tableBody.innerHTML = '<tr><td colspan="13" class="loading">Gagal memuat data. Silakan refresh halaman. Error: ' + error.message + '</td></tr>';
+          tableBody.innerHTML = '<tr><td colspan="12" class="loading">Gagal memuat data. Silakan refresh halaman. Error: ' + error.message + '</td></tr>';
         });
     }
 
@@ -2182,8 +2152,8 @@
       document.getElementById('main-content').style.display = 'none';
       document.getElementById('detail-content').style.display = 'block';
       
-      // NOMOR AGENDA YANG SAMA DENGAN TABEL UTAMA
-      const nomorAgenda = getConsistentAgendaNumber(index);
+      // NOMOR AGENDA SESUAI URUTAN INPUT
+      const nomorAgenda = index + 1;
       
       // Isi data detail dengan format yang benar
       document.getElementById('detail-nomor-agenda').textContent = nomorAgenda.toString();
@@ -2221,8 +2191,8 @@
     function editSurat(index, rowData) {
       modal.style.display = 'block';
       
-      // TAMPILKAN NOMOR AGENDA DI MODAL TITLE
-      const nomorAgenda = getConsistentAgendaNumber(index);
+      // NOMOR AGENDA SESUAI URUTAN INPUT
+      const nomorAgenda = index + 1;
       modalTitle.innerHTML = `<span class="btn-icon">✏️</span> Edit Data Surat - Nomor Agenda: ${nomorAgenda}`;
       
       document.getElementById('edit-index').value = index;
@@ -2274,8 +2244,8 @@
     function showDeleteModal(index, rowData) {
       deleteIndex = index;
       
-      // TAMPILKAN NOMOR AGENDA YANG SESUAI
-      const nomorAgenda = getConsistentAgendaNumber(index);
+      // NOMOR AGENDA SESUAI URUTAN INPUT
+      const nomorAgenda = index + 1;
       
       // Isi informasi surat yang akan dihapus
       document.getElementById('delete-nomor-surat').textContent = rowData.nomorSurat || '';
@@ -2410,8 +2380,8 @@
       
       const rowData = extractRowData(currentData[currentDetailIndex]);
       
-      // NOMOR AGENDA YANG SAMA DENGAN TABEL
-      const nomorAgenda = getConsistentAgendaNumber(currentDetailIndex);
+      // NOMOR AGENDA SESUAI URUTAN INPUT
+      const nomorAgenda = currentDetailIndex + 1;
       
       // Isi data ke template print
       document.getElementById('print-nomor-agenda').textContent = nomorAgenda.toString();
@@ -2481,8 +2451,8 @@
       
       const rowData = extractRowData(currentData[currentDetailIndex]);
       
-      // NOMOR AGENDA YANG SAMA DENGAN TABEL
-      const nomorAgenda = getConsistentAgendaNumber(currentDetailIndex);
+      // NOMOR AGENDA SESUAI URUTAN INPUT
+      const nomorAgenda = currentDetailIndex + 1;
       
       const nomorSurat = rowData.nomorSurat || '';
       const tanggalSurat = formatDateShort(rowData.tanggalSurat);
@@ -2645,8 +2615,8 @@
       
       const rowData = extractRowData(currentData[currentDetailIndex]);
       
-      // NOMOR AGENDA YANG SAMA DENGAN TABEL
-      const nomorAgenda = getConsistentAgendaNumber(currentDetailIndex);
+      // NOMOR AGENDA SESUAI URUTAN INPUT
+      const nomorAgenda = currentDetailIndex + 1;
       
       const nomorSurat = rowData.nomorSurat || '';
       const tanggalSurat = formatDateForDisplay(rowData.tanggalSurat) || '';
@@ -2826,8 +2796,8 @@ Perihal: ${perihal}`;
             return;
           }
           
-          // Cari berdasarkan nomor agenda (kolom ke-2)
-          const nomorAgenda = row.cells[1].textContent;
+          // CARI BERDASARKAN NOMOR AGENDA (KOLOM PERTAMA SEKARANG)
+          const nomorAgenda = row.cells[0].textContent;
           const isVisible = nomorAgenda.includes(searchTerm);
           row.style.display = isVisible ? '' : 'none';
           
@@ -2844,7 +2814,7 @@ Perihal: ${perihal}`;
           
           const noResultsRow = document.createElement('tr');
           noResultsRow.className = 'no-results';
-          noResultsRow.innerHTML = `<td colspan="13" class="loading">Tidak ditemukan surat dengan nomor agenda "${searchTerm}"</td>`;
+          noResultsRow.innerHTML = `<td colspan="12" class="loading">Tidak ditemukan surat dengan nomor agenda "${searchTerm}"</td>`;
           document.getElementById('data-table-body').appendChild(noResultsRow);
         } else {
           // Hapus pesan no results jika ada
