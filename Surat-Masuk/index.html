@@ -1750,7 +1750,7 @@
     <p style="margin-top: 5px; font-size: 12px;">Version 2.2 | Modern UI Design</p>
   </div>
 
-  <script>
+<script>
     let currentData = [];
     let currentDetailIndex = null;
     
@@ -1806,8 +1806,8 @@
           
           // Urutkan data berdasarkan timestamp terbaru
           currentData.sort((a, b) => {
-            const dateA = new Date(a.Timestamp || a.timestamp || a[0] || 0);
-            const dateB = new Date(b.Timestamp || b.timestamp || b[0] || 0);
+            const dateA = parseDate(a.Timestamp || a.timestamp || a[0] || 0);
+            const dateB = parseDate(b.Timestamp || b.timestamp || b[0] || 0);
             return dateB - dateA;
           });
           
@@ -1993,6 +1993,112 @@
       return data;
     }
 
+    // Fungsi untuk parse tanggal dari berbagai format
+    function parseDate(dateString) {
+      if (!dateString) return new Date(0);
+      
+      // Coba format ISO (2026-01-13T02:32:12.530Z)
+      let date = new Date(dateString);
+      if (!isNaN(date.getTime())) return date;
+      
+      // Coba format Indonesia (13/01/2026 9:32:17)
+      const indonesianFormat = dateString.match(/(\d{2})\/(\d{2})\/(\d{4}) (\d{1,2}):(\d{2}):(\d{2})/);
+      if (indonesianFormat) {
+        const [_, day, month, year, hour, minute, second] = indonesianFormat;
+        date = new Date(year, month - 1, day, hour, minute, second);
+        if (!isNaN(date.getTime())) return date;
+      }
+      
+      // Coba format Indonesia tanpa waktu (13/01/2026)
+      const simpleIndoFormat = dateString.match(/(\d{2})\/(\d{2})\/(\d{4})/);
+      if (simpleIndoFormat) {
+        const [_, day, month, year] = simpleIndoFormat;
+        date = new Date(year, month - 1, day);
+        if (!isNaN(date.getTime())) return date;
+      }
+      
+      // Coba format lain
+      date = new Date(dateString);
+      if (!isNaN(date.getTime())) return date;
+      
+      // Default ke tanggal 0 jika tidak bisa parse
+      return new Date(0);
+    }
+
+    // Format tanggal untuk display dengan parsing yang benar
+    function formatDateForDisplay(dateString) {
+      if (!dateString || dateString.trim() === '' || dateString === '-') return '-';
+      
+      const date = parseDate(dateString);
+      if (date.getTime() === 0) return dateString; // Return as-is jika tanggal tidak valid
+      
+      try {
+        return date.toLocaleDateString('id-ID', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+      } catch (e) {
+        return dateString;
+      }
+    }
+
+    // Format tanggal untuk display singkat (untuk print)
+    function formatDateShort(dateString) {
+      if (!dateString || dateString.trim() === '' || dateString === '-') return '';
+      
+      const date = parseDate(dateString);
+      if (date.getTime() === 0) return dateString;
+      
+      try {
+        return date.toLocaleDateString('id-ID', {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric'
+        });
+      } catch (e) {
+        return dateString;
+      }
+    }
+
+    // Format tanggal dan waktu
+    function formatDateTime(date) {
+      try {
+        if (!date || isNaN(date.getTime())) {
+          return 'Tanggal tidak valid';
+        }
+        return date.toLocaleString('id-ID', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+      } catch (e) {
+        return 'Tanggal tidak valid';
+      }
+    }
+
+    // Format tanggal untuk input date field
+    function formatDateForInput(dateString) {
+      if (!dateString || dateString.trim() === '' || dateString === '-') return '';
+      
+      const date = parseDate(dateString);
+      if (date.getTime() === 0) return '';
+      
+      try {
+        // Format YYYY-MM-DD untuk input[type="date"]
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      } catch (e) {
+        return '';
+      }
+    }
+
     // Fungsi untuk toggle dropdown
     function toggleDropdown(dropdown) {
       const menu = dropdown.querySelector('.dropdown-menu');
@@ -2012,9 +2118,9 @@
       document.getElementById('main-content').style.display = 'none';
       document.getElementById('detail-content').style.display = 'block';
       
-      // Isi data detail
+      // Isi data detail dengan format yang benar
       document.getElementById('detail-nomor-agenda').textContent = (index + 1).toString();
-      document.getElementById('detail-timestamp').textContent = formatDateForDisplay(rowData.timestamp) || '-';
+      document.getElementById('detail-timestamp').textContent = formatDateTime(parseDate(rowData.timestamp)) || '-';
       document.getElementById('detail-nomor-surat').textContent = rowData.nomorSurat || '-';
       document.getElementById('detail-tanggal-surat').textContent = formatDateForDisplay(rowData.tanggalSurat) || '-';
       document.getElementById('detail-tanggal-terima').textContent = formatDateForDisplay(rowData.tanggalTerima) || '-';
@@ -2027,10 +2133,13 @@
       document.getElementById('detail-disposisi').textContent = rowData.disposisi || '-';
       
       // Informasi timestamp
-      if (rowData.timestamp) {
-        const inputDate = new Date(rowData.timestamp);
+      const inputDate = parseDate(rowData.timestamp);
+      if (inputDate && !isNaN(inputDate.getTime())) {
         document.getElementById('detail-tanggal-input').textContent = formatDateTime(inputDate);
         document.getElementById('detail-terakhir-update').textContent = formatDateTime(inputDate);
+      } else {
+        document.getElementById('detail-tanggal-input').textContent = '-';
+        document.getElementById('detail-terakhir-update').textContent = '-';
       }
     }
 
@@ -2041,76 +2150,6 @@
       currentDetailIndex = null;
     }
 
-    // Format tanggal untuk display
-    function formatDateForDisplay(dateString) {
-      if (!dateString) return '';
-      try {
-        const date = new Date(dateString);
-        if (isNaN(date.getTime())) {
-          return dateString;
-        }
-        return date.toLocaleDateString('id-ID', {
-          weekday: 'long',
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        });
-      } catch (e) {
-        return dateString;
-      }
-    }
-
-    // Format tanggal untuk display singkat (untuk print)
-    function formatDateShort(dateString) {
-      if (!dateString) return '';
-      try {
-        const date = new Date(dateString);
-        if (isNaN(date.getTime())) {
-          return dateString;
-        }
-        return date.toLocaleDateString('id-ID', {
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric'
-        });
-      } catch (e) {
-        return dateString;
-      }
-    }
-
-    // Format tanggal dan waktu
-    function formatDateTime(date) {
-      try {
-        if (isNaN(date.getTime())) {
-          return 'Tanggal tidak valid';
-        }
-        return date.toLocaleString('id-ID', {
-          weekday: 'long',
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit'
-        });
-      } catch (e) {
-        return date.toString();
-      }
-    }
-
-    // Format tanggal untuk input date
-    function formatDateForInput(dateString) {
-      if (!dateString) return '';
-      try {
-        const date = new Date(dateString);
-        if (isNaN(date.getTime())) {
-          return '';
-        }
-        return date.toISOString().split('T')[0];
-      } catch (e) {
-        return '';
-      }
-    }
-
     // Fungsi untuk mengedit data
     function updateSurat(index, suratData) {
       return new Promise((resolve, reject) => {
@@ -2119,12 +2158,29 @@
         params.append('action', 'update');
         params.append('rowIndex', index);
         
-        // Tambahkan semua data kolom sesuai mapping
+        // Tentukan format tanggal yang akan disimpan
+        const formatDateForStorage = (dateString) => {
+          if (!dateString) return '';
+          const date = parseDate(dateString);
+          if (isNaN(date.getTime())) return dateString;
+          
+          // Format: DD/MM/YYYY untuk konsistensi
+          const day = String(date.getDate()).padStart(2, '0');
+          const month = String(date.getMonth() + 1).padStart(2, '0');
+          const year = date.getFullYear();
+          return `${day}/${month}/${year}`;
+        };
+        
+        // Format tanggal untuk penyimpanan
+        const tanggalSuratFormatted = formatDateForStorage(suratData.tanggalSurat);
+        const tanggalTerimaFormatted = formatDateForStorage(suratData.tanggalTerima);
+        
+        // Tambahkan semua data kolom
         const columns = [
-          new Date().toISOString(), // Update timestamp
+          new Date().toISOString(), // Update timestamp ke format ISO
           suratData.nomorSurat || '',
-          suratData.tanggalSurat || '',
-          suratData.tanggalTerima || '',
+          tanggalSuratFormatted || '',
+          tanggalTerimaFormatted || '',
           suratData.jumlahLampiran || '',
           suratData.sifatSurat || '',
           suratData.suratDari || '',
@@ -2529,7 +2585,7 @@ Perihal: ${perihal}`;
       modalTitle.innerHTML = '<span class="btn-icon">✏️</span> Edit Data Surat';
       document.getElementById('edit-index').value = index;
       
-      // Isi form dengan data yang ada
+      // Isi form dengan data yang ada dengan format yang benar
       document.getElementById('nomor-surat').value = rowData.nomorSurat || '';
       document.getElementById('tanggal-surat').value = formatDateForInput(rowData.tanggalSurat) || '';
       document.getElementById('tanggal-terima').value = formatDateForInput(rowData.tanggalTerima) || '';
@@ -2552,7 +2608,7 @@ Perihal: ${perihal}`;
       });
       
       // Isi checkbox isi disposisi jika ada data
-      if (rowData.isiDisposisi) {
+      if (rowData.isiDisposisi && rowData.isiDisposisi !== '-') {
         const disposisiValues = rowData.isiDisposisi.split(', ');
         disposisiCheckboxes.forEach(checkbox => {
           if (disposisiValues.includes(checkbox.value)) {
@@ -2562,7 +2618,7 @@ Perihal: ${perihal}`;
       }
       
       // Isi checkbox disampaikan kepada jika ada data
-      if (rowData.disampaikanKepada) {
+      if (rowData.disampaikanKepada && rowData.disampaikanKepada !== '-') {
         const kepadaValues = rowData.disampaikanKepada.split(', ');
         kepadaCheckboxes.forEach(checkbox => {
           if (kepadaValues.includes(checkbox.value)) {
@@ -2647,9 +2703,9 @@ Perihal: ${perihal}`;
         sifatSurat: document.getElementById('sifat-surat').value,
         suratDari: document.getElementById('surat-dari').value,
         perihal: document.getElementById('perihal').value,
-        isiDisposisi: isiDisposisi,
-        disampaikanKepada: disampaikanKepada,
-        disposisi: document.getElementById('disposisi').value
+        isiDisposisi: isiDisposisi || '',
+        disampaikanKepada: disampaikanKepada || '',
+        disposisi: document.getElementById('disposisi').value || ''
       };
       
       const editIndex = document.getElementById('edit-index').value;
@@ -2757,3 +2813,4 @@ Perihal: ${perihal}`;
 
 </body>
 </html>
+
