@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Data Surat - Humas UNJANI</title>
+  <title>Data Surat - SISHUMAD UNJANI</title>
   
   <!-- Tambahkan html2pdf library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -662,152 +662,152 @@
       font-size: 14px;
     }
 
-    /* STYLE UNTUK PRINT CONTENT - DIOPTIMALKAN UNTUK A5 */
+    /* STYLE UNTUK PRINT CONTENT - FORMAT SISHUMAD */
     .print-content {
       display: none;
       font-family: 'Arial', sans-serif;
-      width: 148mm !important; /* Lebar A5 */
-      min-height: 210mm !important; /* Tinggi A5 */
-      margin: 0 auto !important;
-      padding: 4mm !important; /* DIPERKECIL dari 5mm */
-      background: white !important;
-      box-sizing: border-box !important;
-      font-size: 8pt !important; /* DIPERKECIL dari 9pt */
+      width: 210mm; /* Lebar A4 */
+      min-height: 297mm; /* Tinggi A4 */
+      margin: 0 auto;
+      padding: 15mm; /* Padding normal */
+      background: white;
+      box-sizing: border-box;
+      font-size: 11pt;
       border: 1px solid #ddd;
-      overflow: hidden !important;
+      text-align: left; /* Default text-align */
     }
 
+    /* KOP SURAT - RATA TENGAH */
     .print-kop {
-      display: flex;
-      align-items: center;
-      margin-bottom: 4px !important; /* DIPERKECIL */
-      padding-bottom: 3px !important; /* DIPERKECIL */
-      border-bottom: 1px solid #000;
+      text-align: center; /* RATA TENGAH */
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      border-bottom: 2px solid #000;
     }
 
     .print-logo {
-      width: 30px !important; /* DIPERKECIL */
-      height: 30px !important; /* DIPERKECIL */
-      margin-right: 6px !important; /* DIPERKECIL */
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 5px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     .print-logo img {
-      max-width: 100% !important;
-      max-height: 100% !important;
+      max-width: 100%;
+      max-height: 100%;
       display: block;
     }
 
-    .print-kop-text {
-      flex: 1;
-      text-align: center;
-    }
-
     .print-kop-text h1 {
-      font-size: 10pt !important; /* DIPERKECIL dari 11pt */
+      font-size: 14pt;
       font-weight: bold;
-      margin: 0 0 1px 0 !important; /* DIPERKECIL */
+      margin: 0 0 3px 0;
       color: #000;
-      line-height: 1.1 !important; /* DIPERKECIL */
+      line-height: 1.2;
+      text-transform: uppercase;
     }
 
     .print-kop-text h2 {
-      font-size: 8pt !important; /* DIPERKECIL dari 9pt */
+      font-size: 12pt;
       font-weight: bold;
-      margin: 0 0 1px 0 !important; /* DIPERKECIL */
+      margin: 0 0 3px 0;
       color: #000;
-      line-height: 1.1 !important; /* DIPERKECIL */
+      line-height: 1.2;
     }
 
     .print-kop-text p {
-      font-size: 6pt !important; /* DIPERKECIL dari 7pt */
+      font-size: 10pt;
       margin: 0;
       color: #000;
-      line-height: 1 !important; /* DIPERKECIL */
+      line-height: 1.2;
     }
 
+    /* JUDUL - RATA TENGAH */
     .print-judul {
-      text-align: center;
+      text-align: center; /* RATA TENGAH */
       font-weight: bold;
-      font-size: 9pt !important; /* DIPERKECIL dari 10pt */
-      margin: 4px 0 !important; /* DIPERKECIL dari 8px 0 */
+      font-size: 12pt;
+      margin: 15px 0;
       color: #000;
       text-transform: uppercase;
-      letter-spacing: 0.3px !important; /* DIPERKECIL */
+      letter-spacing: 1px;
       border-bottom: 1px solid #000;
-      padding-bottom: 2px !important; /* DIPERKECIL dari 4px */
+      padding-bottom: 5px;
     }
 
+    /* DATA SURAT - TABEL STYLE */
     .print-data-box {
       border: 1px solid #000;
-      padding: 4px !important; /* DIPERKECIL dari 6px */
-      margin-bottom: 6px !important; /* DIPERKECIL dari 8px */
-      font-size: 7pt !important; /* DIPERKECIL dari 8pt */
+      padding: 8px;
+      margin-bottom: 10px;
+      font-size: 10pt;
     }
 
     .print-data-row {
       display: flex;
-      margin-bottom: 3px !important; /* DIPERKECIL dari 4px */
+      margin-bottom: 5px;
     }
 
     .print-data-label {
       font-weight: bold;
-      width: 100px !important; /* DIPERKECIL dari 110px */
-      min-width: 100px !important; /* DIPERKECIL dari 110px */
-      font-size: 6pt !important; /* DIPERKECIL dari 7pt */
+      width: 120px;
+      min-width: 120px;
+      font-size: 10pt;
     }
 
     .print-data-value {
       flex: 1;
       border-bottom: 1px dotted #000;
-      margin-left: 4px !important; /* DIPERKECIL dari 6px */
-      padding-bottom: 0 !important;
-      font-size: 6pt !important; /* DIPERKECIL dari 7pt */
+      margin-left: 10px;
+      padding-bottom: 2px;
+      font-size: 10pt;
     }
 
+    /* DISPOSISI CONTAINER */
     .print-disposisi-container {
       display: flex;
-      gap: 6px !important; /* DIPERKECIL dari 8px */
-      margin-bottom: 6px !important; /* DIPERKECIL dari 8px */
+      gap: 10px;
+      margin-bottom: 10px;
     }
 
     .print-disposisi-box {
       flex: 1;
       border: 1px solid #000;
-      padding: 4px !important; /* DIPERKECIL dari 6px */
-      font-size: 6pt !important; /* DIPERKECIL dari 7pt */
+      padding: 8px;
+      font-size: 10pt;
     }
 
     .print-disposisi-box h3 {
-      font-size: 7pt !important; /* DIPERKECIL dari 8pt */
+      font-size: 11pt;
       font-weight: bold;
-      margin: 0 0 2px 0 !important; /* DIPERKECIL dari 4px */
-      text-align: center;
+      margin: 0 0 8px 0;
+      text-align: center; /* RATA TENGAH */
       border-bottom: 1px solid #000;
-      padding-bottom: 1px !important; /* DIPERKECIL dari 2px */
+      padding-bottom: 3px;
       color: #000;
     }
 
+    /* CHECKBOX GROUP - 2 KOLOM */
     .print-checkbox-group {
       display: grid;
-      grid-template-columns: 1fr !important; /* UBAH jadi 1 kolom agar lebih hemat ruang */
-      gap: 1px !important; /* DIPERKECIL dari 3px */
+      grid-template-columns: 1fr 1fr; /* 2 KOLOM */
+      gap: 5px;
     }
 
     .print-checkbox-item {
       display: flex;
       align-items: center;
-      gap: 2px !important; /* DIPERKECIL dari 3px */
-      font-size: 6pt !important; /* DIPERKECIL dari 7pt */
-      line-height: 1 !important; /* DIPERKECIL dari 1.1 */
+      gap: 5px;
+      font-size: 10pt;
+      line-height: 1.2;
     }
 
     .print-checkbox-box {
       display: inline-block;
-      width: 10px !important; /* DIPERKECIL dari 12px */
-      height: 10px !important; /* DIPERKECIL dari 12px */
+      width: 15px;
+      height: 15px;
       border: 1px solid #000;
       background: white;
       position: relative;
@@ -817,43 +817,45 @@
     .print-checkbox-box.checked:after {
       content: '✓';
       position: absolute;
-      top: -2px !important; /* DIPERKECIL dari -3px */
-      left: 1px !important; /* DIPERKECIL dari 2px */
-      font-size: 9px !important; /* DIPERKECIL dari 11px */
+      top: -2px;
+      left: 3px;
+      font-size: 14px;
       font-weight: bold;
       color: #000;
     }
 
+    /* DISPOSISI TEXT BOX */
     .print-disposisi-text-box {
       border: 1px solid #000;
-      padding: 4px !important; /* DIPERKECIL dari 6px */
-      margin-bottom: 6px !important; /* DIPERKECIL dari 8px */
-      min-height: 40px !important; /* DIPERKECIL dari 50px */
-      font-size: 7pt !important; /* DIPERKECIL dari 8pt */
+      padding: 8px;
+      margin-bottom: 10px;
+      min-height: 80px;
+      font-size: 10pt;
     }
 
     .print-disposisi-text-box h3 {
-      font-size: 7pt !important; /* DIPERKECIL dari 8pt */
+      font-size: 11pt;
       font-weight: bold;
-      margin: 0 0 2px 0 !important; /* DIPERKECIL dari 4px */
-      text-align: center;
+      margin: 0 0 5px 0;
+      text-align: center; /* RATA TENGAH */
       border-bottom: 1px solid #000;
-      padding-bottom: 1px !important; /* DIPERKECIL dari 2px */
+      padding-bottom: 3px;
       color: #000;
     }
 
+    /* TTD - RATA KANAN */
     .print-ttd {
-      text-align: right;
-      margin-top: 15px !important; /* DIPERKECIL dari 30px */
-      font-size: 7pt !important; /* DIPERKECIL dari 8pt */
+      text-align: right; /* RATA KANAN */
+      margin-top: 40px;
+      font-size: 10pt;
     }
 
     .print-ttd p {
-      margin: 25px 0 2px 0 !important; /* DIPERKECIL dari 40px 0 3px */
-      font-size: 6pt !important; /* DIPERKECIL dari 7pt */
+      margin: 60px 0 5px 0;
+      font-size: 10pt;
     }
 
-    /* PRINT STYLES - DIOPTIMALKAN UNTUK A5 */
+    /* PRINT STYLES */
     @media print {
       body * {
         visibility: hidden;
@@ -865,15 +867,13 @@
         position: absolute;
         left: 0;
         top: 0;
-        width: 148mm !important;
-        height: 210mm !important;
-        padding: 4mm !important; /* DIPERKECIL */
-        margin: 0 !important;
-        font-size: 8pt !important; /* DIPERKECIL */
+        width: 210mm;
+        height: 297mm;
+        padding: 15mm;
+        margin: 0;
+        font-size: 11pt;
         box-sizing: border-box;
         page-break-after: always;
-        transform: scale(1) !important; /* Pastikan tidak ada scaling */
-        transform-origin: top left !important;
       }
       .no-print {
         display: none !important;
@@ -881,8 +881,8 @@
       
       /* Hilangkan margin default browser */
       @page {
-        margin: 0 !important;
-        size: A5 portrait;
+        margin: 0;
+        size: A4 portrait;
       }
       
       .print-logo img {
@@ -1276,8 +1276,8 @@
           <img src="logounjani.png" alt="Logo UNJANI">
         </div>
         <div class="logo-text">
-          <h1>Data Surat - Humas UNJANI</h1>
-          <p>Universitas Jenderal Achmad Yani - Humas (UNJANI)</p>
+          <h1>Data Surat - SISHUMAD UNJANI</h1>
+          <p>Universitas Jenderal Achmad Yani - SISHUMAD (UNJANI)</p>
         </div>
       </div>
       <div class="controls">
@@ -1670,8 +1670,9 @@
     </div>
   </div>
 
-  <!-- PRINT CONTENT - FORMAT HUMAS DENGAN UKURAN A5 YANG DIOPTIMALKAN -->
+  <!-- PRINT CONTENT - FORMAT SISHUMAD DENGAN RATA TENGAH -->
   <div class="print-content" id="print-content">
+    <!-- KOP SURAT (RATA TENGAH) -->
     <div class="print-kop">
       <div class="print-logo">
         <!-- LOGO UNJANI -->
@@ -1679,30 +1680,32 @@
       </div>
       <div class="print-kop-text">
         <h1>UNIVERSITAS JENDERAL ACHMAD YANI</h1>
-        <h2>HUMAS (UNJANI)</h2>
+        <h2>SISTEM INFORMASI HUMAS DAN ADMINISTRASI (SISHUMAD)</h2>
         <p>Jl. Terusan Jenderal Sudirman PO. BOX 148 Cimahi 40533</p>
       </div>
     </div>
     
+    <!-- JUDUL (RATA TENGAH) -->
     <div class="print-judul">AGENDA SURAT MASUK — LEMBAR DISPOSISI</div>
     
+    <!-- DATA SURAT -->
     <div class="print-data-box">
       <div class="print-data-row">
         <div class="print-data-label">Nomor Agenda</div>
         <div class="print-data-value" id="print-nomor-agenda"></div>
-        <div class="print-data-label" style="width: 100px; margin-left: 10px;">Nomor Surat</div>
+        <div class="print-data-label" style="width: 120px; margin-left: 15px;">Nomor Surat</div>
         <div class="print-data-value" id="print-nomor-surat"></div>
       </div>
       <div class="print-data-row">
         <div class="print-data-label">Tanggal Surat</div>
         <div class="print-data-value" id="print-tanggal-surat"></div>
-        <div class="print-data-label" style="width: 100px; margin-left: 10px;">Tanggal Terima</div>
+        <div class="print-data-label" style="width: 120px; margin-left: 15px;">Tanggal Terima</div>
         <div class="print-data-value" id="print-tanggal-terima"></div>
       </div>
       <div class="print-data-row">
         <div class="print-data-label">Sifat Surat</div>
         <div class="print-data-value" id="print-sifat-surat"></div>
-        <div class="print-data-label" style="width: 100px; margin-left: 10px;">Jumlah Lampiran</div>
+        <div class="print-data-label" style="width: 120px; margin-left: 15px;">Jumlah Lampiran</div>
         <div class="print-data-value" id="print-jumlah-lampiran"></div>
       </div>
       <div class="print-data-row">
@@ -1715,6 +1718,7 @@
       </div>
     </div>
     
+    <!-- DISPOSISI (HEADER RATA TENGAH) -->
     <div class="print-disposisi-container">
       <div class="print-disposisi-box">
         <h3>Isi Disposisi</h3>
@@ -1771,11 +1775,13 @@
       </div>
     </div>
     
+    <!-- KETERANGAN DISPOSISI (HEADER RATA TENGAH) -->
     <div class="print-disposisi-text-box">
       <h3>Disposisi</h3>
       <div id="print-disposisi-text"></div>
     </div>
     
+    <!-- TTD (RATA KANAN) -->
     <div class="print-ttd">
       <p>Cimahi, ........./........./2025</p>
       <p>Kapus SISHUMAD</p>
@@ -1783,7 +1789,7 @@
   </div>
 
   <div class="footer no-print">
-    <p>© 2025 Sistem Administrasi Surat — Humas UNJANI</p>
+    <p>© 2025 Sistem Administrasi Surat — SISHUMAD UNJANI</p>
     <p style="margin-top: 5px; font-size: 12px;">Version 2.2 | Modern UI Design</p>
   </div>
 
@@ -1792,10 +1798,8 @@
     let currentDetailIndex = null;
     let sortedData = []; // Menyimpan data yang sudah diurutkan
     
-    // PERBAIKAN: Menggunakan link App Script yang baru
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx12U5i3_07MmmNcvvblNzj1VQbOclKRSS-3z4e75Vs5NEyL8E3VcJ3C9OL4HmrLwthNg/exec";
     
-    // PERBAIKAN: Mapping kolom untuk menyesuaikan dengan Google Forms
     const COLUMN_MAPPING = {
       'Timestamp': 'Timestamp',
       'Nomor Surat': 'Nomor Surat',
@@ -1812,7 +1816,6 @@
 
     // ======================== FUNGSI UTAMA ========================
     
-    // FUNGSI 1: Ekstrak data dari berbagai format
     function extractRowData(row) {
       let data = {
         timestamp: '',
@@ -1829,7 +1832,6 @@
       };
       
       if (Array.isArray(row)) {
-        // Format array langsung
         data = {
           timestamp: row[0] || '',
           nomorSurat: row[1] || '',
@@ -1844,7 +1846,6 @@
           disposisi: row[10] || ''
         };
       } else if (typeof row === 'object') {
-        // Format object dengan berbagai kemungkinan nama kolom
         data = {
           timestamp: row.Timestamp || row.timestamp || row['Timestamp'] || '',
           nomorSurat: row['Nomor Surat'] || row.nomorSurat || row['nomor-surat'] || '',
@@ -1863,15 +1864,12 @@
       return data;
     }
     
-    // FUNGSI 2: Parse tanggal dari berbagai format
     function parseDate(dateString) {
       if (!dateString) return new Date(0);
       
-      // Coba format ISO (2026-01-13T02:32:12.530Z)
       let date = new Date(dateString);
       if (!isNaN(date.getTime())) return date;
       
-      // Coba format Indonesia (13/01/2026 9:32:17)
       const indonesianFormat = dateString.match(/(\d{2})\/(\d{2})\/(\d{4}) (\d{1,2}):(\d{2}):(\d{2})/);
       if (indonesianFormat) {
         const [_, day, month, year, hour, minute, second] = indonesianFormat;
@@ -1879,7 +1877,6 @@
         if (!isNaN(date.getTime())) return date;
       }
       
-      // Coba format Indonesia tanpa waktu (13/01/2026)
       const simpleIndoFormat = dateString.match(/(\d{2})\/(\d{2})\/(\d{4})/);
       if (simpleIndoFormat) {
         const [_, day, month, year] = simpleIndoFormat;
@@ -1887,15 +1884,12 @@
         if (!isNaN(date.getTime())) return date;
       }
       
-      // Coba format lain
       date = new Date(dateString);
       if (!isNaN(date.getTime())) return date;
       
-      // Default ke tanggal 0 jika tidak bisa parse
       return new Date(0);
     }
     
-    // FUNGSI 3: Format tanggal untuk display
     function formatDateForDisplay(dateString) {
       if (!dateString || dateString.trim() === '' || dateString === '-') return '-';
       
@@ -1914,7 +1908,6 @@
       }
     }
     
-    // FUNGSI 4: Format tanggal singkat (untuk print)
     function formatDateShort(dateString) {
       if (!dateString || dateString.trim() === '' || dateString === '-') return '';
       
@@ -1932,7 +1925,6 @@
       }
     }
     
-    // FUNGSI 5: Format tanggal dan waktu
     function formatDateTime(date) {
       try {
         if (!date || isNaN(date.getTime())) {
@@ -1951,7 +1943,6 @@
       }
     }
     
-    // FUNGSI 6: Format tanggal untuk input date field
     function formatDateForInput(dateString) {
       if (!dateString || dateString.trim() === '' || dateString === '-') return '';
       
@@ -1959,7 +1950,6 @@
       if (date.getTime() === 0) return '';
       
       try {
-        // Format YYYY-MM-DD untuk input[type="date"]
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
@@ -1969,13 +1959,11 @@
       }
     }
     
-    // FUNGSI 7: Toggle dropdown
     function toggleDropdown(dropdown) {
       const menu = dropdown.querySelector('.dropdown-menu');
       menu.classList.toggle('show');
     }
     
-    // FUNGSI 8: Menutup semua dropdown
     function closeAllDropdowns() {
       document.querySelectorAll('.dropdown-menu').forEach(menu => {
         menu.classList.remove('show');
@@ -1984,7 +1972,6 @@
 
     // ======================== FUNGSI DATA ========================
     
-    // Fungsi untuk memuat data dari Google Sheets
     function loadData() {
       const tableBody = document.getElementById('data-table-body');
       
@@ -2007,7 +1994,6 @@
           tableBody.innerHTML = '';
           currentData = data.data || [];
           
-          // Update data count
           const dataCount = currentData.length;
           document.getElementById('total-surat').textContent = dataCount;
           
@@ -2016,25 +2002,18 @@
             return;
           }
           
-          // BALIK URUTAN ARRAY: data terbaru (indeks terakhir) jadi di atas
           sortedData = [...currentData].reverse();
           
-          // Render tabel
           sortedData.forEach(function(row, displayIndex) {
-            // Hitung originalIndex dari data yang sudah di-reverse
             const originalIndex = currentData.length - 1 - displayIndex;
             const tr = document.createElement('tr');
             tr.dataset.rowIndex = originalIndex;
             
-            // NOMOR AGENDA SESUAI URUTAN INPUT (originalIndex + 1)
             const agendaNumber = originalIndex + 1;
             tr.dataset.nomorAgenda = agendaNumber.toString();
             
-            // Konversi data
             const rowData = extractRowData(row);
             
-            // ========== HANYA SATU KOLOM ANGKA: NO. AGENDA ==========
-            // Kolom Nomor Agenda (satu-satunya kolom angka)
             const nomorAgendaTd = document.createElement('td');
             nomorAgendaTd.textContent = agendaNumber;
             nomorAgendaTd.style.textAlign = 'center';
@@ -2042,70 +2021,56 @@
             nomorAgendaTd.style.color = 'var(--primary-dark)';
             nomorAgendaTd.style.backgroundColor = 'rgba(0, 107, 63, 0.05)';
             tr.appendChild(nomorAgendaTd);
-            // ========================================================
             
-            // Kolom Nomor Surat
             const nomorSuratTd = document.createElement('td');
             nomorSuratTd.textContent = rowData.nomorSurat || '';
             tr.appendChild(nomorSuratTd);
             
-            // Kolom Tanggal Surat
             const tanggalSuratTd = document.createElement('td');
             tanggalSuratTd.textContent = formatDateForDisplay(rowData.tanggalSurat) || '';
             tr.appendChild(tanggalSuratTd);
             
-            // Kolom Tanggal Terima
             const tanggalTerimaTd = document.createElement('td');
             tanggalTerimaTd.textContent = formatDateForDisplay(rowData.tanggalTerima) || '';
             tr.appendChild(tanggalTerimaTd);
             
-            // Kolom Jumlah Lampiran
             const jumlahLampiranTd = document.createElement('td');
             jumlahLampiranTd.textContent = rowData.jumlahLampiran || '';
             tr.appendChild(jumlahLampiranTd);
             
-            // Kolom Sifat Surat
             const sifatSuratTd = document.createElement('td');
             sifatSuratTd.textContent = rowData.sifatSurat || '';
             tr.appendChild(sifatSuratTd);
             
-            // Kolom Surat Dari
             const suratDariTd = document.createElement('td');
             suratDariTd.textContent = rowData.suratDari || '';
             tr.appendChild(suratDariTd);
             
-            // Kolom Perihal
             const perihalTd = document.createElement('td');
             perihalTd.textContent = rowData.perihal || '';
             tr.appendChild(perihalTd);
             
-            // Kolom Isi Disposisi
             const isiDisposisiTd = document.createElement('td');
             isiDisposisiTd.textContent = rowData.isiDisposisi || '';
             tr.appendChild(isiDisposisiTd);
             
-            // Kolom Disampaikan Kepada
             const disampaikanKepadaTd = document.createElement('td');
             disampaikanKepadaTd.textContent = rowData.disampaikanKepada || '';
             tr.appendChild(disampaikanKepadaTd);
             
-            // Kolom Keterangan Disposisi
             const disposisiTd = document.createElement('td');
             disposisiTd.textContent = rowData.disposisi || '';
             tr.appendChild(disposisiTd);
             
-            // Kolom Aksi
             const actionTd = document.createElement('td');
             actionTd.className = 'action-buttons';
             
-            // Detail button
             const detailBtn = document.createElement('button');
             detailBtn.className = 'detail-btn';
             detailBtn.innerHTML = '<span class="btn-icon">👁️</span>';
             detailBtn.title = 'Detail';
             detailBtn.onclick = () => showDetail(originalIndex, rowData);
             
-            // Action dropdown untuk Edit dan Delete
             const actionDropdown = document.createElement('div');
             actionDropdown.className = 'action-dropdown';
             
@@ -2121,7 +2086,6 @@
             const dropdownMenu = document.createElement('div');
             dropdownMenu.className = 'dropdown-menu';
             
-            // Edit item
             const editItem = document.createElement('a');
             editItem.className = 'dropdown-item';
             editItem.href = '#';
@@ -2133,7 +2097,6 @@
               closeAllDropdowns();
             };
             
-            // Delete item
             const deleteItem = document.createElement('a');
             deleteItem.className = 'dropdown-item delete';
             deleteItem.href = '#';
@@ -2158,7 +2121,6 @@
             tableBody.appendChild(tr);
           });
           
-          // Tambahkan event listener untuk menutup dropdown saat klik di luar
           document.addEventListener('click', closeAllDropdowns);
         })
         .catch(error => {
@@ -2169,16 +2131,13 @@
 
     // ======================== FUNGSI TAMPILAN ========================
     
-    // Fungsi untuk menampilkan halaman detail
     function showDetail(index, rowData) {
       currentDetailIndex = index;
       document.getElementById('main-content').style.display = 'none';
       document.getElementById('detail-content').style.display = 'block';
       
-      // NOMOR AGENDA SESUAI URUTAN INPUT
       const nomorAgenda = index + 1;
       
-      // Isi data detail dengan format yang benar
       document.getElementById('detail-nomor-agenda').textContent = nomorAgenda.toString();
       document.getElementById('detail-timestamp').textContent = formatDateTime(parseDate(rowData.timestamp)) || '-';
       document.getElementById('detail-nomor-surat').textContent = rowData.nomorSurat || '-';
@@ -2192,7 +2151,6 @@
       document.getElementById('detail-disampaikan-kepada').textContent = rowData.disampaikanKepada || '-';
       document.getElementById('detail-disposisi').textContent = rowData.disposisi || '-';
       
-      // Informasi timestamp
       const inputDate = parseDate(rowData.timestamp);
       if (inputDate && !isNaN(inputDate.getTime())) {
         document.getElementById('detail-tanggal-input').textContent = formatDateTime(inputDate);
@@ -2203,24 +2161,20 @@
       }
     }
     
-    // Fungsi untuk kembali ke halaman utama
     function backToMain() {
       document.getElementById('main-content').style.display = 'block';
       document.getElementById('detail-content').style.display = 'none';
       currentDetailIndex = null;
     }
     
-    // Fungsi untuk mengedit data
     function editSurat(index, rowData) {
       modal.style.display = 'block';
       
-      // NOMOR AGENDA SESUAI URUTAN INPUT
       const nomorAgenda = index + 1;
       modalTitle.innerHTML = `<span class="btn-icon">✏️</span> Edit Data Surat - Nomor Agenda: ${nomorAgenda}`;
       
       document.getElementById('edit-index').value = index;
       
-      // Isi form dengan data yang ada dengan format yang benar
       document.getElementById('nomor-surat').value = rowData.nomorSurat || '';
       document.getElementById('tanggal-surat').value = formatDateForInput(rowData.tanggalSurat) || '';
       document.getElementById('tanggal-terima').value = formatDateForInput(rowData.tanggalTerima) || '';
@@ -2230,7 +2184,6 @@
       document.getElementById('perihal').value = rowData.perihal || '';
       document.getElementById('disposisi').value = rowData.disposisi || '';
       
-      // Reset checkbox
       const disposisiCheckboxes = document.querySelectorAll('#isi-disposisi-checkbox input[type="checkbox"]');
       const kepadaCheckboxes = document.querySelectorAll('#disampaikan-kepada-checkbox input[type="checkbox"]');
       
@@ -2242,7 +2195,6 @@
         checkbox.checked = false;
       });
       
-      // Isi checkbox isi disposisi jika ada data
       if (rowData.isiDisposisi && rowData.isiDisposisi !== '-') {
         const disposisiValues = rowData.isiDisposisi.split(', ');
         disposisiCheckboxes.forEach(checkbox => {
@@ -2252,7 +2204,6 @@
         });
       }
       
-      // Isi checkbox disampaikan kepada jika ada data
       if (rowData.disampaikanKepada && rowData.disampaikanKepada !== '-') {
         const kepadaValues = rowData.disampaikanKepada.split(', ');
         kepadaCheckboxes.forEach(checkbox => {
@@ -2263,56 +2214,45 @@
       }
     }
     
-    // Fungsi untuk menampilkan modal delete
     function showDeleteModal(index, rowData) {
       deleteIndex = index;
       
-      // NOMOR AGENDA SESUAI URUTAN INPUT
       const nomorAgenda = index + 1;
       
-      // Isi informasi surat yang akan dihapus
       document.getElementById('delete-nomor-surat').textContent = rowData.nomorSurat || '';
       document.getElementById('delete-surat-dari').textContent = rowData.suratDari || '';
       document.getElementById('delete-perihal').textContent = rowData.perihal || '';
       
-      // Update judul modal dengan nomor agenda
       document.querySelector('.delete-modal-header h2').innerHTML = 
         `<span class="btn-icon">🗑️</span> Hapus Data Surat - Nomor Agenda: ${nomorAgenda}`;
       
-      // Tampilkan modal
       deleteModal.style.display = 'block';
     }
 
     // ======================== FUNGSI OPERASI DATA ========================
     
-    // Fungsi untuk mengupdate data
     function updateSurat(index, suratData) {
       return new Promise((resolve, reject) => {
-        // Buat URL dengan parameter
         const params = new URLSearchParams();
         params.append('action', 'update');
         params.append('rowIndex', index);
         
-        // Tentukan format tanggal yang akan disimpan
         const formatDateForStorage = (dateString) => {
           if (!dateString) return '';
           const date = parseDate(dateString);
           if (isNaN(date.getTime())) return dateString;
           
-          // Format: DD/MM/YYYY untuk konsistensi
           const day = String(date.getDate()).padStart(2, '0');
           const month = String(date.getMonth() + 1).padStart(2, '0');
           const year = date.getFullYear();
           return `${day}/${month}/${year}`;
         };
         
-        // Format tanggal untuk penyimpanan
         const tanggalSuratFormatted = formatDateForStorage(suratData.tanggalSurat);
         const tanggalTerimaFormatted = formatDateForStorage(suratData.tanggalTerima);
         
-        // Tambahkan semua data kolom
         const columns = [
-          new Date().toISOString(), // Update timestamp ke format ISO
+          new Date().toISOString(),
           suratData.nomorSurat || '',
           tanggalSuratFormatted || '',
           tanggalTerimaFormatted || '',
@@ -2331,7 +2271,6 @@
         
         console.log('Update params:', params.toString());
         
-        // Gunakan fetch dengan method POST untuk update
         fetch(SCRIPT_URL, {
           method: 'POST',
           headers: {
@@ -2360,7 +2299,6 @@
       });
     }
     
-    // Fungsi untuk menghapus data
     function deleteSurat(index) {
       return new Promise((resolve, reject) => {
         const params = new URLSearchParams();
@@ -2397,16 +2335,13 @@
 
     // ======================== FUNGSI PRINT & SHARE ========================
     
-    // Fungsi untuk mencetak detail surat - DIOPTIMALKAN
     function printDetail() {
       if (currentDetailIndex === null) return;
       
       const rowData = extractRowData(currentData[currentDetailIndex]);
       
-      // NOMOR AGENDA SESUAI URUTAN INPUT
       const nomorAgenda = currentDetailIndex + 1;
       
-      // Isi data ke template print dengan nilai default
       document.getElementById('print-nomor-agenda').textContent = nomorAgenda.toString();
       document.getElementById('print-nomor-surat').textContent = rowData.nomorSurat || '-';
       document.getElementById('print-tanggal-surat').textContent = formatDateShort(rowData.tanggalSurat) || '-';
@@ -2416,12 +2351,10 @@
       document.getElementById('print-surat-dari').textContent = rowData.suratDari || '-';
       document.getElementById('print-perihal').textContent = rowData.perihal || '-';
       
-      // Perbaikan untuk disposisi yang mungkin undefined
       const disposisiText = rowData.disposisi || '';
       document.getElementById('print-disposisi-text').textContent = disposisiText;
       document.getElementById('print-disposisi-text').innerHTML = disposisiText.replace(/\n/g, '<br>');
       
-      // Reset semua checkbox di template print
       const printDisposisiCheckboxes = document.querySelectorAll('#print-isi-disposisi .print-checkbox-box');
       const printKepadaCheckboxes = document.querySelectorAll('#print-disampaikan-kepada .print-checkbox-box');
       
@@ -2433,7 +2366,6 @@
         box.classList.remove('checked');
       });
       
-      // Centang checkbox isi disposisi yang sesuai
       if (rowData.isiDisposisi && rowData.isiDisposisi !== '-') {
         const disposisiValues = rowData.isiDisposisi.split(', ');
         disposisiValues.forEach(value => {
@@ -2446,7 +2378,6 @@
         });
       }
       
-      // Centang checkbox disampaikan kepada yang sesuai
       if (rowData.disampaikanKepada && rowData.disampaikanKepada !== '-') {
         const kepadaValues = rowData.disampaikanKepada.split(', ');
         kepadaValues.forEach(value => {
@@ -2459,18 +2390,13 @@
         });
       }
       
-      // Tampilkan print content
       document.getElementById('print-content').style.display = 'block';
       
-      // Tambahkan kelas untuk print
       document.body.classList.add('printing');
       
-      // Tunggu sebentar agar DOM diperbarui, lalu cetak
       setTimeout(() => {
-        // Trigger print
         window.print();
         
-        // Setelah cetak, sembunyikan print content
         setTimeout(() => {
           document.getElementById('print-content').style.display = 'none';
           document.body.classList.remove('printing');
@@ -2478,13 +2404,12 @@
       }, 100);
     }
     
-    // Fungsi untuk download PDF - DIOPTIMALKAN UNTUK A5
+    // FUNGSI DOWNLOAD PDF - KEMBALI KE FORMAT AWAL (SISHUMAD)
     function downloadPDF() {
       if (currentDetailIndex === null) return;
       
       const rowData = extractRowData(currentData[currentDetailIndex]);
       
-      // NOMOR AGENDA SESUAI URUTAN INPUT
       const nomorAgenda = currentDetailIndex + 1;
       
       const nomorSurat = rowData.nomorSurat || '';
@@ -2498,64 +2423,63 @@
       const isiDisposisi = rowData.isiDisposisi || '';
       const disampaikanKepada = rowData.disampaikanKepada || '';
       
-      // Buat elemen HTML untuk PDF - DIOPTIMALKAN UNTUK A5
+      // BUAT ELEMEN HTML UNTUK PDF DENGAN FORMAT SISHUMAD
       const pdfContent = document.createElement('div');
-      pdfContent.style.cssText = 'font-family: Arial, sans-serif; width: 148mm; min-height: 210mm; padding: 4mm; margin: 0; background: white; box-sizing: border-box; font-size: 8pt;';
+      pdfContent.style.cssText = 'font-family: Arial, sans-serif; width: 210mm; min-height: 297mm; padding: 15mm; margin: 0; background: white; box-sizing: border-box; font-size: 11pt;';
       
-      // Isi konten PDF dengan format yang lebih compact
       pdfContent.innerHTML = `
-        <!-- Kop Surat -->
-        <div style="display: flex; align-items: center; margin-bottom: 4px; padding-bottom: 3px; border-bottom: 1px solid #000;">
-          <div style="width: 30px; height: 30px; margin-right: 6px; display: flex; align-items: center; justify-content: center;">
-            <div style="width: 100%; height: 100%; background: #006B3F; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 7px; text-align: center;">LOGO<br>UNJANI</div>
+        <!-- KOP SURAT (RATA TENGAH) -->
+        <div style="text-align: center; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 2px solid #000;">
+          <div style="width: 70px; height: 70px; margin: 0 auto 5px; display: flex; align-items: center; justify-content: center;">
+            <div style="width: 100%; height: 100%; background: #006B3F; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 10px; text-align: center;">LOGO<br>UNJANI</div>
           </div>
-          <div style="flex: 1; text-align: center;">
-            <h1 style="font-size: 10pt; font-weight: bold; margin: 0 0 1px 0; color: #000; line-height: 1.1;">UNIVERSITAS JENDERAL ACHMAD YANI</h1>
-            <h2 style="font-size: 8pt; font-weight: bold; margin: 0 0 1px 0; color: #000; line-height: 1.1;">HUMAS (UNJANI)</h2>
-            <p style="font-size: 6pt; margin: 0; color: #000; line-height: 1;">Jl. Terusan Jenderal Sudirman PO. BOX 148 Cimahi 40533</p>
+          <div>
+            <h1 style="font-size: 14pt; font-weight: bold; margin: 0 0 3px 0; color: #000; line-height: 1.2; text-transform: uppercase;">UNIVERSITAS JENDERAL ACHMAD YANI</h1>
+            <h2 style="font-size: 12pt; font-weight: bold; margin: 0 0 3px 0; color: #000; line-height: 1.2;">SISTEM INFORMASI HUMAS DAN ADMINISTRASI (SISHUMAD)</h2>
+            <p style="font-size: 10pt; margin: 0; color: #000; line-height: 1.2;">Jl. Terusan Jenderal Sudirman PO. BOX 148 Cimahi 40533</p>
           </div>
         </div>
         
-        <!-- Judul -->
-        <div style="text-align: center; font-weight: bold; font-size: 9pt; margin: 4px 0; color: #000; text-transform: uppercase; letter-spacing: 0.3px; border-bottom: 1px solid #000; padding-bottom: 2px;">
+        <!-- JUDUL (RATA TENGAH) -->
+        <div style="text-align: center; font-weight: bold; font-size: 12pt; margin: 15px 0; color: #000; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid #000; padding-bottom: 5px;">
           AGENDA SURAT MASUK — LEMBAR DISPOSISI
         </div>
         
-        <!-- Data Surat - LEBIH COMPACT -->
-        <div style="border: 1px solid #000; padding: 4px; margin-bottom: 6px; font-size: 7pt;">
-          <div style="display: flex; margin-bottom: 3px;">
-            <div style="font-weight: bold; width: 100px; min-width: 100px; font-size: 6pt;">Nomor Agenda</div>
-            <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 4px; padding-bottom: 0; font-size: 6pt;">${nomorAgenda}</div>
-            <div style="font-weight: bold; width: 100px; margin-left: 10px; font-size: 6pt;">Nomor Surat</div>
-            <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 4px; padding-bottom: 0; font-size: 6pt;">${nomorSurat}</div>
+        <!-- DATA SURAT -->
+        <div style="border: 1px solid #000; padding: 8px; margin-bottom: 10px; font-size: 10pt;">
+          <div style="display: flex; margin-bottom: 5px;">
+            <div style="font-weight: bold; width: 120px; min-width: 120px; font-size: 10pt;">Nomor Agenda</div>
+            <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 10px; padding-bottom: 2px; font-size: 10pt;">${nomorAgenda}</div>
+            <div style="font-weight: bold; width: 120px; margin-left: 15px; font-size: 10pt;">Nomor Surat</div>
+            <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 10px; padding-bottom: 2px; font-size: 10pt;">${nomorSurat}</div>
           </div>
-          <div style="display: flex; margin-bottom: 3px;">
-            <div style="font-weight: bold; width: 100px; min-width: 100px; font-size: 6pt;">Tanggal Surat</div>
-            <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 4px; padding-bottom: 0; font-size: 6pt;">${tanggalSurat}</div>
-            <div style="font-weight: bold; width: 100px; margin-left: 10px; font-size: 6pt;">Tanggal Terima</div>
-            <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 4px; padding-bottom: 0; font-size: 6pt;">${tanggalTerima}</div>
+          <div style="display: flex; margin-bottom: 5px;">
+            <div style="font-weight: bold; width: 120px; min-width: 120px; font-size: 10pt;">Tanggal Surat</div>
+            <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 10px; padding-bottom: 2px; font-size: 10pt;">${tanggalSurat}</div>
+            <div style="font-weight: bold; width: 120px; margin-left: 15px; font-size: 10pt;">Tanggal Terima</div>
+            <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 10px; padding-bottom: 2px; font-size: 10pt;">${tanggalTerima}</div>
           </div>
-          <div style="display: flex; margin-bottom: 3px;">
-            <div style="font-weight: bold; width: 100px; min-width: 100px; font-size: 6pt;">Sifat Surat</div>
-            <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 4px; padding-bottom: 0; font-size: 6pt;">${sifatSurat}</div>
-            <div style="font-weight: bold; width: 100px; margin-left: 10px; font-size: 6pt;">Jumlah Lampiran</div>
-            <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 4px; padding-bottom: 0; font-size: 6pt;">${jumlahLampiran}</div>
+          <div style="display: flex; margin-bottom: 5px;">
+            <div style="font-weight: bold; width: 120px; min-width: 120px; font-size: 10pt;">Sifat Surat</div>
+            <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 10px; padding-bottom: 2px; font-size: 10pt;">${sifatSurat}</div>
+            <div style="font-weight: bold; width: 120px; margin-left: 15px; font-size: 10pt;">Jumlah Lampiran</div>
+            <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 10px; padding-bottom: 2px; font-size: 10pt;">${jumlahLampiran}</div>
           </div>
-          <div style="display: flex; margin-bottom: 3px;">
-            <div style="font-weight: bold; width: 100px; min-width: 100px; font-size: 6pt;">Surat Dari</div>
-            <div style="flex: 3; border-bottom: 1px dotted #000; margin-left: 4px; padding-bottom: 0; font-size: 6pt;">${suratDari}</div>
+          <div style="display: flex; margin-bottom: 5px;">
+            <div style="font-weight: bold; width: 120px; min-width: 120px; font-size: 10pt;">Surat Dari</div>
+            <div style="flex: 3; border-bottom: 1px dotted #000; margin-left: 10px; padding-bottom: 2px; font-size: 10pt;">${suratDari}</div>
           </div>
-          <div style="display: flex; margin-bottom: 3px;">
-            <div style="font-weight: bold; width: 100px; min-width: 100px; font-size: 6pt;">Perihal</div>
-            <div style="flex: 3; border-bottom: 1px dotted #000; margin-left: 4px; padding-bottom: 0; font-size: 6pt;">${perihal}</div>
+          <div style="display: flex; margin-bottom: 5px;">
+            <div style="font-weight: bold; width: 120px; min-width: 120px; font-size: 10pt;">Perihal</div>
+            <div style="flex: 3; border-bottom: 1px dotted #000; margin-left: 10px; padding-bottom: 2px; font-size: 10pt;">${perihal}</div>
           </div>
         </div>
         
-        <!-- Disposisi - LEBIH COMPACT -->
-        <div style="display: flex; gap: 6px; margin-bottom: 6px;">
-          <div style="flex: 1; border: 1px solid #000; padding: 4px; font-size: 6pt;">
-            <h3 style="font-size: 7pt; font-weight: bold; margin: 0 0 2px 0; text-align: center; border-bottom: 1px solid #000; padding-bottom: 1px; color: #000;">Isi Disposisi</h3>
-            ${generateCheckboxHTMLForPDFCompact(isiDisposisi, [
+        <!-- DISPOSISI -->
+        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+          <div style="flex: 1; border: 1px solid #000; padding: 8px; font-size: 10pt;">
+            <h3 style="font-size: 11pt; font-weight: bold; margin: 0 0 8px 0; text-align: center; border-bottom: 1px solid #000; padding-bottom: 3px; color: #000;">Isi Disposisi</h3>
+            ${generateCheckboxHTMLForPDF(isiDisposisi, [
               'Tindak lanjuti',
               'Untuk dilaksanakan',
               'Wakili',
@@ -2570,9 +2494,9 @@
             ])}
           </div>
           
-          <div style="flex: 1; border: 1px solid #000; padding: 4px; font-size: 6pt;">
-            <h3 style="font-size: 7pt; font-weight: bold; margin: 0 0 2px 0; text-align: center; border-bottom: 1px solid #000; padding-bottom: 1px; color: #000;">Disampaikan kepada:</h3>
-            ${generateCheckboxHTMLForPDFCompact(disampaikanKepada, [
+          <div style="flex: 1; border: 1px solid #000; padding: 8px; font-size: 10pt;">
+            <h3 style="font-size: 11pt; font-weight: bold; margin: 0 0 8px 0; text-align: center; border-bottom: 1px solid #000; padding-bottom: 3px; color: #000;">Disampaikan kepada:</h3>
+            ${generateCheckboxHTMLForPDF(disampaikanKepada, [
               'Ka Bag Pers & Multimedia',
               'Arsip',
               'Staff'
@@ -2580,36 +2504,36 @@
           </div>
         </div>
         
-        <!-- Keterangan Disposisi - LEBIH COMPACT -->
-        <div style="border: 1px solid #000; padding: 4px; margin-bottom: 6px; min-height: 40px; font-size: 7pt;">
-          <h3 style="font-size: 7pt; font-weight: bold; margin: 0 0 2px 0; text-align: center; border-bottom: 1px solid #000; padding-bottom: 1px; color: #000;">Disposisi</h3>
-          <div style="line-height: 1.2;">${disposisi}</div>
+        <!-- KETERANGAN DISPOSISI -->
+        <div style="border: 1px solid #000; padding: 8px; margin-bottom: 10px; min-height: 80px; font-size: 10pt;">
+          <h3 style="font-size: 11pt; font-weight: bold; margin: 0 0 5px 0; text-align: center; border-bottom: 1px solid #000; padding-bottom: 3px; color: #000;">Disposisi</h3>
+          <div style="line-height: 1.4;">${disposisi}</div>
         </div>
         
-        <!-- TTD Kapus SISHUMAD - LEBIH COMPACT -->
-        <div style="text-align: right; margin-top: 15px; font-size: 7pt;">
-          <p style="margin: 25px 0 2px 0; font-size: 6pt;">Cimahi, ........./........./2025</p>
-          <p style="margin: 0; font-size: 6pt; font-weight: bold;">Kapus SISHUMAD</p>
+        <!-- TTD (RATA KANAN) -->
+        <div style="text-align: right; margin-top: 40px; font-size: 10pt;">
+          <p style="margin: 60px 0 5px 0; font-size: 10pt;">Cimahi, ........./........./2025</p>
+          <p style="margin: 0; font-size: 10pt; font-weight: bold;">Kapus SISHUMAD</p>
         </div>
       `;
       
-      // Konfigurasi untuk html2pdf - DIOPTIMALKAN UNTUK A5
+      // KONFIGURASI UNTUK HTML2PDF - FORMAT A4
       const opt = {
         margin: [0, 0, 0, 0],
         filename: `Disposisi_Surat_${nomorAgenda}.pdf`,
-        image: { type: 'jpeg', quality: 0.95 },
+        image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { 
           scale: 2,
           useCORS: true,
           backgroundColor: '#FFFFFF',
-          width: 148,
-          height: 210,
+          width: 210,
+          height: 297,
           logging: false,
           letterRendering: true
         },
         jsPDF: { 
           unit: 'mm', 
-          format: 'a5',
+          format: 'a4',
           orientation: 'portrait',
           compress: true,
           hotfixes: ["px_scaling"]
@@ -2617,26 +2541,29 @@
         pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
       };
       
-      // Generate PDF dengan timeout untuk memastikan rendering
+      // GENERATE PDF
       setTimeout(() => {
         html2pdf().set(opt).from(pdfContent).save();
       }, 500);
     }
     
-    // Fungsi untuk generate checkbox yang lebih compact
-    function generateCheckboxHTMLForPDFCompact(selectedValues, options) {
+    // FUNGSI UNTUK GENERATE CHECKBOX UNTUK PDF
+    function generateCheckboxHTMLForPDF(selectedValues, options) {
       if (!selectedValues) selectedValues = '';
       const values = selectedValues.split(', ').filter(v => v.trim() !== '');
-      let html = '<div style="display: grid; grid-template-columns: 1fr; gap: 1px;">';
+      let html = '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px;">';
       
       options.forEach(option => {
         const isChecked = values.includes(option);
-        const checkmark = isChecked ? '✓' : '';
+        const checkboxStyle = 'display: inline-block; width: 15px; height: 15px; border: 1px solid #000; background: white; margin-right: 5px; flex-shrink: 0;';
+        
+        const checkmark = isChecked 
+          ? '<span style="position: absolute; top: -2px; left: 3px; font-size: 14px; font-weight: bold; color: #000;">✓</span>' 
+          : '';
         
         html += `
-          <div style="display: flex; align-items: center; gap: 2px; font-size: 6pt; line-height: 1;">
-            <span style="display: inline-block; width: 10px; height: 10px; border: 1px solid #000; background: white; text-align: center; line-height: 8px; font-size: 8px;">${checkmark}</span>
-            ${option}
+          <div style="display: flex; align-items: center; gap: 5px; font-size: 10pt; line-height: 1.2; position: relative;">
+            <span style="${checkboxStyle}">${checkmark}</span> ${option}
           </div>
         `;
       });
@@ -2645,13 +2572,11 @@
       return html;
     }
     
-    // Fungsi untuk share ke WhatsApp
     function shareToWhatsApp() {
       if (currentDetailIndex === null) return;
       
       const rowData = extractRowData(currentData[currentDetailIndex]);
       
-      // NOMOR AGENDA SESUAI URUTAN INPUT
       const nomorAgenda = currentDetailIndex + 1;
       
       const nomorSurat = rowData.nomorSurat || '';
@@ -2663,8 +2588,7 @@
       const perihal = rowData.perihal || '';
       const disposisi = rowData.disposisi || '';
       
-      // Buat pesan untuk WhatsApp dengan format HUMAS
-      const message = `*AGENDA SURAT MASUK — HUMAS UNJANI*
+      const message = `*AGENDA SURAT MASUK — SISHUMAD UNJANI*
 
 *Nomor Agenda*: ${nomorAgenda}
 *Nomor Surat*: ${nomorSurat}
@@ -2685,47 +2609,38 @@ ${rowData.disampaikanKepada || '-'}
 ${disposisi}
 
 *UNIVERSITAS JENDERAL ACHMAD YANI*
-*HUMAS (UNJANI)*`;
+*SISTEM INFORMASI HUMAS DAN ADMINISTRASI (SISHUMAD)*`;
       
-      // Encode message untuk URL
       const encodedMessage = encodeURIComponent(message);
       
-      // Tampilkan preview di modal
       const messagePreview = document.getElementById('whatsapp-message-preview');
       messagePreview.innerHTML = message.replace(/\n/g, '<br>');
       
-      // Tampilkan modal
       const whatsappModal = document.getElementById('whatsapp-modal');
       whatsappModal.style.display = 'block';
       
-      // Setup button untuk membuka WhatsApp
       const whatsappSendBtn = document.getElementById('whatsapp-send-btn');
       whatsappSendBtn.onclick = function() {
-        // Buka WhatsApp dengan pesan
         const whatsappURL = `https://wa.me/?text=${encodedMessage}`;
         window.open(whatsappURL, '_blank');
         
-        // Tutup modal
         whatsappModal.style.display = 'none';
       };
     }
 
     // ======================== SETUP MODAL ========================
     
-    // Modal functions
     const modal = document.getElementById('surat-modal');
     const closeBtn = document.querySelector('.close');
     const cancelBtn = document.getElementById('cancel-btn');
     const suratForm = document.getElementById('surat-form');
     const modalTitle = document.getElementById('modal-title');
 
-    // Delete modal elements
     const deleteModal = document.getElementById('delete-modal');
     const deleteCloseBtn = document.querySelector('.delete-close');
     const deleteCancelBtn = document.getElementById('delete-cancel-btn');
     const deleteConfirmBtn = document.getElementById('delete-confirm-btn');
 
-    // WhatsApp modal elements
     const whatsappModal = document.getElementById('whatsapp-modal');
     const whatsappCloseBtn = document.querySelector('.whatsapp-close');
     const whatsappCancelBtn = document.getElementById('whatsapp-cancel-btn');
@@ -2764,16 +2679,14 @@ ${disposisi}
       }
     }
 
-    // Handle delete confirmation
     deleteConfirmBtn.onclick = function() {
       if (deleteIndex !== null) {
         deleteSurat(deleteIndex)
           .then(() => {
             closeDeleteModal();
             alert('Data surat berhasil dihapus');
-            loadData(); // Reload data untuk memperbarui tampilan
+            loadData();
             
-            // Jika sedang melihat detail surat yang dihapus, kembali ke halaman utama
             if (currentDetailIndex === deleteIndex) {
               backToMain();
             }
@@ -2785,15 +2698,12 @@ ${disposisi}
       }
     };
 
-    // Handle form submission
     suratForm.onsubmit = function(e) {
       e.preventDefault();
       
-      // Ambil nilai checkbox isi disposisi
       const disposisiCheckboxes = document.querySelectorAll('#isi-disposisi-checkbox input[type="checkbox"]:checked');
       const isiDisposisi = Array.from(disposisiCheckboxes).map(cb => cb.value).join(', ');
       
-      // Ambil nilai checkbox disampaikan kepada
       const kepadaCheckboxes = document.querySelectorAll('#disampaikan-kepada-checkbox input[type="checkbox"]:checked');
       const disampaikanKepada = Array.from(kepadaCheckboxes).map(cb => cb.value).join(', ');
       
@@ -2815,12 +2725,11 @@ ${disposisi}
       console.log('Mengupdate data dengan index:', editIndex);
       console.log('Data surat:', suratData);
       
-      // Update data existing
       updateSurat(editIndex, suratData)
         .then(() => {
           closeModal();
           alert('Data surat berhasil diperbarui');
-          loadData(); // Reload data untuk memperbarui tampilan
+          loadData();
         })
         .catch(error => {
           console.error('Error:', error);
@@ -2830,7 +2739,6 @@ ${disposisi}
 
     // ======================== SETUP FUNGSI LAINNYA ========================
     
-    // Setup search
     function setupSearch() {
       const searchInput = document.getElementById('search-input');
       
@@ -2845,7 +2753,6 @@ ${disposisi}
             return;
           }
           
-          // CARI BERDASARKAN NOMOR AGENDA (KOLOM PERTAMA SEKARANG)
           const nomorAgenda = row.cells[0].textContent;
           const isVisible = nomorAgenda.includes(searchTerm);
           row.style.display = isVisible ? '' : 'none';
@@ -2853,9 +2760,7 @@ ${disposisi}
           if (isVisible) hasResults = true;
         });
         
-        // Jika tidak ada hasil dan search term tidak kosong
         if (!hasResults && searchTerm !== '') {
-          // Hapus pesan sebelumnya jika ada
           const existingMessage = document.querySelector('.no-results');
           if (existingMessage) {
             existingMessage.remove();
@@ -2866,7 +2771,6 @@ ${disposisi}
           noResultsRow.innerHTML = `<td colspan="12" class="loading">Tidak ditemukan surat dengan nomor agenda "${searchTerm}"</td>`;
           document.getElementById('data-table-body').appendChild(noResultsRow);
         } else {
-          // Hapus pesan no results jika ada
           const existingMessage = document.querySelector('.no-results');
           if (existingMessage) {
             existingMessage.remove();
@@ -2875,28 +2779,24 @@ ${disposisi}
       });
     }
     
-    // Setup tambah surat
     function setupTambahSurat() {
       document.getElementById('tambah-surat-btn').addEventListener('click', function() {
         window.open('https://docs.google.com/forms/d/e/1FAIpQLSdSCx2Egbmt4Mk7nnu0x02VdKUfa59-QFvLu_ZxBxyz3tkjJQ/viewform?usp=header', '_blank');
       });
     }
     
-    // Setup spreadsheet
     function setupSpreadsheet() {
       document.getElementById('spreadsheet-btn').addEventListener('click', function() {
         window.open('https://docs.google.com/spreadsheets/d/1wNNP6V6nR54ZodcVfQGsiyMLB0ummn6paqFIJZigyZk/edit?usp=sharing', '_blank');
       });
     }
     
-    // Setup refresh
     function setupRefresh() {
       document.getElementById('refresh-btn').addEventListener('click', function() {
         loadData();
       });
     }
     
-    // Setup detail page
     function setupDetailPage() {
       document.getElementById('back-btn').addEventListener('click', backToMain);
       document.getElementById('print-detail-btn').addEventListener('click', printDetail);
@@ -2906,7 +2806,6 @@ ${disposisi}
 
     // ======================== INISIALISASI ========================
     
-    // Event listeners untuk modal
     closeBtn.onclick = closeModal;
     cancelBtn.onclick = closeModal;
 
@@ -2916,7 +2815,6 @@ ${disposisi}
     whatsappCloseBtn.onclick = closeWhatsappModal;
     whatsappCancelBtn.onclick = closeWhatsappModal;
 
-    // Inisialisasi saat halaman dimuat
     window.onload = function() {
       loadData();
       setupSearch();
