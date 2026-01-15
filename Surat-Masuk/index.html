@@ -693,7 +693,7 @@
       }
     }
 
-    /* STYLE UNTUK PRINT CONTENT - DIUBAH UNTUK A5 */
+    /* STYLE UNTUK PRINT CONTENT - DIUBAH UNTUK A5 (TETAP FORMAT HUMAS) */
     .print-content {
       display: none;
       font-family: 'Arial', sans-serif;
@@ -1661,7 +1661,7 @@
     </div>
   </div>
 
-  <!-- PRINT CONTENT - DIUBAH MENJADI FORMAT SISHUMAD A5 -->
+  <!-- PRINT CONTENT - FORMAT HUMAS DENGAN UKURAN A5 -->
   <div class="print-content" id="print-content">
     <div class="print-kop">
       <div class="print-logo">
@@ -1670,31 +1670,45 @@
       </div>
       <div class="print-kop-text">
         <h1>UNIVERSITAS JENDERAL ACHMAD YANI</h1>
-        <h2>SISHUMAD (SISFO HUMAS DAN ADMISI)</h2>
+        <h2>HUMAS (UNJANI)</h2>
         <p>Jl. Terusan Jenderal Sudirman PO. BOX 148 Cimahi 40533</p>
       </div>
     </div>
     
-    <div class="print-judul">LEMBAR DISPOSISI</div>
+    <div class="print-judul">AGENDA SURAT MASUK — LEMBAR DISPOSISI</div>
     
     <div class="print-data-box">
       <div class="print-data-row">
-        <div class="print-data-label">NO. AGENDA</div>
+        <div class="print-data-label">Nomor Agenda</div>
         <div class="print-data-value" id="print-nomor-agenda"></div>
-        <div class="print-data-label" style="width: 110px; margin-left: 15px;">NOMOR SURAT</div>
+        <div class="print-data-label" style="width: 110px; margin-left: 15px;">Nomor Surat</div>
         <div class="print-data-value" id="print-nomor-surat"></div>
       </div>
       <div class="print-data-row">
-        <div class="print-data-label">TGL. SURAT</div>
+        <div class="print-data-label">Tanggal Surat</div>
         <div class="print-data-value" id="print-tanggal-surat"></div>
-        <div class="print-data-label" style="width: 110px; margin-left: 15px;">TGL. TERIMA</div>
+        <div class="print-data-label" style="width: 110px; margin-left: 15px;">Tanggal Terima</div>
         <div class="print-data-value" id="print-tanggal-terima"></div>
+      </div>
+      <div class="print-data-row">
+        <div class="print-data-label">Sifat Surat</div>
+        <div class="print-data-value" id="print-sifat-surat"></div>
+        <div class="print-data-label" style="width: 110px; margin-left: 15px;">Jumlah Lampiran</div>
+        <div class="print-data-value" id="print-jumlah-lampiran"></div>
+      </div>
+      <div class="print-data-row">
+        <div class="print-data-label">Surat Dari</div>
+        <div class="print-data-value" id="print-surat-dari" style="flex: 3;"></div>
+      </div>
+      <div class="print-data-row">
+        <div class="print-data-label">Perihal</div>
+        <div class="print-data-value" id="print-perihal" style="flex: 3;"></div>
       </div>
     </div>
     
     <div class="print-disposisi-container">
       <div class="print-disposisi-box">
-        <h3>INSTRUKSI / PETUNJUK</h3>
+        <h3>Isi Disposisi</h3>
         <div class="print-checkbox-group" id="print-isi-disposisi">
           <div class="print-checkbox-item">
             <span class="print-checkbox-box" id="print-disposisi-tindak-lanjuti"></span> Tindak lanjuti
@@ -1709,41 +1723,53 @@
             <span class="print-checkbox-box" id="print-disposisi-jadwalkan"></span> Jadwalkan
           </div>
           <div class="print-checkbox-item">
+            <span class="print-checkbox-box" id="print-disposisi-sisipkan-jawaban"></span> Sisipkan jawaban
+          </div>
+          <div class="print-checkbox-item">
+            <span class="print-checkbox-box" id="print-disposisi-arsipkan"></span> Arsipkan
+          </div>
+          <div class="print-checkbox-item">
             <span class="print-checkbox-box" id="print-disposisi-untuk-dilaporkan"></span> Untuk dilaporkan
           </div>
           <div class="print-checkbox-item">
-            <span class="print-checkbox-box" id="print-disposisi-lain-lain"></span> Lain-lain: ......
+            <span class="print-checkbox-box" id="print-disposisi-untuk-diketahui"></span> Untuk diketahui
+          </div>
+          <div class="print-checkbox-item">
+            <span class="print-checkbox-box" id="print-disposisi-pelajari-teliti"></span> Pelajari/Teliti
+          </div>
+          <div class="print-checkbox-item">
+            <span class="print-checkbox-box" id="print-disposisi-lain-lain"></span> Lain-lain
+          </div>
+          <div class="print-checkbox-item">
+            <span class="print-checkbox-box" id="print-disposisi-koordinasikan"></span> Koordinasikan
           </div>
         </div>
       </div>
       
       <div class="print-disposisi-box">
-        <h3>DITERUSKAN KEPADA</h3>
+        <h3>Disampaikan kepada:</h3>
         <div class="print-checkbox-group" id="print-disampaikan-kepada">
           <div class="print-checkbox-item">
-            <span class="print-checkbox-box" id="print-kepada-ka-sisfo"></span> Ka. Sisfo
+            <span class="print-checkbox-box" id="print-kepada-ka-bag-pers-multimedia"></span> Ka Bag Pers & Multimedia
           </div>
           <div class="print-checkbox-item">
-            <span class="print-checkbox-box" id="print-kepada-ka-humas"></span> Ka. Humas
+            <span class="print-checkbox-box" id="print-kepada-arsip"></span> Arsip
           </div>
           <div class="print-checkbox-item">
-            <span class="print-checkbox-box" id="print-kepada-ka-admisi"></span> Ka. Admisi
-          </div>
-          <div class="print-checkbox-item">
-            <span class="print-checkbox-box" id="print-kepada-agendaris"></span> Agendaris
+            <span class="print-checkbox-box" id="print-kepada-staff"></span> Staff
           </div>
         </div>
       </div>
     </div>
     
     <div class="print-disposisi-text-box">
-      <h3>CATATAN KHUSUS / DISPOSISI</h3>
+      <h3>Disposisi</h3>
       <div id="print-disposisi-text"></div>
     </div>
     
     <div class="print-ttd">
-      <p>Cimahi, .............</p>
-      <p style="font-weight: bold; margin-top: 50px;">Kepala Sishumad,</p>
+      <p>Cimahi, ........./........./2025</p>
+      <p>Kapus SISHUMAD</p>
     </div>
   </div>
 
@@ -2376,6 +2402,10 @@
       document.getElementById('print-nomor-surat').textContent = rowData.nomorSurat || '';
       document.getElementById('print-tanggal-surat').textContent = formatDateShort(rowData.tanggalSurat) || '';
       document.getElementById('print-tanggal-terima').textContent = formatDateShort(rowData.tanggalTerima) || '';
+      document.getElementById('print-sifat-surat').textContent = rowData.sifatSurat || '';
+      document.getElementById('print-jumlah-lampiran').textContent = rowData.jumlahLampiran || '';
+      document.getElementById('print-surat-dari').textContent = rowData.suratDari || '';
+      document.getElementById('print-perihal').textContent = rowData.perihal || '';
       document.getElementById('print-disposisi-text').textContent = rowData.disposisi || '';
       
       // Reset semua checkbox di template print
@@ -2403,21 +2433,12 @@
         });
       }
       
-      // Centang checkbox disampaikan kepada yang sesuai (ubah ke format SISHUMAD)
+      // Centang checkbox disampaikan kepada yang sesuai
       if (rowData.disampaikanKepada) {
         const kepadaValues = rowData.disampaikanKepada.split(', ');
-        
-        // Mapping untuk format baru SISHUMAD
-        const mapping = {
-          'ka-bag-pers-multimedia': 'ka-sisfo', // Sesuaikan dengan yang diperlukan
-          'arsip': 'ka-humas',
-          'staff': 'ka-admisi'
-        };
-        
         kepadaValues.forEach(value => {
           const cleanValue = value.trim().toLowerCase().replace(/[^a-z0-9]/g, '-');
-          const mappedValue = mapping[cleanValue] || cleanValue;
-          const checkboxId = 'print-kepada-' + mappedValue;
+          const checkboxId = 'print-kepada-' + cleanValue;
           const checkbox = document.getElementById(checkboxId);
           if (checkbox) {
             checkbox.classList.add('checked');
@@ -2450,6 +2471,10 @@
       const nomorSurat = rowData.nomorSurat || '';
       const tanggalSurat = formatDateShort(rowData.tanggalSurat);
       const tanggalTerima = formatDateShort(rowData.tanggalTerima);
+      const sifatSurat = rowData.sifatSurat || '';
+      const jumlahLampiran = rowData.jumlahLampiran || '';
+      const suratDari = rowData.suratDari || '';
+      const perihal = rowData.perihal || '';
       const disposisi = rowData.disposisi || '';
       const isiDisposisi = rowData.isiDisposisi || '';
       const disampaikanKepada = rowData.disampaikanKepada || '';
@@ -2465,67 +2490,85 @@
             </div>
             <div style="flex: 1; text-align: center;">
               <h1 style="font-size: 11pt; font-weight: bold; margin: 0 0 2px 0; color: #000; line-height: 1.2;">UNIVERSITAS JENDERAL ACHMAD YANI</h1>
-              <h2 style="font-size: 9pt; font-weight: bold; margin: 0 0 2px 0; color: #000; line-height: 1.2;">SISHUMAD (SISFO HUMAS DAN ADMISI)</h2>
+              <h2 style="font-size: 9pt; font-weight: bold; margin: 0 0 2px 0; color: #000; line-height: 1.2;">HUMAS (UNJANI)</h2>
               <p style="font-size: 7pt; margin: 0; color: #000; line-height: 1.2;">Jl. Terusan Jenderal Sudirman PO. BOX 148 Cimahi 40533</p>
             </div>
           </div>
           
           <!-- Judul -->
           <div style="text-align: center; font-weight: bold; font-size: 10pt; margin: 8px 0; color: #000; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #000; padding-bottom: 4px;">
-            LEMBAR DISPOSISI
+            AGENDA SURAT MASUK — LEMBAR DISPOSISI
           </div>
           
           <!-- Data Surat -->
           <div style="border: 1px solid #000; padding: 6px; margin-bottom: 8px; font-size: 8pt;">
             <div style="display: flex; margin-bottom: 4px;">
-              <div style="font-weight: bold; width: 110px; min-width: 110px; font-size: 7pt;">NO. AGENDA</div>
+              <div style="font-weight: bold; width: 110px; min-width: 110px; font-size: 7pt;">Nomor Agenda</div>
               <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 6px; padding-bottom: 1px; font-size: 7pt;">${nomorAgenda}</div>
-              <div style="font-weight: bold; width: 110px; margin-left: 15px; font-size: 7pt;">NOMOR SURAT</div>
+              <div style="font-weight: bold; width: 110px; margin-left: 15px; font-size: 7pt;">Nomor Surat</div>
               <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 6px; padding-bottom: 1px; font-size: 7pt;">${nomorSurat}</div>
             </div>
             <div style="display: flex; margin-bottom: 4px;">
-              <div style="font-weight: bold; width: 110px; min-width: 110px; font-size: 7pt;">TGL. SURAT</div>
+              <div style="font-weight: bold; width: 110px; min-width: 110px; font-size: 7pt;">Tanggal Surat</div>
               <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 6px; padding-bottom: 1px; font-size: 7pt;">${tanggalSurat}</div>
-              <div style="font-weight: bold; width: 110px; margin-left: 15px; font-size: 7pt;">TGL. TERIMA</div>
+              <div style="font-weight: bold; width: 110px; margin-left: 15px; font-size: 7pt;">Tanggal Terima</div>
               <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 6px; padding-bottom: 1px; font-size: 7pt;">${tanggalTerima}</div>
+            </div>
+            <div style="display: flex; margin-bottom: 4px;">
+              <div style="font-weight: bold; width: 110px; min-width: 110px; font-size: 7pt;">Sifat Surat</div>
+              <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 6px; padding-bottom: 1px; font-size: 7pt;">${sifatSurat}</div>
+              <div style="font-weight: bold; width: 110px; margin-left: 15px; font-size: 7pt;">Jumlah Lampiran</div>
+              <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 6px; padding-bottom: 1px; font-size: 7pt;">${jumlahLampiran}</div>
+            </div>
+            <div style="display: flex; margin-bottom: 4px;">
+              <div style="font-weight: bold; width: 110px; min-width: 110px; font-size: 7pt;">Surat Dari</div>
+              <div style="flex: 3; border-bottom: 1px dotted #000; margin-left: 6px; padding-bottom: 1px; font-size: 7pt;">${suratDari}</div>
+            </div>
+            <div style="display: flex; margin-bottom: 4px;">
+              <div style="font-weight: bold; width: 110px; min-width: 110px; font-size: 7pt;">Perihal</div>
+              <div style="flex: 3; border-bottom: 1px dotted #000; margin-left: 6px; padding-bottom: 1px; font-size: 7pt;">${perihal}</div>
             </div>
           </div>
           
           <!-- Disposisi -->
           <div style="display: flex; gap: 8px; margin-bottom: 8px;">
             <div style="flex: 1; border: 1px solid #000; padding: 6px; font-size: 7pt;">
-              <h3 style="font-size: 8pt; font-weight: bold; margin: 0 0 4px 0; text-align: center; border-bottom: 1px solid #000; padding-bottom: 2px; color: #000;">INSTRUKSI / PETUNJUK</h3>
+              <h3 style="font-size: 8pt; font-weight: bold; margin: 0 0 4px 0; text-align: center; border-bottom: 1px solid #000; padding-bottom: 2px; color: #000;">Isi Disposisi</h3>
               ${generateCheckboxHTMLForPDF(isiDisposisi, [
                 'Tindak lanjuti',
                 'Untuk dilaksanakan',
                 'Wakili',
                 'Jadwalkan',
+                'Sisipkan jawaban',
+                'Arsipkan',
                 'Untuk dilaporkan',
-                'Lain-lain: ......'
+                'Untuk diketahui',
+                'Pelajari/Teliti',
+                'Lain-lain',
+                'Koordinasikan'
               ])}
             </div>
             
             <div style="flex: 1; border: 1px solid #000; padding: 6px; font-size: 7pt;">
-              <h3 style="font-size: 8pt; font-weight: bold; margin: 0 0 4px 0; text-align: center; border-bottom: 1px solid #000; padding-bottom: 2px; color: #000;">DITERUSKAN KEPADA</h3>
+              <h3 style="font-size: 8pt; font-weight: bold; margin: 0 0 4px 0; text-align: center; border-bottom: 1px solid #000; padding-bottom: 2px; color: #000;">Disampaikan kepada:</h3>
               ${generateCheckboxHTMLForPDF(disampaikanKepada, [
-                'Ka. Sisfo',
-                'Ka. Humas',
-                'Ka. Admisi',
-                'Agendaris'
+                'Ka Bag Pers & Multimedia',
+                'Arsip',
+                'Staff'
               ])}
             </div>
           </div>
           
           <!-- Keterangan Disposisi -->
           <div style="border: 1px solid #000; padding: 6px; margin-bottom: 8px; min-height: 50px; font-size: 8pt;">
-            <h3 style="font-size: 8pt; font-weight: bold; margin: 0 0 4px 0; text-align: center; border-bottom: 1px solid #000; padding-bottom: 2px; color: #000;">CATATAN KHUSUS / DISPOSISI</h3>
+            <h3 style="font-size: 8pt; font-weight: bold; margin: 0 0 4px 0; text-align: center; border-bottom: 1px solid #000; padding-bottom: 2px; color: #000;">Disposisi</h3>
             <div>${disposisi}</div>
           </div>
           
-          <!-- TTD Kepala Sishumad -->
+          <!-- TTD Kapus SISHUMAD -->
           <div style="text-align: right; margin-top: 30px; font-size: 8pt;">
-            <p style="margin: 0; font-size: 7pt;">Cimahi, .............</p>
-            <p style="margin: 50px 0 3px 0; font-size: 7pt; font-weight: bold;">Kepala Sishumad,</p>
+            <p style="margin: 40px 0 3px 0; font-size: 7pt;">Cimahi, ........./........./2025</p>
+            <p style="margin: 0; font-size: 7pt; font-weight: bold;">Kapus SISHUMAD</p>
           </div>
         </div>
       `;
@@ -2562,27 +2605,18 @@
       let html = '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3px;">';
       
       options.forEach(option => {
-        // Untuk "Lain-lain: ......", selalu tampilkan tanpa checkbox
-        if (option.includes('Lain-lain')) {
-          html += `
-            <div style="display: flex; align-items: center; gap: 3px; font-size: 7pt; line-height: 1.1;">
-              <span style="display: inline-block; width: 12px; height: 12px; border: 1px solid #000; background: white; margin-right: 3px; flex-shrink: 0;"></span> ${option}
-            </div>
-          `;
-        } else {
-          const isChecked = values.includes(option.replace('Ka. ', ''));
-          const checkboxStyle = 'display: inline-block; width: 12px; height: 12px; border: 1px solid #000; background: white; margin-right: 3px; flex-shrink: 0;';
-          
-          const checkmark = isChecked 
-            ? '<span style="position: absolute; top: -3px; left: 2px; font-size: 11px; font-weight: bold; color: #000;">✓</span>' 
-            : '';
-          
-          html += `
-            <div style="display: flex; align-items: center; gap: 3px; font-size: 7pt; line-height: 1.1; position: relative;">
-              <span style="${checkboxStyle}">${checkmark}</span> ${option}
-            </div>
-          `;
-        }
+        const isChecked = values.includes(option);
+        const checkboxStyle = 'display: inline-block; width: 12px; height: 12px; border: 1px solid #000; background: white; margin-right: 3px; flex-shrink: 0;';
+        
+        const checkmark = isChecked 
+          ? '<span style="position: absolute; top: -3px; left: 2px; font-size: 11px; font-weight: bold; color: #000;">✓</span>' 
+          : '';
+        
+        html += `
+          <div style="display: flex; align-items: center; gap: 3px; font-size: 7pt; line-height: 1.1; position: relative;">
+            <span style="${checkboxStyle}">${checkmark}</span> ${option}
+          </div>
+        `;
       });
       
       html += '</div>';
@@ -2605,24 +2639,31 @@
       const jumlahLampiran = rowData.jumlahLampiran || '';
       const suratDari = rowData.suratDari || '';
       const perihal = rowData.perihal || '';
+      const disposisi = rowData.disposisi || '';
       
-      // Buat pesan untuk WhatsApp dengan format SISHUMAD
-      const message = `*LEMBAR DISPOSISI SISHUMAD UNJANI*
+      // Buat pesan untuk WhatsApp dengan format HUMAS
+      const message = `*AGENDA SURAT MASUK — HUMAS UNJANI*
 
-*NO. AGENDA*: ${nomorAgenda}
-*NOMOR SURAT*: ${nomorSurat}
-*TGL. SURAT*: ${tanggalSurat}
-*TGL. TERIMA*: ${tanggalTerima}
-*SIFAT SURAT*: ${sifatSurat}
-*LAMPIRAN*: ${jumlahLampiran}
-*DARI*: ${suratDari}
-*PERIHAL*: ${perihal}
+*Nomor Agenda*: ${nomorAgenda}
+*Nomor Surat*: ${nomorSurat}
+*Tanggal Surat*: ${tanggalSurat}
+*Tanggal Terima*: ${tanggalTerima}
+*Sifat Surat*: ${sifatSurat}
+*Jumlah Lampiran*: ${jumlahLampiran}
+*Surat Dari*: ${suratDari}
+*Perihal*: ${perihal}
 
-*DISPOSISI*:
-${rowData.disposisi || '-'}
+*Isi Disposisi*:
+${rowData.isiDisposisi || '-'}
+
+*Disampaikan Kepada*:
+${rowData.disampaikanKepada || '-'}
+
+*Keterangan Disposisi*:
+${disposisi}
 
 *UNIVERSITAS JENDERAL ACHMAD YANI*
-*SISHUMAD (SISFO HUMAS DAN ADMISI)*`;
+*HUMAS (UNJANI)*`;
       
       // Encode message untuk URL
       const encodedMessage = encodeURIComponent(message);
