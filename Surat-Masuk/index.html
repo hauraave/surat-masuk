@@ -662,7 +662,198 @@
       font-size: 14px;
     }
 
-    /* PRINT STYLES - DIUBAH UNTUK A5 */
+    /* STYLE UNTUK PRINT CONTENT - DIOPTIMALKAN UNTUK A5 */
+    .print-content {
+      display: none;
+      font-family: 'Arial', sans-serif;
+      width: 148mm !important; /* Lebar A5 */
+      min-height: 210mm !important; /* Tinggi A5 */
+      margin: 0 auto !important;
+      padding: 4mm !important; /* DIPERKECIL dari 5mm */
+      background: white !important;
+      box-sizing: border-box !important;
+      font-size: 8pt !important; /* DIPERKECIL dari 9pt */
+      border: 1px solid #ddd;
+      overflow: hidden !important;
+    }
+
+    .print-kop {
+      display: flex;
+      align-items: center;
+      margin-bottom: 4px !important; /* DIPERKECIL */
+      padding-bottom: 3px !important; /* DIPERKECIL */
+      border-bottom: 1px solid #000;
+    }
+
+    .print-logo {
+      width: 30px !important; /* DIPERKECIL */
+      height: 30px !important; /* DIPERKECIL */
+      margin-right: 6px !important; /* DIPERKECIL */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .print-logo img {
+      max-width: 100% !important;
+      max-height: 100% !important;
+      display: block;
+    }
+
+    .print-kop-text {
+      flex: 1;
+      text-align: center;
+    }
+
+    .print-kop-text h1 {
+      font-size: 10pt !important; /* DIPERKECIL dari 11pt */
+      font-weight: bold;
+      margin: 0 0 1px 0 !important; /* DIPERKECIL */
+      color: #000;
+      line-height: 1.1 !important; /* DIPERKECIL */
+    }
+
+    .print-kop-text h2 {
+      font-size: 8pt !important; /* DIPERKECIL dari 9pt */
+      font-weight: bold;
+      margin: 0 0 1px 0 !important; /* DIPERKECIL */
+      color: #000;
+      line-height: 1.1 !important; /* DIPERKECIL */
+    }
+
+    .print-kop-text p {
+      font-size: 6pt !important; /* DIPERKECIL dari 7pt */
+      margin: 0;
+      color: #000;
+      line-height: 1 !important; /* DIPERKECIL */
+    }
+
+    .print-judul {
+      text-align: center;
+      font-weight: bold;
+      font-size: 9pt !important; /* DIPERKECIL dari 10pt */
+      margin: 4px 0 !important; /* DIPERKECIL dari 8px 0 */
+      color: #000;
+      text-transform: uppercase;
+      letter-spacing: 0.3px !important; /* DIPERKECIL */
+      border-bottom: 1px solid #000;
+      padding-bottom: 2px !important; /* DIPERKECIL dari 4px */
+    }
+
+    .print-data-box {
+      border: 1px solid #000;
+      padding: 4px !important; /* DIPERKECIL dari 6px */
+      margin-bottom: 6px !important; /* DIPERKECIL dari 8px */
+      font-size: 7pt !important; /* DIPERKECIL dari 8pt */
+    }
+
+    .print-data-row {
+      display: flex;
+      margin-bottom: 3px !important; /* DIPERKECIL dari 4px */
+    }
+
+    .print-data-label {
+      font-weight: bold;
+      width: 100px !important; /* DIPERKECIL dari 110px */
+      min-width: 100px !important; /* DIPERKECIL dari 110px */
+      font-size: 6pt !important; /* DIPERKECIL dari 7pt */
+    }
+
+    .print-data-value {
+      flex: 1;
+      border-bottom: 1px dotted #000;
+      margin-left: 4px !important; /* DIPERKECIL dari 6px */
+      padding-bottom: 0 !important;
+      font-size: 6pt !important; /* DIPERKECIL dari 7pt */
+    }
+
+    .print-disposisi-container {
+      display: flex;
+      gap: 6px !important; /* DIPERKECIL dari 8px */
+      margin-bottom: 6px !important; /* DIPERKECIL dari 8px */
+    }
+
+    .print-disposisi-box {
+      flex: 1;
+      border: 1px solid #000;
+      padding: 4px !important; /* DIPERKECIL dari 6px */
+      font-size: 6pt !important; /* DIPERKECIL dari 7pt */
+    }
+
+    .print-disposisi-box h3 {
+      font-size: 7pt !important; /* DIPERKECIL dari 8pt */
+      font-weight: bold;
+      margin: 0 0 2px 0 !important; /* DIPERKECIL dari 4px */
+      text-align: center;
+      border-bottom: 1px solid #000;
+      padding-bottom: 1px !important; /* DIPERKECIL dari 2px */
+      color: #000;
+    }
+
+    .print-checkbox-group {
+      display: grid;
+      grid-template-columns: 1fr !important; /* UBAH jadi 1 kolom agar lebih hemat ruang */
+      gap: 1px !important; /* DIPERKECIL dari 3px */
+    }
+
+    .print-checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 2px !important; /* DIPERKECIL dari 3px */
+      font-size: 6pt !important; /* DIPERKECIL dari 7pt */
+      line-height: 1 !important; /* DIPERKECIL dari 1.1 */
+    }
+
+    .print-checkbox-box {
+      display: inline-block;
+      width: 10px !important; /* DIPERKECIL dari 12px */
+      height: 10px !important; /* DIPERKECIL dari 12px */
+      border: 1px solid #000;
+      background: white;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .print-checkbox-box.checked:after {
+      content: '✓';
+      position: absolute;
+      top: -2px !important; /* DIPERKECIL dari -3px */
+      left: 1px !important; /* DIPERKECIL dari 2px */
+      font-size: 9px !important; /* DIPERKECIL dari 11px */
+      font-weight: bold;
+      color: #000;
+    }
+
+    .print-disposisi-text-box {
+      border: 1px solid #000;
+      padding: 4px !important; /* DIPERKECIL dari 6px */
+      margin-bottom: 6px !important; /* DIPERKECIL dari 8px */
+      min-height: 40px !important; /* DIPERKECIL dari 50px */
+      font-size: 7pt !important; /* DIPERKECIL dari 8pt */
+    }
+
+    .print-disposisi-text-box h3 {
+      font-size: 7pt !important; /* DIPERKECIL dari 8pt */
+      font-weight: bold;
+      margin: 0 0 2px 0 !important; /* DIPERKECIL dari 4px */
+      text-align: center;
+      border-bottom: 1px solid #000;
+      padding-bottom: 1px !important; /* DIPERKECIL dari 2px */
+      color: #000;
+    }
+
+    .print-ttd {
+      text-align: right;
+      margin-top: 15px !important; /* DIPERKECIL dari 30px */
+      font-size: 7pt !important; /* DIPERKECIL dari 8pt */
+    }
+
+    .print-ttd p {
+      margin: 25px 0 2px 0 !important; /* DIPERKECIL dari 40px 0 3px */
+      font-size: 6pt !important; /* DIPERKECIL dari 7pt */
+    }
+
+    /* PRINT STYLES - DIOPTIMALKAN UNTUK A5 */
     @media print {
       body * {
         visibility: hidden;
@@ -674,16 +865,24 @@
         position: absolute;
         left: 0;
         top: 0;
-        width: 148mm !important; /* Lebar A5 */
-        height: 210mm !important; /* Tinggi A5 */
-        padding: 5mm;
-        margin: 0;
-        font-size: 9pt !important;
+        width: 148mm !important;
+        height: 210mm !important;
+        padding: 4mm !important; /* DIPERKECIL */
+        margin: 0 !important;
+        font-size: 8pt !important; /* DIPERKECIL */
         box-sizing: border-box;
         page-break-after: always;
+        transform: scale(1) !important; /* Pastikan tidak ada scaling */
+        transform-origin: top left !important;
       }
       .no-print {
         display: none !important;
+      }
+      
+      /* Hilangkan margin default browser */
+      @page {
+        margin: 0 !important;
+        size: A5 portrait;
       }
       
       .print-logo img {
@@ -691,196 +890,6 @@
         visibility: visible !important;
         opacity: 1 !important;
       }
-    }
-
-    /* STYLE UNTUK PRINT CONTENT - DIUBAH UNTUK A5 (TETAP FORMAT HUMAS) */
-    .print-content {
-      display: none;
-      font-family: 'Arial', sans-serif;
-      width: 148mm; /* Lebar A5 */
-      min-height: 210mm; /* Tinggi A5 */
-      margin: 0 auto;
-      padding: 5mm;
-      background: white;
-      box-sizing: border-box;
-      font-size: 9pt;
-      border: 1px solid #ddd;
-    }
-
-    .print-kop {
-      display: flex;
-      align-items: center;
-      margin-bottom: 6px;
-      padding-bottom: 5px;
-      border-bottom: 1px solid #000;
-    }
-
-    .print-logo {
-      width: 35px;
-      height: 35px;
-      margin-right: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .print-logo img {
-      max-width: 100%;
-      max-height: 100%;
-      display: block;
-    }
-
-    .print-kop-text {
-      flex: 1;
-      text-align: center;
-    }
-
-    .print-kop-text h1 {
-      font-size: 11pt;
-      font-weight: bold;
-      margin: 0 0 2px 0;
-      color: #000;
-      line-height: 1.2;
-    }
-
-    .print-kop-text h2 {
-      font-size: 9pt;
-      font-weight: bold;
-      margin: 0 0 2px 0;
-      color: #000;
-      line-height: 1.2;
-    }
-
-    .print-kop-text p {
-      font-size: 7pt;
-      margin: 0;
-      color: #000;
-      line-height: 1.2;
-    }
-
-    .print-judul {
-      text-align: center;
-      font-weight: bold;
-      font-size: 10pt;
-      margin: 8px 0;
-      color: #000;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      border-bottom: 1px solid #000;
-      padding-bottom: 4px;
-    }
-
-    .print-data-box {
-      border: 1px solid #000;
-      padding: 6px;
-      margin-bottom: 8px;
-      font-size: 8pt;
-    }
-
-    .print-data-row {
-      display: flex;
-      margin-bottom: 4px;
-    }
-
-    .print-data-label {
-      font-weight: bold;
-      width: 110px;
-      min-width: 110px;
-      font-size: 7pt;
-    }
-
-    .print-data-value {
-      flex: 1;
-      border-bottom: 1px dotted #000;
-      margin-left: 6px;
-      padding-bottom: 1px;
-      font-size: 7pt;
-    }
-
-    .print-disposisi-container {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 8px;
-    }
-
-    .print-disposisi-box {
-      flex: 1;
-      border: 1px solid #000;
-      padding: 6px;
-      font-size: 7pt;
-    }
-
-    .print-disposisi-box h3 {
-      font-size: 8pt;
-      font-weight: bold;
-      margin: 0 0 4px 0;
-      text-align: center;
-      border-bottom: 1px solid #000;
-      padding-bottom: 2px;
-      color: #000;
-    }
-
-    .print-checkbox-group {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3px;
-    }
-
-    .print-checkbox-item {
-      display: flex;
-      align-items: center;
-      gap: 3px;
-      font-size: 7pt;
-      line-height: 1.1;
-    }
-
-    .print-checkbox-box {
-      display: inline-block;
-      width: 12px;
-      height: 12px;
-      border: 1px solid #000;
-      background: white;
-      position: relative;
-      flex-shrink: 0;
-    }
-
-    .print-checkbox-box.checked:after {
-      content: '✓';
-      position: absolute;
-      top: -3px;
-      left: 2px;
-      font-size: 11px;
-      font-weight: bold;
-      color: #000;
-    }
-
-    .print-disposisi-text-box {
-      border: 1px solid #000;
-      padding: 6px;
-      margin-bottom: 8px;
-      min-height: 50px;
-      font-size: 8pt;
-    }
-
-    .print-disposisi-text-box h3 {
-      font-size: 8pt;
-      font-weight: bold;
-      margin: 0 0 4px 0;
-      text-align: center;
-      border-bottom: 1px solid #000;
-      padding-bottom: 2px;
-      color: #000;
-    }
-
-    .print-ttd {
-      text-align: right;
-      margin-top: 30px;
-      font-size: 8pt;
-    }
-
-    .print-ttd p {
-      margin: 40px 0 3px 0;
-      font-size: 7pt;
     }
 
     /* WHATSAPP SHARE MODAL */
@@ -1661,7 +1670,7 @@
     </div>
   </div>
 
-  <!-- PRINT CONTENT - FORMAT HUMAS DENGAN UKURAN A5 -->
+  <!-- PRINT CONTENT - FORMAT HUMAS DENGAN UKURAN A5 YANG DIOPTIMALKAN -->
   <div class="print-content" id="print-content">
     <div class="print-kop">
       <div class="print-logo">
@@ -1681,19 +1690,19 @@
       <div class="print-data-row">
         <div class="print-data-label">Nomor Agenda</div>
         <div class="print-data-value" id="print-nomor-agenda"></div>
-        <div class="print-data-label" style="width: 110px; margin-left: 15px;">Nomor Surat</div>
+        <div class="print-data-label" style="width: 100px; margin-left: 10px;">Nomor Surat</div>
         <div class="print-data-value" id="print-nomor-surat"></div>
       </div>
       <div class="print-data-row">
         <div class="print-data-label">Tanggal Surat</div>
         <div class="print-data-value" id="print-tanggal-surat"></div>
-        <div class="print-data-label" style="width: 110px; margin-left: 15px;">Tanggal Terima</div>
+        <div class="print-data-label" style="width: 100px; margin-left: 10px;">Tanggal Terima</div>
         <div class="print-data-value" id="print-tanggal-terima"></div>
       </div>
       <div class="print-data-row">
         <div class="print-data-label">Sifat Surat</div>
         <div class="print-data-value" id="print-sifat-surat"></div>
-        <div class="print-data-label" style="width: 110px; margin-left: 15px;">Jumlah Lampiran</div>
+        <div class="print-data-label" style="width: 100px; margin-left: 10px;">Jumlah Lampiran</div>
         <div class="print-data-value" id="print-jumlah-lampiran"></div>
       </div>
       <div class="print-data-row">
@@ -2388,7 +2397,7 @@
 
     // ======================== FUNGSI PRINT & SHARE ========================
     
-    // Fungsi untuk mencetak detail surat
+    // Fungsi untuk mencetak detail surat - DIOPTIMALKAN
     function printDetail() {
       if (currentDetailIndex === null) return;
       
@@ -2397,16 +2406,20 @@
       // NOMOR AGENDA SESUAI URUTAN INPUT
       const nomorAgenda = currentDetailIndex + 1;
       
-      // Isi data ke template print
+      // Isi data ke template print dengan nilai default
       document.getElementById('print-nomor-agenda').textContent = nomorAgenda.toString();
-      document.getElementById('print-nomor-surat').textContent = rowData.nomorSurat || '';
-      document.getElementById('print-tanggal-surat').textContent = formatDateShort(rowData.tanggalSurat) || '';
-      document.getElementById('print-tanggal-terima').textContent = formatDateShort(rowData.tanggalTerima) || '';
-      document.getElementById('print-sifat-surat').textContent = rowData.sifatSurat || '';
-      document.getElementById('print-jumlah-lampiran').textContent = rowData.jumlahLampiran || '';
-      document.getElementById('print-surat-dari').textContent = rowData.suratDari || '';
-      document.getElementById('print-perihal').textContent = rowData.perihal || '';
-      document.getElementById('print-disposisi-text').textContent = rowData.disposisi || '';
+      document.getElementById('print-nomor-surat').textContent = rowData.nomorSurat || '-';
+      document.getElementById('print-tanggal-surat').textContent = formatDateShort(rowData.tanggalSurat) || '-';
+      document.getElementById('print-tanggal-terima').textContent = formatDateShort(rowData.tanggalTerima) || '-';
+      document.getElementById('print-sifat-surat').textContent = rowData.sifatSurat || '-';
+      document.getElementById('print-jumlah-lampiran').textContent = rowData.jumlahLampiran || '-';
+      document.getElementById('print-surat-dari').textContent = rowData.suratDari || '-';
+      document.getElementById('print-perihal').textContent = rowData.perihal || '-';
+      
+      // Perbaikan untuk disposisi yang mungkin undefined
+      const disposisiText = rowData.disposisi || '';
+      document.getElementById('print-disposisi-text').textContent = disposisiText;
+      document.getElementById('print-disposisi-text').innerHTML = disposisiText.replace(/\n/g, '<br>');
       
       // Reset semua checkbox di template print
       const printDisposisiCheckboxes = document.querySelectorAll('#print-isi-disposisi .print-checkbox-box');
@@ -2421,7 +2434,7 @@
       });
       
       // Centang checkbox isi disposisi yang sesuai
-      if (rowData.isiDisposisi) {
+      if (rowData.isiDisposisi && rowData.isiDisposisi !== '-') {
         const disposisiValues = rowData.isiDisposisi.split(', ');
         disposisiValues.forEach(value => {
           const cleanValue = value.trim().toLowerCase().replace(/[^a-z0-9]/g, '-');
@@ -2434,7 +2447,7 @@
       }
       
       // Centang checkbox disampaikan kepada yang sesuai
-      if (rowData.disampaikanKepada) {
+      if (rowData.disampaikanKepada && rowData.disampaikanKepada !== '-') {
         const kepadaValues = rowData.disampaikanKepada.split(', ');
         kepadaValues.forEach(value => {
           const cleanValue = value.trim().toLowerCase().replace(/[^a-z0-9]/g, '-');
@@ -2449,17 +2462,23 @@
       // Tampilkan print content
       document.getElementById('print-content').style.display = 'block';
       
+      // Tambahkan kelas untuk print
+      document.body.classList.add('printing');
+      
       // Tunggu sebentar agar DOM diperbarui, lalu cetak
       setTimeout(() => {
+        // Trigger print
         window.print();
+        
         // Setelah cetak, sembunyikan print content
         setTimeout(() => {
           document.getElementById('print-content').style.display = 'none';
+          document.body.classList.remove('printing');
         }, 100);
-      }, 500);
+      }, 100);
     }
     
-    // Fungsi untuk download PDF
+    // Fungsi untuk download PDF - DIOPTIMALKAN UNTUK A5
     function downloadPDF() {
       if (currentDetailIndex === null) return;
       
@@ -2479,142 +2498,145 @@
       const isiDisposisi = rowData.isiDisposisi || '';
       const disampaikanKepada = rowData.disampaikanKepada || '';
       
-      // Buat elemen HTML untuk PDF
+      // Buat elemen HTML untuk PDF - DIOPTIMALKAN UNTUK A5
       const pdfContent = document.createElement('div');
+      pdfContent.style.cssText = 'font-family: Arial, sans-serif; width: 148mm; min-height: 210mm; padding: 4mm; margin: 0; background: white; box-sizing: border-box; font-size: 8pt;';
+      
+      // Isi konten PDF dengan format yang lebih compact
       pdfContent.innerHTML = `
-        <div style="font-family: 'Arial', sans-serif; width: 148mm; min-height: 210mm; padding: 5mm; margin: 0; background: white; box-sizing: border-box; font-size: 9pt;">
-          <!-- Kop Surat -->
-          <div style="display: flex; align-items: center; margin-bottom: 6px; padding-bottom: 5px; border-bottom: 1px solid #000;">
-            <div style="width: 35px; height: 35px; margin-right: 8px;">
-              <div style="width: 100%; height: 100%; background: #006B3F; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 8px; text-align: center;">LOGO<br>UNJANI</div>
-            </div>
-            <div style="flex: 1; text-align: center;">
-              <h1 style="font-size: 11pt; font-weight: bold; margin: 0 0 2px 0; color: #000; line-height: 1.2;">UNIVERSITAS JENDERAL ACHMAD YANI</h1>
-              <h2 style="font-size: 9pt; font-weight: bold; margin: 0 0 2px 0; color: #000; line-height: 1.2;">HUMAS (UNJANI)</h2>
-              <p style="font-size: 7pt; margin: 0; color: #000; line-height: 1.2;">Jl. Terusan Jenderal Sudirman PO. BOX 148 Cimahi 40533</p>
-            </div>
+        <!-- Kop Surat -->
+        <div style="display: flex; align-items: center; margin-bottom: 4px; padding-bottom: 3px; border-bottom: 1px solid #000;">
+          <div style="width: 30px; height: 30px; margin-right: 6px; display: flex; align-items: center; justify-content: center;">
+            <div style="width: 100%; height: 100%; background: #006B3F; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 7px; text-align: center;">LOGO<br>UNJANI</div>
+          </div>
+          <div style="flex: 1; text-align: center;">
+            <h1 style="font-size: 10pt; font-weight: bold; margin: 0 0 1px 0; color: #000; line-height: 1.1;">UNIVERSITAS JENDERAL ACHMAD YANI</h1>
+            <h2 style="font-size: 8pt; font-weight: bold; margin: 0 0 1px 0; color: #000; line-height: 1.1;">HUMAS (UNJANI)</h2>
+            <p style="font-size: 6pt; margin: 0; color: #000; line-height: 1;">Jl. Terusan Jenderal Sudirman PO. BOX 148 Cimahi 40533</p>
+          </div>
+        </div>
+        
+        <!-- Judul -->
+        <div style="text-align: center; font-weight: bold; font-size: 9pt; margin: 4px 0; color: #000; text-transform: uppercase; letter-spacing: 0.3px; border-bottom: 1px solid #000; padding-bottom: 2px;">
+          AGENDA SURAT MASUK — LEMBAR DISPOSISI
+        </div>
+        
+        <!-- Data Surat - LEBIH COMPACT -->
+        <div style="border: 1px solid #000; padding: 4px; margin-bottom: 6px; font-size: 7pt;">
+          <div style="display: flex; margin-bottom: 3px;">
+            <div style="font-weight: bold; width: 100px; min-width: 100px; font-size: 6pt;">Nomor Agenda</div>
+            <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 4px; padding-bottom: 0; font-size: 6pt;">${nomorAgenda}</div>
+            <div style="font-weight: bold; width: 100px; margin-left: 10px; font-size: 6pt;">Nomor Surat</div>
+            <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 4px; padding-bottom: 0; font-size: 6pt;">${nomorSurat}</div>
+          </div>
+          <div style="display: flex; margin-bottom: 3px;">
+            <div style="font-weight: bold; width: 100px; min-width: 100px; font-size: 6pt;">Tanggal Surat</div>
+            <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 4px; padding-bottom: 0; font-size: 6pt;">${tanggalSurat}</div>
+            <div style="font-weight: bold; width: 100px; margin-left: 10px; font-size: 6pt;">Tanggal Terima</div>
+            <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 4px; padding-bottom: 0; font-size: 6pt;">${tanggalTerima}</div>
+          </div>
+          <div style="display: flex; margin-bottom: 3px;">
+            <div style="font-weight: bold; width: 100px; min-width: 100px; font-size: 6pt;">Sifat Surat</div>
+            <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 4px; padding-bottom: 0; font-size: 6pt;">${sifatSurat}</div>
+            <div style="font-weight: bold; width: 100px; margin-left: 10px; font-size: 6pt;">Jumlah Lampiran</div>
+            <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 4px; padding-bottom: 0; font-size: 6pt;">${jumlahLampiran}</div>
+          </div>
+          <div style="display: flex; margin-bottom: 3px;">
+            <div style="font-weight: bold; width: 100px; min-width: 100px; font-size: 6pt;">Surat Dari</div>
+            <div style="flex: 3; border-bottom: 1px dotted #000; margin-left: 4px; padding-bottom: 0; font-size: 6pt;">${suratDari}</div>
+          </div>
+          <div style="display: flex; margin-bottom: 3px;">
+            <div style="font-weight: bold; width: 100px; min-width: 100px; font-size: 6pt;">Perihal</div>
+            <div style="flex: 3; border-bottom: 1px dotted #000; margin-left: 4px; padding-bottom: 0; font-size: 6pt;">${perihal}</div>
+          </div>
+        </div>
+        
+        <!-- Disposisi - LEBIH COMPACT -->
+        <div style="display: flex; gap: 6px; margin-bottom: 6px;">
+          <div style="flex: 1; border: 1px solid #000; padding: 4px; font-size: 6pt;">
+            <h3 style="font-size: 7pt; font-weight: bold; margin: 0 0 2px 0; text-align: center; border-bottom: 1px solid #000; padding-bottom: 1px; color: #000;">Isi Disposisi</h3>
+            ${generateCheckboxHTMLForPDFCompact(isiDisposisi, [
+              'Tindak lanjuti',
+              'Untuk dilaksanakan',
+              'Wakili',
+              'Jadwalkan',
+              'Sisipkan jawaban',
+              'Arsipkan',
+              'Untuk dilaporkan',
+              'Untuk diketahui',
+              'Pelajari/Teliti',
+              'Lain-lain',
+              'Koordinasikan'
+            ])}
           </div>
           
-          <!-- Judul -->
-          <div style="text-align: center; font-weight: bold; font-size: 10pt; margin: 8px 0; color: #000; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid #000; padding-bottom: 4px;">
-            AGENDA SURAT MASUK — LEMBAR DISPOSISI
+          <div style="flex: 1; border: 1px solid #000; padding: 4px; font-size: 6pt;">
+            <h3 style="font-size: 7pt; font-weight: bold; margin: 0 0 2px 0; text-align: center; border-bottom: 1px solid #000; padding-bottom: 1px; color: #000;">Disampaikan kepada:</h3>
+            ${generateCheckboxHTMLForPDFCompact(disampaikanKepada, [
+              'Ka Bag Pers & Multimedia',
+              'Arsip',
+              'Staff'
+            ])}
           </div>
-          
-          <!-- Data Surat -->
-          <div style="border: 1px solid #000; padding: 6px; margin-bottom: 8px; font-size: 8pt;">
-            <div style="display: flex; margin-bottom: 4px;">
-              <div style="font-weight: bold; width: 110px; min-width: 110px; font-size: 7pt;">Nomor Agenda</div>
-              <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 6px; padding-bottom: 1px; font-size: 7pt;">${nomorAgenda}</div>
-              <div style="font-weight: bold; width: 110px; margin-left: 15px; font-size: 7pt;">Nomor Surat</div>
-              <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 6px; padding-bottom: 1px; font-size: 7pt;">${nomorSurat}</div>
-            </div>
-            <div style="display: flex; margin-bottom: 4px;">
-              <div style="font-weight: bold; width: 110px; min-width: 110px; font-size: 7pt;">Tanggal Surat</div>
-              <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 6px; padding-bottom: 1px; font-size: 7pt;">${tanggalSurat}</div>
-              <div style="font-weight: bold; width: 110px; margin-left: 15px; font-size: 7pt;">Tanggal Terima</div>
-              <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 6px; padding-bottom: 1px; font-size: 7pt;">${tanggalTerima}</div>
-            </div>
-            <div style="display: flex; margin-bottom: 4px;">
-              <div style="font-weight: bold; width: 110px; min-width: 110px; font-size: 7pt;">Sifat Surat</div>
-              <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 6px; padding-bottom: 1px; font-size: 7pt;">${sifatSurat}</div>
-              <div style="font-weight: bold; width: 110px; margin-left: 15px; font-size: 7pt;">Jumlah Lampiran</div>
-              <div style="flex: 1; border-bottom: 1px dotted #000; margin-left: 6px; padding-bottom: 1px; font-size: 7pt;">${jumlahLampiran}</div>
-            </div>
-            <div style="display: flex; margin-bottom: 4px;">
-              <div style="font-weight: bold; width: 110px; min-width: 110px; font-size: 7pt;">Surat Dari</div>
-              <div style="flex: 3; border-bottom: 1px dotted #000; margin-left: 6px; padding-bottom: 1px; font-size: 7pt;">${suratDari}</div>
-            </div>
-            <div style="display: flex; margin-bottom: 4px;">
-              <div style="font-weight: bold; width: 110px; min-width: 110px; font-size: 7pt;">Perihal</div>
-              <div style="flex: 3; border-bottom: 1px dotted #000; margin-left: 6px; padding-bottom: 1px; font-size: 7pt;">${perihal}</div>
-            </div>
-          </div>
-          
-          <!-- Disposisi -->
-          <div style="display: flex; gap: 8px; margin-bottom: 8px;">
-            <div style="flex: 1; border: 1px solid #000; padding: 6px; font-size: 7pt;">
-              <h3 style="font-size: 8pt; font-weight: bold; margin: 0 0 4px 0; text-align: center; border-bottom: 1px solid #000; padding-bottom: 2px; color: #000;">Isi Disposisi</h3>
-              ${generateCheckboxHTMLForPDF(isiDisposisi, [
-                'Tindak lanjuti',
-                'Untuk dilaksanakan',
-                'Wakili',
-                'Jadwalkan',
-                'Sisipkan jawaban',
-                'Arsipkan',
-                'Untuk dilaporkan',
-                'Untuk diketahui',
-                'Pelajari/Teliti',
-                'Lain-lain',
-                'Koordinasikan'
-              ])}
-            </div>
-            
-            <div style="flex: 1; border: 1px solid #000; padding: 6px; font-size: 7pt;">
-              <h3 style="font-size: 8pt; font-weight: bold; margin: 0 0 4px 0; text-align: center; border-bottom: 1px solid #000; padding-bottom: 2px; color: #000;">Disampaikan kepada:</h3>
-              ${generateCheckboxHTMLForPDF(disampaikanKepada, [
-                'Ka Bag Pers & Multimedia',
-                'Arsip',
-                'Staff'
-              ])}
-            </div>
-          </div>
-          
-          <!-- Keterangan Disposisi -->
-          <div style="border: 1px solid #000; padding: 6px; margin-bottom: 8px; min-height: 50px; font-size: 8pt;">
-            <h3 style="font-size: 8pt; font-weight: bold; margin: 0 0 4px 0; text-align: center; border-bottom: 1px solid #000; padding-bottom: 2px; color: #000;">Disposisi</h3>
-            <div>${disposisi}</div>
-          </div>
-          
-          <!-- TTD Kapus SISHUMAD -->
-          <div style="text-align: right; margin-top: 30px; font-size: 8pt;">
-            <p style="margin: 40px 0 3px 0; font-size: 7pt;">Cimahi, ........./........./2025</p>
-            <p style="margin: 0; font-size: 7pt; font-weight: bold;">Kapus SISHUMAD</p>
-          </div>
+        </div>
+        
+        <!-- Keterangan Disposisi - LEBIH COMPACT -->
+        <div style="border: 1px solid #000; padding: 4px; margin-bottom: 6px; min-height: 40px; font-size: 7pt;">
+          <h3 style="font-size: 7pt; font-weight: bold; margin: 0 0 2px 0; text-align: center; border-bottom: 1px solid #000; padding-bottom: 1px; color: #000;">Disposisi</h3>
+          <div style="line-height: 1.2;">${disposisi}</div>
+        </div>
+        
+        <!-- TTD Kapus SISHUMAD - LEBIH COMPACT -->
+        <div style="text-align: right; margin-top: 15px; font-size: 7pt;">
+          <p style="margin: 25px 0 2px 0; font-size: 6pt;">Cimahi, ........./........./2025</p>
+          <p style="margin: 0; font-size: 6pt; font-weight: bold;">Kapus SISHUMAD</p>
         </div>
       `;
       
-      // Konfigurasi untuk html2pdf - DIUBAH UNTUK A5
+      // Konfigurasi untuk html2pdf - DIOPTIMALKAN UNTUK A5
       const opt = {
         margin: [0, 0, 0, 0],
         filename: `Disposisi_Surat_${nomorAgenda}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
+        image: { type: 'jpeg', quality: 0.95 },
         html2canvas: { 
-          scale: 2, 
+          scale: 2,
           useCORS: true,
           backgroundColor: '#FFFFFF',
-          width: 148, // mm
-          height: 210 // mm
+          width: 148,
+          height: 210,
+          logging: false,
+          letterRendering: true
         },
         jsPDF: { 
           unit: 'mm', 
-          format: 'a5', // DIUBAH: Format A5
+          format: 'a5',
           orientation: 'portrait',
-          compress: true
+          compress: true,
+          hotfixes: ["px_scaling"]
         },
-        pagebreak: { mode: 'avoid-all' }
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
       };
       
-      // Generate PDF
-      html2pdf().set(opt).from(pdfContent).save();
+      // Generate PDF dengan timeout untuk memastikan rendering
+      setTimeout(() => {
+        html2pdf().set(opt).from(pdfContent).save();
+      }, 500);
     }
     
-    // Fungsi untuk generate HTML checkbox untuk PDF
-    function generateCheckboxHTMLForPDF(selectedValues, options) {
+    // Fungsi untuk generate checkbox yang lebih compact
+    function generateCheckboxHTMLForPDFCompact(selectedValues, options) {
       if (!selectedValues) selectedValues = '';
       const values = selectedValues.split(', ').filter(v => v.trim() !== '');
-      let html = '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3px;">';
+      let html = '<div style="display: grid; grid-template-columns: 1fr; gap: 1px;">';
       
       options.forEach(option => {
         const isChecked = values.includes(option);
-        const checkboxStyle = 'display: inline-block; width: 12px; height: 12px; border: 1px solid #000; background: white; margin-right: 3px; flex-shrink: 0;';
-        
-        const checkmark = isChecked 
-          ? '<span style="position: absolute; top: -3px; left: 2px; font-size: 11px; font-weight: bold; color: #000;">✓</span>' 
-          : '';
+        const checkmark = isChecked ? '✓' : '';
         
         html += `
-          <div style="display: flex; align-items: center; gap: 3px; font-size: 7pt; line-height: 1.1; position: relative;">
-            <span style="${checkboxStyle}">${checkmark}</span> ${option}
+          <div style="display: flex; align-items: center; gap: 2px; font-size: 6pt; line-height: 1;">
+            <span style="display: inline-block; width: 10px; height: 10px; border: 1px solid #000; background: white; text-align: center; line-height: 8px; font-size: 8px;">${checkmark}</span>
+            ${option}
           </div>
         `;
       });
